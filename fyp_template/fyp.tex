@@ -1,0 +1,423 @@
+\documentclass[12pt, a4paper]{report}
+
+\usepackage{fyp}
+
+%%these packages are not really necessary if you dont need the code and proofs environments
+%%so if you like you can delete from here till the next comment
+%%note that there are some examples below which obviously won't work once you remove this part
+\usepackage{verbatim}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{acronym}
+\usepackage{csquotes}
+
+\newcommand{\unk}{\textit{\textless{UNK}\textgreater} }
+%%this environment is useful if you have code snippets
+\newenvironment{code}
+{\footnotesize\verbatim}{\endverbatim\normalfont}
+
+%%the following environments are useful to present proofs in your thesis
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{definition}%plain}
+\newtheorem{example}{Example}[section]
+\theoremstyle{definition}%remark}
+\newtheorem{proposition}{Proposition}[section]
+\theoremstyle{definition}%remark}
+\newtheorem{lemma}{Lemma}[section]
+\theoremstyle{definition}%remark}
+\newtheorem{corollary}{Corollary}[section]
+\theoremstyle{definition}%remark}
+\newtheorem{theorem}{Theorem}[section]
+%%you can delete till here if you dont need the code and proofs environments
+
+
+
+\setlength{\headheight}{15pt}
+%\overfullrule=15pt
+
+%% TEMPORARY FIX FOR MORE READABLE CITATIONS 
+\usepackage{natbib}
+\bibpunct{(}{)}{,}{a}{}{;}
+\bibliographystyle{abbrvnat}
+\renewcommand{\cite}[1]{[\citealp{#1}]}
+%% END OF TEMPORARY FIX FOR MORE READABLE CITATIONS 
+
+\begin{document}
+
+
+%%make sure to enter this information
+\title{a title}
+\author{Sean Bugeja}
+\date{enter a date}
+\supervisor{Mr. Mike Rosner}
+\department{Faculty of ICT}
+\universitycrestpath{crest}
+\submitdate{enter a date} 
+
+\frontmatter
+
+
+\begin{acknowledgements}
+your acknowledgments
+\end{acknowledgements}
+       
+\begin{abstract}
+Provides a short (typically 1 page) overview of the dissertation’s contents including the tackled problem and high-level results/conclusions.
+\end{abstract}
+
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+\newpage
+\section*{Acronyms}
+\begin{acronym}
+\acro{NLP}{Natural Language Processing}
+\acro{LSTM}{Long Short Term Memory}
+\acro{OOV}{Out of Vocabulary}
+\acro{IV}{In Vocabulary}
+\acro{SVM}{Support Vector Machine}
+\acro{ASR}{Automatic Speech Recognition}
+\acro{RC}{Reading Comprehension}
+\acro{LDA}{Latent Dirichlet Allocation}
+\acro{LSA}{Latent Semantic Analysis}
+\end{acronym}
+
+
+\mainmatter
+
+\chapter{Introduction}
+
+\section{Problem Definition}
+A definition of the problem being tackled and establishment of the research question(s).
+
+
+%%you can organize your chapters into parts but this is not always necessary
+%%\part{Part1} - Available but generally not used
+\chapter{Background and Literature Review}
+% A sufficient background designed to provide examiners with just enough information to be able to understand the work of the dissertation itself as well as the context in which it was tackled.
+
+\section{Targeted Sentiment Analysis}
+\subsection{What is targeted sentiment analysis?}
+Targeted sentiment analysis is a fine-grained text-classification task which stems from the broader, more general, document or sentence level sentiment analysis. 
+
+The former extends on the latter by taking into consideration a particular target or aspect within the context of the document, and aims to identify the sentiment with respect to this target or aspect \cite{pang2008}, \cite{liu2012}, \cite{pontiki}.
+
+It is not a hard requirement for the target or aspect to appear within the phrase that is being classified. 
+
+It is often the case in the literature that when referring to a "target", this would be a particular noun or subject within the phrase while an "aspect" can be a more general area within which the phrase should be evaluated. 
+
+Consider the phrase \enquote{The waiting times were long however the ravioli were simply to die for}, a plausible target within this phrase that could be considered would be \enquote{waiting times} for which the statement conveys a negative sentiment. 
+
+Alternatively the phrase could be assessed in terms of a more general aspect such as \enquote{food quality}, for which a positive sentiment is conveyed even though the exact term \enquote{food quality} does not appear in the phrase itself.   
+
+It is trivially evident that, separating itself from sentence-oriented sentiment analysis, target or aspect based sentiment analysis requires the careful consideration of the target or aspect in question along with its context. 
+
+The extent of this fact was first demonstrated by \cite{jiang2011}, whose work demonstrated that a staggering 40\% of errors within the field of targeted-sentiment analysis could be attributed to the lack of consideration of the target or aspect \cite{jiang2011}.
+
+\subsection{What is the importance of targeted sentiment analysis?}
+Due to the proliferation of social media networks and online shopping, opinions voiced from users on specific topics, products, services and events have never been as readily available for data mining. 
+
+The value in having the means to accurately gauge public interest and opinion of very specific topics of interest on such a phenomenal scale cannot be understated.
+
+From those in the public sector, such as electoral campaigns who seek to obtain a clearer picture of their constituents' strongest held opinions and expectations, to private businesses who wish to employ the most effective advertising campaign for their products and services, all of these objectives rely heavily on being as cognizant on public sentiment as possible. \cite{tang2016}
+
+Over time it becomes increasingly self-evident that the content of these online text sources is becoming more sophisticated and richer in information. 
+
+Changes in social media platforms such as twitter's decision to raise the character limit of tweets results in the same unit of data containing up to twice the amount of information.
+
+As the amount of information available increases, so to must the resolution at which this information is processed, so as to keep pace with the needs of both producers and consumers alike.    
+
+This phenomenon further pushes the need to focus on opinion mining at a finer-grained level, with the ability to discern varying sentiments towards separate targets within the same phrase. 
+\subsection{What are the challenges of targeted sentiment analysis?}
+As with any task that requires a deeper understanding of the intricacies of language, there are many challenges that face target-oriented sentiment analysis. 
+
+Many of these challenges are inherent parsing the structure of language, however because of the informal nature of the majority of text data upon which this task is typically carried out, additional challenges present themselves.
+
+Colloquialisms and social short-hands are a commonplace within social media networks where many users intend on conveying as much information in as little characters as possible, particularly in situations where this number is capped. 
+
+This phenomenon also leads to intentional, as well as unintentional, spelling errors which further obscures that data for any prospective machine learning model that does not account for these circumstances. 
+
+Along with these challenges, the literature also presents a number of obstacles and particularly problematic instances that need to be taken into account when approaching the task of targeted sentiment analysis.
+
+Comparative opinions are one such circumstance where the sentiment being conveyed is obscured by another subject which the model would have to model correctly. 
+
+\cite{tang2016} report challenges of this sort, with phrases such as “I've had better Japanese food at a mall food court”. 
+
+Other common challenges that pointed to in \cite{tang2016}, are negation and conditional situations, citing the example "but dinner here is never disappointing, even if the prices are a bit over the top", where the sentiment towards the target cannot be easily deduced from the various syntactic structures present.
+
+Moreover, the particular case of expressions which consist of multiple words needs to be given special care. 
+
+Various approaches that employ word embeddings operate on the word as the atomic unit of operation, and would therefore struggle to correctly model an expression such as "die for" in "the ice cream to die for" \cite{tang2016} from its constituents.
+
+Similarly, \cite{zheng2018}, \cite{tang2016} also state that this issue is significant, and has not been given sufficient attention, when modelling targets that also consist of multiple words.
+
+When considering the opinion of a sentence towards a specific target, it may be the case that the sentence will have opposing sentiments for different targets, this is another degree of complexity that targeted-sentiment analysis models need to account for as opposed to sentiment analysis of the sentence as a whole \cite{tang}.
+
+Phrases such as "great food but the service was dreadful!" convey different and opposite sentiments towards "food" and "service" \cite{tang2016}. 
+
+Previous sentence oriented sentiment analysis approaches such as \cite{socher2011}, \cite{appel2016} would be incapable of correctly distinguishing this level of granularity \cite{chen2017}.
+
+In their work \cite{dehongma2017} also call attention to the fact that there are several instances where the sentiment conveyed by a particular word is contingent upon the target or aspect that is being considered. 
+
+An adjective such as "short" can have positive connotations with respect to "waiting times" for a restaurant, on the other hand the same adjective is assumed negative when describing something such as the "battery life" of a product. 
+
+\subsection{What metrics are commonly used to measure performance?}
+Accuracy is a frequently cited metric within the field of targeted sentiment analysis, however this is not always the most accurate indicator of a model's performance in a classification task, particularly when the dataset that is being utilized is heavily biased to one specific class. 
+Care must be given in the training phase of any machine learning model to ensure that the model is exposed to all classes in question in a balanced way. 
+
+Training a model heavily on one specific class, or not enough on another could lead the model to classify the majority of test samples to the biased class or being unable to correctly classify the class that has been under-represented in training, since the model would not have gathered enough information to discern this class. 
+
+In the case where the testing dataset would be imbalanced towards the same class, the overall accuracy would lack the sufficient information expected as a metric to illustrate the effectiveness of the model to classify samples into the correct class since the model would have been trained in a biased way towards the class that is prevalent. 
+
+A more sophisticated metric that is robust to this issue is the macro averaged F1-score which takes into consideration the model's performance in each class separately. 
+
+As an example, a frequently cited benchmark dataset is presented in \cite{dong}, this dataset consists of 6248 training and 692 test phrases collected from twitter, each annotated with a particular sentiment (negative, neutral or positive) towards a specific target that appears in the tweet. 
+
+Within both the training and testing subsets of this dataset, there are twice as many neutral instances as there are positive and negative instances. 
+
+Works such as \cite{chen2017}, \cite{dong} correctly point out the shortcoming of accuracy as a valid performance metric in this situations such as this, and cite macro-averaged F1 scores in their results. 
+
+\section{Manual Feature Engineering}
+\subsection{What did initial approaches using manual features involve?}
+Initially, the conventional approach involved manually extracting the most expressive and information rich features from sentences that would subsequently be processed through some statistical model such as a SVM for classification.
+
+This entailed the formulation of processes by which to obtain these features, and was normally preceded by some form of normalization of the original data before these features could be extracted. Typically many types of these features were used in conjunction, each intended to extrapolate differing particularities about a specific aspect of the text, such as whether a specific token represented a noun or an adjective, or details about the words surrounding it to name a few.
+
+\subsection{What were some of the initial approaches using manual features?}
+The capacity of the SVM had been demonstrated on the general task of sentiment analysis in works such as \cite{pang2002}.  
+
+Bag-of-words, part-of-speech tags and other morphological and syntactical features and external resources such as linguistic parsers and sentiment lexicon have employed in works such as \cite{dong}, \cite{vo2015}, \cite{nguyen2015}. 
+
+As \cite{tang2016b} point out, these methods would sometimes impose an external dependency on the system. Moreover, within the context of social media, where conventional rules of language are often times regarded rather as guidelines, various studies question the applicability of dependency parsing techniques that rely on a particular degree of formality, or structure, within the content itself \cite{tang2016b}, \cite{chen2017}.
+
+Nevertheless these features have proven their worth when used in conjunction with powerful models such as the aforementioned SVM \cite{kiritchenko} \cite{wagner2014}, as well as neural networks \cite{dong}, \cite{vo2015}, in predicting sentiment polarity.
+
+Even in the work that followed, focusing on increasingly autonomous feature extraction methods and more sophisticated deep learning architectures such as the LSTM model, \cite{tang2016b} make note of the competitive results obtained by the SVM approach in \cite{kiritchenko} compared to their implementations. 
+
+\subsection{What are the disadvantages of using manual features?}
+Although works such as \cite{kiritchenko}, \cite{wagner2014}) obtained encouraging results, much of the subsequent literature recognizes that these results where exceedingly contingent on the choice of features that were being utilized \cite{tang2016b}.
+
+Although the manual feature-based approach faired well in their work, \cite{tang2016b} suggest that features of this kind lack the required resolution of detail that would accurately capture the interplay between target and context. The features that had been used had sound rationales behind them, however devising these rationales was in itself becoming increasingly time consuming. One reason for this is scalability; with the increase of data that were available, this inevitably brings with it more considerations and specifics that must be accounted for when otherwise manually devising these features. 
+
+As eluded to by \cite{zheng2018}, with the aforementioned increase in labor involved, these approaches were exhibiting diminishing returns, and could be regarded as a bottleneck in terms of performance of these models and the wealth of data available. 
+
+A more autonomous solution that would accurately capture the intricacies of language from an expansive wealth of text at a deeper level, not contingent on a proportionally large amount of labor-intensive manual feature-engineering, was desired to further advance the field of targeted sentiment analysis.  
+
+
+\section{Word Embeddings}
+\subsection{What are word embeddings?}
+Word embeddings seek to tackle the non-trivial task of accurately capturing as much of the intricate details that are inherent in language, as possible. To model the intricacies of a word within the context of a language, or a particular subset thereof, sophisticated models are employed to construct continuous and real-valued vectors for each word. The resulting vectors are commonly referred to as word embeddings \cite{bengio2003} \cite{mikolov2013} \cite{pennington} \cite{tang}. 
+
+By first learning a continuous word vector embedding from data \cite{bengio2003} \cite{mikolov2013} \cite{pennington}, most approaches can take advantage of the principle of compositionality \cite{frege1892} to obtain a sentence or indeed a document level representation for a myriad of downstream NLP tasks, including sentiment analysis. 
+
+Two of the most prominent word embedding models that are currently employed in many NLP tasks are \textit{word2vec} \cite{mikolov2013} and \textit{GloVe} \cite{pennington}. More recently, an extension on the former, termed \textit{fasttext} \cite{bojanowski2017} is also garnering considerable attention within the field, distinguishing itself from the other models mentioned through the use of sub-word information.  
+\subsection{What are the leading two approaches?}
+There are two fundamental approaches to the task of learning word vectors that are prevalent in the literature, namely global matrix factorization methods and local context window methods. Each of these approaches has its own strengths and weaknesses and the two need not be mutually exclusive. 
+
+The two principal methods for learning distributional word representations are count-based and prediction-based, each with their own strengths and shortcomings, and neither being clearly superior to the other in every aspect \cite{pennington}. 
+\textbf{this might be redundant at this point}
+
+
+Both methods provide a powerful means of autonomously extracting expressive and meaningful features from a wealth of text to the degree that would be unfeasible through manual means alone due to the staggering complexity inherent in language itself as well as the sheer volume of data that is being constantly made available through various online platforms that allow the power of expression to an unparalleled, and ever-growing, number of people across a myriad of different domains and topics.   
+
+
+Matrix factorization methods, such as LSA \cite{deerwester1990} (as cited in \cite{mikolov2013}), attempt to extrapolate significant statistical information pertaining to a specific corpus, from decomposed matrices that are typically obtained through low-rank approximations. Two of the most eminent matrix factorization models that were employed for estimating continuous representations of words include the previously mentioned LSA and LDA \cite{mikolov2013}. The variations in these models' hyper-parameters at the design stage determine the nature of the information that is extracted and are typically contingent on the downstream task being handled.
+
+One of the benefits that is had from constructing a vector space with distributional representations of words is the ability to model features such as similarity between the constituent words and subsequently group words with similar meanings which expands a downstream model's comprehension of a language. \cite{mikolov2013b}
+
+Models trained using matrix factorization methods are efficient at exploiting statistical information, however they tend to fall short in tasks such as word analogy that tend to favor models that can accurately represent the similarity between words in a vector space that \cite{mikolov2013} elude to. 
+
+
+Conversely, shallow window-based methods are so-called as these methods rely on a context window of some specified width when making predictions. A trivial disadvantage that presents itself immediately with this approach is the limited capacity to efficiently exploit redundancy in the data on a wider macro level. This is due to the fact that these methods operate on the level of their current context window as opposed to the document as a whole \cite{pennington}.
+
+This notwithstanding, working on the assumption that more related words will tend to appear closer to each other than not, \cite{mikolov2013} argue that window-based approaches are ideal for word analogy tasks even though these lack any regard for the statistics of a document on a global level \cite{pennington}.
+
+\subsection{How does word2vec do its thing?}
+At the time \cite{mikolov2013} note that the tendency in the field of NLP was to regard words in an isolated fashion as opposed to considering each word within the scope of a distributed space where more in-depth information could be extracted regarding the relationship between words. Models, such as the popular n-gram model, that embodied this principle were shown to outperform more complex approaches, however this meant that the concept of modelling similarity between these words was absent. 
+
+There was a need for more sophisticated, and scalable, techniques to address the bottleneck that was presenting itself in the lack of accurately labelled data that was being made available for training models in fields such as ASR and machine translation. As these models emerged to tackle increasingly large data sets, simpler models, such as the aforementioned n-gram model, were consistently outperformed by neural networks using distributed representations of words in the form of word embeddings. Moreover, neural networks were shown to capture the linear relationships between words more accurately than previous methods that used LSA, while maintaining a higher level of scalability when compared to LDA \cite{mikolov2013}. 
+
+Some of the initial work making use of neural networks to learn word embeddings include \cite{collobert2008}. Their approach consisted of a feedforward neural network tasked with predicting the correct word within a context window of five words including the target word itself.
+
+\cite{mikolov2013} introduced the continuous skip-gram and the continuous bag of words models in an effort to effectively extract word embeddings from large corpora. The former aims to learn an adequate representation of a word by training to predict the words that are most likely to surround it while, inversely, the latter was trained to predict a specific word given its context, both using a feed-forward neural network with the non-linear hidden layer removed. 
+
+\textbf{Image would make sense here for skipgram vs cbow.}
+
+Their work brought about a novel evaluation strategy which measures the expressive capacity of a word vector space through complex multi-dimensional comparisons that went over and above previous scalar metrics that were typically limited to the distance or angle between word vectors. As evidence of the level of sophistication obtained in the representations that were generated using the \textit{skip-gram} model, the authors note that the composition of vectors for words such as "Germany" and "capital" results in a vector that closely resembles the word "Berlin". Additionally, more sophisticated linear translations could be modeled such as "Madrid" - "Spain" + "France" is resulting in a word vector closest to that of the word "Paris".
+
+While the skip-gram model required no dense matrix multiplications which made it substantially more efficient than most of the neural network implementations that had preceded it, in their experiments they note that the quality of the resultant word vectors could be improved by increasing the window size, however this would carry with it a corresponding increase in computational complexity. Nevertheless, \cite{mikolov2013} demonstrated that sufficiently expressive vector representations of words could be obtained from large corpora of data without the need for computationally expensive models.
+
+Following their initial work, \cite{mikolov2013b} later expanded on their \textit{word2vec} models, introducing the negative sampling algorithm to improve the efficiency by which the model learned word vectors while proposing a method for accounting for phrases through a simple data-driven approach whereby particular phrases composed of multiple words were treated as a singular token, and trained-for as such.
+
+As noted by \cite{mikolov2013}, the performance of their models were contingent on a set of design choices, most critical of which include the training algorithm, vector size, sub-sampling rate and the size of the training window. They conclude that the optimal configuration for these parameters varies based on the task being tackled.
+
+\subsection{How is GloVe different to Word2Vec?}
+Using co-occurrence statistics to extract continuous representations of words within a large corpus of data has been explored in NLP in works as early as (\cite{rumelhart1988}, as cited by \cite{bojanowski2017})
+
+\cite{pennington} argue that while the significance of word occurrence information within a text when learning word representations in an unsupervised manner is uncontested, further research is needed into the mechanisms by which these statistical data generate meaningful vector representations. In pursuit of this, they propose the \textit{GloVe} model, characterized by its use of the global, that is to say at the level of the corpus in its entirety, co-occurrence information to produce aptly-called \textit{``global vectors"}.
+
+\textbf{Mention that pennington refer to the two principal methods as count and prediction based
+Tie this to the matrix and window based explanations i gave prior 
+Make pennington's case clear for the efficiency of count based. }
+
+\cite{pennington} point out that while count and prediction based methods are not fundamentally dissimilar since both exploit co-occurrence statistics within a corpus to obtain accurate representations, they argue for the efficiency of the former approach over the latter.
+
+They exploit this advantage in developing \textit{GloVe} by taking into account the co-occurrence matrix of the corpus as a whole and only considering non-zero elements thereof, as opposed to the sparse matrix as a whole. This provides a substantial increase in speed and moreover, as their work suggests, generates more expressive representations of each word when compared to a limited window-based approach. \textit{GloVe} was evaluated on three separate tasks, specifically word analogy, word similarity and entity recognition tasks, achieving superior results over the previous literature in all. \cite{pennington}
+
+Furthering the case for the capacity of the \textit{GloVe} model, the comparative study carried out on the task of reading comprehension by \cite{bhuwandhingra2017} demonstrated that pre-trained \textit{GloVe} embeddings outclassed other embeddings, including \textit{word2vec} \cite{mikolov2013}. From their experiments, \cite{bhuwandhingra2017} continue to suggest that these embeddings, in their off-the-shelf format, also surpassed embeddings trained on the target text itself as well as, to their surprise, an expanded corpus of data extracted from a domain commensurate with that of the target text.
+
+\subsection{How is \textit{fasttext} different?}
+Both \textit{word2vec} and \textit{GloVe} are considered as models operating on a word-level by regarding the word as the atomic operand, however \cite{bojanowski2017} argue that this approach is possibly sub-optimal when considering languages, such as Turkish and Finnish, where single words can have multiple morphologies, or comprise of exceedingly large vocabularies, or both. In contrast, they argue that the use of sub-word information lends itself well to these languages where the multiple morphologies of a word follow some form structure, such as specific verb conjugations. 
+
+To tackle this issue they propose extending the \textit{word2vec} skip-gram model to operate at a sub-word level, through the use of character n-grams. As opposed to having each word represented by a vector, vector representations of the words' constituent character n-grams are aggregated to build the final representation of the word. They suggest that this approach would also provide a means of addressing particularly rare words that would not otherwise be in the vocabulary by constructing a representation from their constituent character n-grams. 
+
+\cite{bojanowski2017} report excellent training times for their unsupervised approach without the need for any pre-processing, while outperforming other benchmark models that do not make use of sub-word information or use techniques such as morphological analysis. Moreover, they illustrate their approach's capacity for constructing a representation of OOV words from the vectors of its constituent n-grams by mapping the cosine similarity between all n-gram pairs of the OOV word and an IV word with a similar meaning.
+
+\textbf{Could include the image of the mapping here. }
+
+\textbf{Need to make a point possibly about what doesn't work so well with the OOV approach though.}
+
+\section{Out-of-vocabulary Words}
+\subsection{What are OOV words?}
+
+It stands to reason that due to the ever changing and ever evolving nature of language, it is impossible to account for the entire vocabulary of a particular language when constructing word embeddings. Regardless of the amount of text that is initially used to construct the word embeddings there shall be words that are not encountered within that text and therefore a continuous vector representation of that word could not be produced. While the probability of covering the most commonly occurring words increases with the size of the original text and the variety within it, encountering new words is an inescapable eventuality. 
+
+OOV words are so called as they do not appear within the vocabulary of a model or word embedding. The consequence of this is that the model effectively possesses no information about the specific word when first encountering it, and thus has no means of discerning its significance, within the scope of the language as a whole, much less within the context of the phrase being evaluated. 
+
+This can be remedied to varying extents following that initial encounter with the word, and many different approaches have been proposed towards this objective.
+
+\subsection{What problems for generative tasks do OOV words create?}
+
+OOV words are of particular concern when dealing with tasks that are generative in nature, such as ASR. The toll of OOV words on the performance of approaches to these tasks is two-fold. Firstly, OOV words may be substituted for IV words. Secondly, the OOV word has a direct effect on the neighbouring IV words \cite{naptali2012}.
+
+A common approach to this problem is clustering OOV words into groups that would are sufficiently expressive of their constituents. Various techniques have been employed towards this goal such syntactic and morphological features, part-of-speech tag information, online resources, and subword-level models to name a few, \cite{naptali2012} does a good job of outlining these approaches respectively. 
+
+\subsection{What problems for sentiment analysis do OOV words create?}
+
+Since sentiment analysis is classification task, where words are provided as input and subsequently used as keys when looking up the relevant embedding vector, substituting an OOV word for an IV word is of no concern. The effect of an OOV word on its neighboring words, however, is prone to undermine a model's ability to generate an accurate representation of the content as a whole. 
+
+This sort of phenomenon is not particularly difficult to imagine since it is often times the case in languages that even a single punctuation symbol can have drastic effects on the meaning of a phrase. 
+
+Moreover, OOV words obviously make the process of comprehending a phrase more difficult by introducing elements that the model has no knowledge of. If the word embedding model that is being used is analogous to the model's understanding of a language, an OOV word is effectively a word the model does not understand, and therefore has limited to no means by which to gauge the effect of that word on the overall sentiment of the phrase, if any.
+
+\subsection{How are OOV words typically regarded in Sentiment Analysis?}
+
+A typical approach to this OOV challenge within the field of sentiment analysis is the use of a particular singular token that is meant to represent low frequency words during the training phase, and subsequently model all OOV words encountered in the test phase. The vector for this token is often times initialized to some random uniform distribution. 
+
+\subsection{Why is this sub-optimal?}
+
+As far back as \cite{gallwitz1996}, before the popularity of pre-trained word embeddings such as \textit{GloVe} and \textit{Word2Vec}, it was pointed out that using a single token is somewhat crude. It could not possibly encompass the wealth of linguistic information expressed by every OOV word that is encountered, consider that an OOV word can be anything from a spelling mistake to proper noun such as the name of an entity, and anything in between.  
+
+When training an n-gram model, the use of a single \unk label for all OOV words will lead to a substantial inconsistency in the frequency of OOV words between training and test datasets \cite{gallwitz1996}. This inconsistency is comparable to the possibly counter productive training that is carried out on the singular \unk vector across different samples within the scope of sentiment analysis and word embeddings.
+
+In their work, dealing particularly with OOV tokens within the field of RC, \cite{bhuwandhingra2017} note a considerable drop in performance when taking this approach in some cases and suggest that a unique OOV token would lack the desired level of detail to correctly generate a correct answer. 
+
+\subsection{Why are classes better for handling OOV words?}
+It is not necessarily useful to approach the OOV word challenge at the word-level. It is assumed that OOV words would scarcely appear when evaluating text, which substantially limits the occasions for a prospective model to learn any discerning information about that word. Attempting to model clusters of OOV words instead, would benefit each member of the cluster by the accumulated frequency of all members. \cite{naptali2012}
+
+\subsection{What is the trade-off between too many and too few classes?}
+
+Too few classes may not possess a sufficiently fine level of detail in their discerning characteristics and cluster together words which are unrelated and subsequently erroneously trained together. This can be seen from the extreme of this case, where only a singular token is used, and the issues that have been reported for this approach.
+
+Conversely, if an excessive number of classes are used, this would naturally decrease the amount of OOV words within each class, and consequently the frequency of words appearing in a particular sample. This hinders a model's ability to learn any distinguishing characteristics of a class. Taken to the extreme, if each class were to contain only a singular word, this would effectively render each class as a randomly initialized vector for this word which is rarely encountered, and trained. This undermines the purpose of a word vector, which is to convey as much information about the word as possible. 
+
+\subsection{Why do i think there are benefits to be had from better OOV handling in SA?}
+
+Within the scope of a RC task, \cite{bhuwandhingra2017}, carry out a study to accurately measure the effects that different embeddings and OOV approaches can have on the final result of two benchmark models. 
+
+They outline the typical approach to RC problems as initially generating a representation of the source document, possibly through the use of pre-trained word embedding sources such as \textit{GloVe} in conjunction with statistical models such as the LSTM \cite{hochreiter1997} which may employ an attention mechanism \cite{bahdanau2014}. The result of this process is a contextual representation of the document from which a valid answer can be extracted. 
+
+It is worth noting that this process is not dissimilar from the majority of approaches that have been adopted recently within the field of sentiment analysis. Both employ similar techniques and maintain the same characteristic order of events in generating a substantive representation of the source, differing only in the objective and hence the final product to be extracted from that representation. While this is by no means an insignificant difference, on a macro level this can be seen merely as altering and fine tuning the variables and parameters that are input to the system, as opposed to the system as a whole. 
+
+Through their work, \cite{bhuwandhingra2017} suggest that there are notable effects on the downstream results of models when comparing the use of different word embeddings, pre-trained or otherwise. Specifically, as an out-of-the-box solution, they recommend the use of GloVe \cite{pennington} 200-dimension pre-trained embeddings. Moreover, for their benchmark RC models, they recommend assigning random unique vectors for OOV tokens at test time, possibly due to the fact that subjects in generated responses are likely to be OOV token and proper nouns. 
+
+Based on these findings, the aforementioned similarity in the process of tackling RC tasks and SA tasks, along with the challenges that OOV words pose in the field of SA that have been outlined, the study of word embedding choice and OOV approaches and their effects therein is something that we believe merits further investigation.  
+
+
+% \subsection{General Embeddings}
+% Word2Vec \cite{mikolov2013}, GloVe \cite{pennington}.\\
+% More recently FastText \cite{bojanowski2017}.\\
+% \subsection{Specialized Embeddings}
+% Sentiment Specific Word Embeddings \cite{tang}, result in performance improvement in \cite{moore2018}.\\
+% More recently domain sensitive word embeddings in \cite{shi2018} \cite{felbo2017} \cite{teng2016}.\\
+
+% \section{Deep Learning in NLP}
+% Proven effective for Sentiment Analysis, using CNN \cite{kim} \cite{dossantos2014}.\\
+% Recursive Neural Networks also used in \cite{dong}.\\
+% Recurrent Neural Networks better suited for sequences, suffer from vanishing gradient problem \cite{bengio1994}.\\
+% Gated Recurrent Unit \cite{chung2014} one way to address issue, used in approaches such as \cite{zhang2016} \cite{xue2018}.\\
+% Another approach to address vanishing gradient, LSTM \cite{hochreiter1997}.\\
+% Adapted for target based sentiment analysis first by \cite{tang2016b}, termed TD-LSTM and TC-LSTM.\\ 
+
+% \section{Attention Mechanism}
+% Another technique proven effective, first introduced in Machine Translation \cite{bahdanau2014}.\\
+% Has since been applied in multiple approaches \cite{yang2016} using hierarchical attention, \cite{wang} integrated attention into an LSTM model, termed ATAE-LSTM.\\
+% More recent approaches seek to make the attention mechanism more sophisticated \cite{tay2017b} \cite{liu2017} \cite{dehongma2017}.\\
+% Some more recent approaches have decided to do away with attention and its inherent disadvantages, suck as the lack of granularity in the updating process, in favour of more sophisticated CNN models with gating mechanisms \cite{xue2018} and the so-called transformation network \cite{li2018} all obtaining competitive results with respect to previous benchmarks.\\
+% \cite{wang2018} also showed mathematically that the efficiency of standard attention mechanisms when it comes to domain sensitive words is limited, and propose a series of more sophisticated approaches to mitigate the problem with promising results.\\
+% \section{Memory Networks}
+% First applied in NLP to address the task of question answering (QA) \cite{jasonweston2014} and subsequently improved upon in \cite{sukhbaatar2015} proposing end-to-end memory networks.\\
+% Many approaches have made use of this technique for aspect based sentiment analysis (ABSA) after the initial application of Tang in \cite{tang2016} achieved state of the art results at the time.\\
+% Tay proposed two variations of a more efficient model, the Dyadic Memory Network, in \cite{tay2017}, one using tensors and another applying holographic principles. While the latter was faster in theory, in practice the former proved more efficient due to its matrix math being more parallelizable.\\
+% Other approaches also address the task of aspect based sentiment analysis by combining memory networks with some form of modified attention mechanism such as \cite{chen2017} with his Recurrent Attention Model (RAM).\\
+% A problem with memory networks is determining how much memory should be updated at each time step. In an attempt to address this \cite{li2018} proposes a gating mechanism that adaptively selects to what extent each memory chain that composes the entire memory bank should be updated based on different measures modelled by separate gates.\\
+% Fan \cite{fan2018} addresses the challenge inherent in representing targets composed of multiple words by pairing a memory mechanism with a convolutional operator, updating the relevant memory banks with respect to a window of 3 words as opposed to one.
+% \section{Domain-Specific Contexts}
+% An emerging challenge that has been garnering much attention in ABSA is modelling particular context terms which may have similar syntactic features yet opposing sentiment features in different domains or when used to describe different targets.\cite{shi2018}\cite{wang2018}.
+% Ma integrates commonsense knowledge into an LSTM mode in \cite{ma2018}.\\ 
+% This external knowledge is obtained through AffectiveSpace 2 \cite{cambria2015} a reduced dimentional representation of SenticNet \cite{erikcambria2018}.\\
+% Another approach in \cite{zheng2018} instead propose a more sophisticated model involving 3 bidirectional LSTMs and achieve better results without the use of any external knowledgebase.\
+% As previously mentioned \cite{wang2018} notes the limitation of standard attention mechanisms for this problem and proposes modifications to address it.\\
+% Finally, works in \cite{tang2016},\cite{felbo2017} and \cite{shi2018} propose new word embedding models to address this issue with promising results.\\
+% \section{Reproducibility}
+% Moore presents a compelling argument in \cite{moore2018} for the field of ABSA in general to adopt standard practices that make reproducability of approaches easier as they identify that this is an ongoing problem in the field currently.
+
+
+\chapter{Methodology}
+% A detailed explanation of how the problem was tackled along with justifications for all decisions taken in the course of the solution.
+\section{Section Name}
+
+% \begin{proof}
+% this is a proof
+% \end{proof}
+
+\chapter{Evaluation and Results}
+% Details about how the solution was evaluated with respect to the original research question(s) along with the results achieved.
+% \section{Datasets}
+% \subsection{Reviews}
+% SemEval restaurant and laptop dataset \cite{pontiki}.\\
+% \subsection{Social Media}
+% Social media datasets are provided in \cite{socher2013}, \cite{dong}, \cite{pontikib} and \cite{saeidi2016}.\\
+
+\section{Evaluation Metrics}
+
+
+\chapter{Conclusion}
+% An outline of the main conclusions from the student’s research an the impact of these conclusions on the field.
+\section{Future Work}
+% Proposals for the student him/herself or other future researchers with regards to how the work can be extended or used as a basis for future work in the are.
+\appendix
+
+\chapter{Appendix A}
+\section{These are some details}
+%%example of the code environment
+\begin{code}
+this is some code;
+Make sure to use this template.
+\end{code}
+
+
+\bibliomatter
+
+
+
+\bibliographystyle{abbrv}
+ \bibliography{references}
+ 
+\end{document}
