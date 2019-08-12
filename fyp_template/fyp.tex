@@ -779,9 +779,9 @@ The primary consideration when re-distributing a dataset is minimizing the numbe
 	\SetAlgoLined
 	\DontPrintSemicolon
 	\algorithmfootnote{Ternary operations are applied element-wise}
-	\KwIn{Previous Class Label Counts $ \rightarrow  \mathbf{counts}$}
+	\KwIn{Source Class Label Counts $ \rightarrow  \mathbf{counts}$}
 	\KwIn{Target Class Label Distribution $ \rightarrow \mathbf{targets}$}
-	\KwResult{New Class Label Counts}
+	\KwResult{Redistributed Class Label Counts}
 	\tcp{...argument validation}
 	% \ForEach{count $c_i$, target $t_i$}{%
 	% 	$v_i \gets c_i \times t_i$ 
@@ -831,7 +831,7 @@ This dataset was specifically proposed for the task of sentiment analysis on twi
 \subsection{SemEval 2016 Twitter Dataset}
 Similar to the previously mentioned dataset, this was also constructed for the purposes of the SemEval sentiment analysis on twitter challenge \cite{nakov2016}, with the difference of being graded on a 5-point scale as opposed to a 3-point and also comprising substantially more samples and topics than the former. For the purposes of our work, we reduce the resolution of this dataset from a 5-point scale to a 3-point scale by grouping \enquote{very negative} and \enquote{weakly negative} samples under a single \enquote{negative} label, and similarly for \enquote{very positive} and \enquote{weakly positive}, to obtain \enquote{positive} samples. The annotation process that was employed is similar to that outlined in the \cite{rosenthal2015} with minor differences in the majority voting system for conflict resolution around label disagreements due to the different point-scale (the process is detailed in \cite{nakov2016}). The actual tweet data for this dataset was also obtained from the Github repository of \cite{baziotis2017} due to the same limitation around this data expiring after a particular time-window. The test and train splits of the dataset were similarly interchanged to obtain a larger training dataset. The final dataset includes over 20000 training samples covering 100 topics, with the overwhelming majority being either \enquote{neutral} or \enquote{positive}. Whereas the testing dataset consists of 6000 samples with entirely different topics and is skewed towards the \enquote{positive} label.
 
-\begin{table}[]
+\begin{table}
 	\centering
 	\begin{tabular}{|l|l|l|l|c|c|}
 		\hline
@@ -862,7 +862,7 @@ Similar to the previously mentioned dataset, this was also constructed for the p
 	\label{tab:dataset_domain_vocab}
 \end{table}
 
-\begin{table}[]
+\begin{table}
 	\centering
 	\begin{tabular}{|l|ccc|}
 		\hline
@@ -880,7 +880,7 @@ Similar to the previously mentioned dataset, this was also constructed for the p
 	\label{tab:dataset_target_length}
 \end{table}
 
-\begin{table}[]
+\begin{table}
 	\centering
 	\begin{tabular}{|l|l|c|ccc|}
 		\hline
@@ -911,7 +911,7 @@ Similar to the previously mentioned dataset, this was also constructed for the p
 	\label{tab:dataset_class_dists}
 \end{table}
 
-\begin{table}[]
+\begin{table}
 	\centering
 	\begin{tabular}{|l|c|cc|ccc|}
 		\hline
