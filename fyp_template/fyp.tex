@@ -802,10 +802,11 @@ The primary consideration when re-distributing a dataset is minimizing the numbe
 	}
 	\Return $\mathbf{candidates}$
 	\caption{Dataset Re-Distribution}
+	\label{alg:re_dist}
 \end{algorithm}
 \vspace{\baselineskip}
 
-The first stage of the process validates the arguments provided, ensuring that a valid distribution is provided.\footnote{Omitted from the algorithm for brevity} Since the limiting factors in this process are the smallest (most scarce) count numbers, an infinitely large marker must be used to remove elements from consideration. The algorithm starts from the smallest count number as a reference point, from which candidate counts are calculated, and subsequently compared to the original number of samples for each class. If all candidates are less than the number of samples available, the redistribution is considered valid and the algorithm terminates. Otherwise, the process is repeated using the class for which there are insufficient samples as the new reference until all candidate counts are valid.
+The first stage of the process validates the arguments provided, ensuring that a valid distribution is provided.\footnote{Omitted from the algorithm for brevity} Since the limiting factors in this process are the smallest (most scarce) count numbers, an infinitely large marker must be used to remove elements from consideration. The algorithm(\ref{alg:re_dist}) starts from the smallest count number as a reference point, from which candidate counts are calculated, and subsequently compared to the original number of samples for each class. If all candidates are less than the number of samples available, the redistribution is considered valid and the algorithm terminates. Otherwise, the process is repeated using the class for which there are insufficient samples as the new reference until all candidate counts are valid.
 
 One drawback of this approach is the substantial reduction in the magnitude of the original dataset that can occur in heavily skewed datasets that contain a small number of samples for some particular class. The amount of samples that will be discarded is directly proportional to the class that is the most scarce in the dataset and its corresponding target distribution in the new dataset.
 
