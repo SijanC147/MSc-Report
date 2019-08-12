@@ -13,6 +13,7 @@
 \usepackage{acronym}
 \usepackage{csquotes}
 \usepackage{multirow}
+\usepackage[ruled,vlined,linesnumbered,noresetcount]{algorithm2e}
 \usepackage[table,xcdraw]{xcolor}
 \usepackage[normalem]{ulem}
 \useunder{\uline}{\ul}{}
@@ -90,6 +91,7 @@ Provides a short (typically 1 page) overview of the dissertation’s contents in
 \acro{RC}{Reading Comprehension}
 \acro{LDA}{Latent Dirichlet Allocation}
 \acro{LSA}{Latent Semantic Analysis}
+\acro{CLI}{Command Line Interface}
 \end{acronym}
 
 
@@ -745,6 +747,37 @@ The most salient outputs of the feature provider are the \textit{TFRecord} files
 Finally, similar to other components, data at multiple stages are exported to pickle files for two reasons. Firstly, this foregoes the need for carrying out repetitive processing. Secondly, by loading these files at different stages of the feature generation process in an online setting, where computationally expensive tasks are kept to a minimum, the feature provider can maintain its internal state, preserving the value of all of its class members. Indeed, this is desired for all components; maintaining an identical internal state in both offline and online environments reduces the risk of costly online experiment failures resulting from run-time errors.
 
 \chapter{Implementation}
+\section{Importing Datasets}
+The framework provides a CLI command as an entry point for importing new datasets. The command signature requires a path to a directory containing three files at a minimum: a \enquote{train} and \enquote{test} file and an accompanying parser Python\footnote{Python3 syntax is expected} script. This API additionally exposes arguments for specifying a custom identified under which to index the imported data, as well as a specific parser in situations where multiple parsers are provided.
+
+The parsing script will typically consist of two stages: reading and mutating the raw data. The first is contingent on the format of the raw data being imported and can vary in complexity from simply reading from a text file to more complex operations on proprietary data formats. The second stage generally involves the use of generators and looping structures to iterate through raw samples and produce the arrays the framework expects. This stage also presents an opportunity for the user to incorporate any conditional filtering or transformations, such as excluding \enquote{conflict} labels from raw datasets. The function must produce three arrays consisting of the sentences, targets, and labels. A fourth array, of character offsets of each target, may also be returned. This is optional for datasets where each target appears only once in each sentence, but required otherwise, as the framework would have no means of differentiating between multiple target occurrences in a sentence.
+
+The signature that is enforced by the framework on the parsing function stipulates that it expects solely one parameter without a default value, which is reserved for the path of the file to be parsed. For most cases a single function will suffice, however in some instances, multiple functions may be required for improved  separation of concerns. In these situations, both the parsing script and the function that serves as the primary entry point within it must be named according to the provided \texttt{parser-name} CLI argument.
+
+Initially, the framework scans the directory for the relevant source files which contain the words \enquote{test} and \enquote{train} in their names. The parsing script is loaded based on the provided parser name argument or the default parser file-name. Once all required files are located, the framework inspects the parsing script and ensures that the parsing function has the expected signature. Provided all these tests are passed, the framework proceeds to run the parsing script on the raw data then stores the result in its own hashed index of datasets under the user-provided identifier for future use.
+
+This mechanism for importing datasets provides the widest range for support of various data types while maximally extrapolating the code responsible for this operation, thereby simplifying the process for the end-user. Furthermore, the framework is abstracted from the dataset importing process thereby limiting the scope of errors that may occur during the process to the parsing script itself, which is easier to debug by the end-user as opposed to the internal code of the framework. 
+
+Finally, the structure of this approach allows for the possibility of defining multiple parsing functions, each of which may carry out processing or filtering operations prior to importing the dataset, while also delegating the responsibility of storing and accessing these different versions of a dataset to the framework.
+
+\section{Dataset Re-Distribution}
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwData{Previous Class Label Counts, Target Class Label Distribution}
+  \KwResult{New Class Label Counts}
+  initialization\;
+  \While{not at end of this document}{
+    read current\;
+    \eIf{understand}{
+      go to next section\;
+      current section becomes this one\;
+    }{
+      go back to the beginning of current section\;
+    }
+  }
+\caption{Dataset Re-Distribution Algorithm}
+\end{algorithm}
+
 \section{Datasets}
 The following section presents a brief overview of the datasets that were chosen to be integrated into the framework. We focus on the principal factors that were considered when choosing these datasets with the intention of maximizing the diversity in these attributes. These include the mechanism by which the datasets where originally obtained and annotated, the respective platform from where they were sourced, any specific domain around which they center and finally we present any salient statistical information that characterizes the datasets.
 
