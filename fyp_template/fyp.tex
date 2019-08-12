@@ -225,7 +225,7 @@ Some of the initial work making use of neural networks to learn word embeddings 
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{fyp_template/figures/cbow_vs_skipgram.png}
+    \includegraphics[width=0.7\textwidth]{./figures/cbow_vs_skipgram.png}
     \caption{The differences between the model architectures proposed by Mikolov in \cite{mikolov2013}. The Continuous Bag-Of-Words (CBOW) approach predicts a word from its context and, conversely, the skip-gram model predicts the context from a word. \cite{mikolov2013b}}
     \label{fig:cbow_vs_skipgram}
 \end{figure}
@@ -260,7 +260,7 @@ The authors also demonstrate how a vector for an OOV word can be constructed fro
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{fyp_template/figures/fasttext_oov_similarity.png}
+    \includegraphics[width=0.7\textwidth]{./figures/fasttext_oov_similarity.png}
     \caption{Character n-gram similarity between the OOV word \enquote{microcircuit} and IV word \enquote{chip}. Positive and negative cosine similarity are denoted in red and blue respectively. Figure adapted from \cite{bojanowski2017}}
     \label{fig:fasttext_oov_similarity}
 \end{figure}
@@ -278,7 +278,7 @@ The hidden layers of a neural network architecture are able to extrapolate featu
  
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{fyp_template/figures/ffnn.jpg}
+    \includegraphics[width=0.7\textwidth]{./figures/ffnn.jpg}
     \caption{Standard feedforward neural network (FFNN) architecture \cite{zhang2018}}
     \label{fig:ffnn}
 \end{figure}
@@ -321,7 +321,7 @@ These convolution layers are coupled with a max-pooling layer with the intention
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{fyp_template/figures/cnn_architecture.jpg}
+    \includegraphics[width=0.7\textwidth]{./figures/cnn_architecture.jpg}
     \caption{An example of a CNN architecture used for sentence modelling and subsequent binary classification \cite{yezhang2015} as cited in \cite{young2017}.}
     \label{fig:cnn_architecture}
 \end{figure}
@@ -369,7 +369,7 @@ These gates are commonly referred to as the input, forget and output gate. Moreo
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{fyp_template/figures/lstm_architecture.png}
+    \includegraphics[width=1\textwidth]{./figures/lstm_architecture.png}
     \caption{LSTM repeating module illustrating the four neural layers (Yellow Boxes) that comprise it. Point-wise vector operations are depicted in red boxes. Image adapted from \cite{colah-understanding-lstm}}
     \label{fig:lstm_architecture}
 \end{figure}
@@ -449,7 +449,7 @@ Each unit in a GRU model will have separate update and reset gates that will ind
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{fyp_template/figures/gru_architecture.png}
+    \includegraphics[width=0.7\textwidth]{./figures/gru_architecture.png}
     \caption{Internal gating structure of a GRU unit. \cite{colah-understanding-lstm}}
     \label{fig:gru_architecture}
 \end{figure}
@@ -470,7 +470,7 @@ That being said, there is no clear winner between the two variants, as demonstra
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{fyp_template/figures/rnn_v_lstm_v_gru_graphs.jpg}
+    \includegraphics[width=0.7\textwidth]{./figures/rnn_v_lstm_v_gru_graphs.jpg}
     \caption{Results obtained by \cite{chung2014} during training and validation of different RNN variants illustrating the superiority of LSTM and GRU units over the traditional RNN.}
     \label{fig:rnn_v_lstm_v_gru_graphs}
 \end{figure}
@@ -540,7 +540,7 @@ Furthermore, \cite{sukhbaatar2015} show that the performance of their model can 
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{fyp_template/figures/tang_memory_network.png}
+    \includegraphics[width=0.7\textwidth]{./figures/tang_memory_network.png}
     \caption{The deep memory network approach for targeted sentiment analysis, with 3 hops. The model stored the context of a target in memory and repeatedly attends to that memory with respect to the target word $w_i$. \cite{tang2016}}
     \label{fig:tang_memory_network}
 \end{figure}
@@ -552,7 +552,7 @@ Memory networks were first put forward towards the goal of targeted sentiment an
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{fyp_template/figures/chen_recurrent_attention.png}
+    \includegraphics[width=0.7\textwidth]{./figures/chen_recurrent_attention.png}
     \caption{The recurrent attention model architecture showing the placement of the location-weighted memory module with respect to the input and attention layers. As opposed to \cite{tang2016}, the attention values are combined from one episode to the next non-linearly, using a GRU. \cite{chen2017}}
     \label{fig:chen_recurrent_attention_model}
 \end{figure}
