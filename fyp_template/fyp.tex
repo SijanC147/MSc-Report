@@ -764,7 +764,8 @@ Finally, the structure of this approach allows for the possibility of defining m
 \section{Dataset Re-Distribution}
 \begin{algorithm}[H]
 	\SetAlgoLined
-	\KwData{Previous Class Label Counts, Target Class Label Distribution}
+	\KwIn{Previous Class Label Counts $ \rightarrow  \mathbf{counts}$}
+	\KwIn{Target Class Label Distribution $ \rightarrow \mathbf{targets}$}
 	\KwResult{New Class Label Counts}
 	% \ForEach{count $c_i$, target $t_i$}{%
 	% 	$v_i \gets c_i \times t_i$ 
@@ -775,7 +776,7 @@ Finally, the structure of this approach allows for the possibility of defining m
 	% 	 }
 	% } 
 	$\mathbf{initials} \gets \mathbf{counts} \odot \mathbf{targets}$\;
-	$\mathbf{counts} \gets (initials = 0) ? \infty : counts$\;  
+	$\mathbf{counts} \gets$ (initials = 0) ? $\infty$ : counts\;  
 	\While{$\min(counts) \neq \infty$}{
 	$\mathbf{smallest} \gets$ (counts = $\min(counts)$) ? counts : 0\;  
 	$\mathbf{totals} \gets$ (smallest $\neq$ 0) ? $\lfloor{\frac{smallest}{target}}\rfloor$ : $\infty$\;
