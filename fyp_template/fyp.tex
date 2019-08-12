@@ -50,6 +50,16 @@
 \renewcommand{\cite}[1]{[\citealp{#1}]}
 %% END OF TEMPORARY FIX FOR MORE READABLE CITATIONS 
 % \bibliographystyle{abbrv} %% UNCOMMENT 
+\makeatletter
+\newcommand{\algorithmfootnote}[2][\footnotesize]{%
+  \let\old@algocf@finish\@algocf@finish% Store algorithm finish macro
+  \def\@algocf@finish{\old@algocf@finish% Update finish macro to insert "footnote"
+    \leavevmode\rlap{\begin{minipage}{\linewidth}
+    #1#2
+    \end{minipage}}%
+  }%
+}
+\makeatother
 
 \begin{document}
 
@@ -762,11 +772,17 @@ This mechanism for importing datasets provides the widest range for support of v
 Finally, the structure of this approach allows for the possibility of defining multiple parsing functions, each of which may carry out processing or filtering operations prior to importing the dataset, while also delegating the responsibility of storing and accessing these different versions of a dataset to the framework.
 
 \section{Dataset Re-Distribution}
+The primary consideration when re-distributing a dataset is minimizing the number of original samples that are discarded to maintain as much of the size of the original dataset as possible without selecting duplicate samples from the source.
+
+\vspace{\baselineskip}
 \begin{algorithm}[H]
 	\SetAlgoLined
+	\DontPrintSemicolon
+	\algorithmfootnote{Ternary operations are applied element-wise}
 	\KwIn{Previous Class Label Counts $ \rightarrow  \mathbf{counts}$}
 	\KwIn{Target Class Label Distribution $ \rightarrow \mathbf{targets}$}
 	\KwResult{New Class Label Counts}
+	\tcp{...argument validation}
 	% \ForEach{count $c_i$, target $t_i$}{%
 	% 	$v_i \gets c_i \times t_i$ 
 	% } 
@@ -775,8 +791,8 @@ Finally, the structure of this approach allows for the possibility of defining m
 	% 			$c_i \gets \infty$
 	% 	 }
 	% } 
-	$\mathbf{initials} \gets \mathbf{counts} \odot \mathbf{targets}$\;
-	$\mathbf{counts} \gets$ (initials = 0) ? $\infty$ : counts\;  
+	$\mathbf{counts'} \gets \mathbf{counts} \odot \mathbf{targets}$\;
+	$\mathbf{counts} \gets$ (counts$'$ = 0) ? $\infty$ : counts\;  
 	\While{$\min(counts) \neq \infty$}{
 	$\mathbf{smallest} \gets$ (counts = $\min(counts)$) ? counts : 0\;  
 	$\mathbf{totals} \gets$ (smallest $\neq$ 0) ? $\lfloor{\frac{smallest}{target}}\rfloor$ : $\infty$\;
@@ -787,6 +803,11 @@ Finally, the structure of this approach allows for the possibility of defining m
 	\Return $\mathbf{candidates}$
 	\caption{Dataset Re-Distribution Algorithm}
 \end{algorithm}
+\vspace{\baselineskip}
+
+The first stage of the process validates the arguments provided, ensuring that a valid distribution is provided.\footnote{Omitted from the algorithm for brevity} Since the limiting factors in this process are the smallest (most scarce) count numbers, an infinitely large marker must be used to remove elements from consideration. The algorithm starts from the smallest count number as a reference point, from which candidate counts are calculated, and subsequently compared to the original number of samples for each class. If all candidates are less than the number of samples available, the redistribution is considered valid and the algorithm terminates. Otherwise, the process is repeated using the class for which there are insufficient samples as the new reference until all candidate counts are valid.
+
+One drawback of this approach is the substantial reduction in the magnitude of the original dataset that can occur in heavily skewed datasets that contain a small number of samples for some particular class. The amount of samples that will be discarded is directly proportional to the class that is the most scarce in the dataset and its corresponding target distribution in the new dataset.
 
 \section{Datasets}
 The following section presents a brief overview of the datasets that were chosen to be integrated into the framework. We focus on the principal factors that were considered when choosing these datasets with the intention of maximizing the diversity in these attributes. These include the mechanism by which the datasets where originally obtained and annotated, the respective platform from where they were sourced, any specific domain around which they center and finally we present any salient statistical information that characterizes the datasets.
