@@ -1,1 +1,13 @@
-fyp_template/fyp.synctex.gz
+**/*.synctex.gz
+**/*.bbl
+**/*.aux
+**/*.blg
+**/*.fdb_latexmk
+**/*.fls
+**/*.lof
+**/*.log
+**/*.lot
+**/*.synctex(busy)
+**/*.toc
+
+
