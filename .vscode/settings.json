@@ -1,3 +1,19 @@
 {
-  "editor.fontSize": 14
+  "editor.fontSize": 14,
+  "editor.wordWrap": "on",
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#a8ea8a",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#5d86e2",
+    "activityBarBadge.foreground": "#15202b",
+    "titleBar.activeBackground": "#88e25f",
+    "titleBar.inactiveBackground": "#88e25f99",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveForeground": "#15202b99",
+    "statusBar.background": "#88e25f",
+    "statusBarItem.hoverBackground": "#68da34",
+    "statusBar.foreground": "#15202b"
+  },
+  "peacock.color": "#88e25f"
 }

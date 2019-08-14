@@ -742,13 +742,13 @@ The steps that the feature provider takes to generate the required features are 
 
 As inputs, this component requires an embedding object, one or more dataset objects, and the specific OOV policy that is to be adopted when constructing mapping tokens into features for the experiment module. The indices mapped to each token are contingent on whether OOV tokens are considered at all, solely during training, or whether a particular bucketing strategy is used. If OOV tokens are ignored, this needs to be addressed at the tokenization stage by excluding these tokens. In the case where OOV tokens are only considered at the training stage, the process is similar, excluding only OOV tokens found in the test data, whereas when using a bucketing strategy, no tokens are excluded, and the mapping process is handled accordingly by the look-up table operation. Moreover, the mapped values for OOV tokens vary based on the OOV policy that is adopted, including the number of OOV buckets that are used, since this directly alters the hashing function that assigns the bucket to each token. All of these factors are taken into consideration and handled internally by the framework's own hashing mechanism, creating new data when required and re-using any computationally expensive data where possible.
 
-Although trivially simple, the mapping process can becomes increasingly time-consuming for larger look-up tables, as the look-up ops would be required to traverse more data as a consequence. The initial approach to the problem was to optimize the python code responsible, through the use of generators and parallel processing libraries. These benefits from this approach were quickly exhausted however, and the approach proved to be unreliable, requiring fine-tuning based on the nature of the data being processed. To address this, the process was instead implemented using TensorFlow itself which is particularly adept at optimizing parallelizable operations by first expressing them in graph form, and subsequently executing handling resources and parallelizing operations wherever possible during graph execution, providing more consistent performance. Furthermore, the framework also generates a \textit{filtered} vocabulary file containing only the tokens that occur in the datasets being used, and their corresponding index in the larger embedding vocabulary which is used for building a look-up table at a fraction of the size of the original embedding vocabulary, for the exclusive purpose of mapping the tokenized datasets being considered.
+Although trivially simple, the mapping process can become increasingly time-consuming for larger look-up tables, as the look-up ops would be required to traverse more data as a consequence. The initial approach to the problem was to optimize the python code responsible, through the use of generators and parallel processing libraries. These benefits from this approach were quickly exhausted however, and the approach proved to be unreliable, requiring fine-tuning based on the nature of the data being processed. To address this, the process was instead implemented using TensorFlow itself which is particularly adept at optimizing parallelizable operations by first expressing them in graph form, and subsequently executing handling resources and parallelizing operations wherever possible during graph execution, providing more consistent performance. Furthermore, the framework also generates a \textit{filtered} vocabulary file containing only the tokens that occur in the datasets being used, and their corresponding index in the larger embedding vocabulary which is used for building a look-up table at a fraction of the size of the original embedding vocabulary, for the exclusive purpose of mapping the tokenized datasets being considered.
 
 \subsubsection{Merging Datasets}
 As previously alluded to, different datasets are characterized by the different attributes and vocabulary that they provide based on the limitations of the platform from which they are sourced, such as the character limit on Twitter, or a specific domain around which they center, such as reviews of a specific type of product. A mechanism by which these datasets could be merged allows us to capture a wider range of these characteristics in both training and testing data and evaluate the performance of different TSA approaches across these variances.
 
 \subsubsection{Text Pre-Processing}
-Spacy\footnote{Public NLP library for python, accessible through https://spacy.io/} was used for all text-processing and tokenization tasks. One of the primary reasons for using this tool was its native and intuitive support for parallelization. Secondly, its proprietary language model format enables selectively loading sub-modules based on run-time requirements, improving performance by avoiding superfluous processing.
+Spacy\footnote{Public NLP library for python, accessible at https://spacy.io/} was used for all text-processing and tokenization tasks. One of the primary reasons for using this tool was its native and intuitive support for parallelization. Secondly, its proprietary language model format enables selectively loading sub-modules based on run-time requirements, improving performance by avoiding superfluous processing.
 
 Text normalization is kept to a minimum since the exploration of these techniques is beyond the scope of this work. First, for embeddings with case-insensitive vocabularies, all tokens are lower-cased accordingly. Furthermore, a default filter function is implemented which omits URLs and email addresses, and which is detached from the feature provider, facilitating extensibility by the end user.
 
@@ -817,6 +817,29 @@ pos_set_one = partial(_pos_pipe_filter, tags=["ADJ", "ADV", "NOUN", "VERB"])
 \end{code}
 
 During the filtering process, the framework tracks all tokens that are being filtered along with the corresponding user-provided filter-function. This information is tabulated and exported as a CSV file that is stored in the framework's hashed index of embeddings alongside the filtered embedding, for future reference. The primary motivation behind the filter report file is to enable the end-user to inspect the filtering process at a granular level, providing insight into the tokens being filtered along with the function-filter responsible.
+
+\subsection{OOV Policies}
+The OOV policy of an experiment describes the mechanism used to deal with OOV tokens during feature generation. This policy is controlled by two parameters, an \texttt{oov} flag, and a \texttt{num\_oov\_buckets} parameter, which is an integer that instructs the framework to use a bucketing strategy and how many buckets to use.
+
+There are three valid configurations for these parameters described as follows, 
+
+\begin{enumerate}
+\item \texttt{oov} = \texttt{false} 
+
+In this instance, all OOV tokens in both training and testing datasets are discarded.
+
+\item \texttt{oov} = \texttt{true}, \texttt{num\_oov\_buckets} = 0
+
+When using no bucketing strategy, distinct vectors are initialized using a customizable initialization function for all OOV tokens in the training dataset. OOV tokens from the testing dataset are discarded to simulate real-world environments.
+
+\item \texttt{oov} = \texttt{true}, \texttt{num\_oov\_buckets} $\geqslant$ 0
+
+All tokens, in both trianing and testing datasets are considered, with OOV tokens being assigned a bucket using Tensorflow's in-built hashing fucntion. Similar to (2), vectors for each bucket are initialized using a customizable initialization function.
+\end{enumerate}
+
+A list is maintained of which tokens to consider during tokenization, which controls which OOV tokens are discarded. Lookup operations during experimentation requires a vocabulary file which is generated with the tokens and their respective indices in the embedding, including any bucket entries. To speed up experimentation, a second, filtered, vocabulary file is generated containing only indices of tokens relevant to the experiment, thereby reducing the look-up operations' computation time.
+
+This approach implies that any changes made to the \texttt{num\_oov\_buckets} or the \texttt{oov} flag will alter the content of the aforementioned files and require the process to be repeated. Changes to the OOV initialization function, however, do not, since vector initialization for OOV tokens and buckets takes place within the scope of the experiment module.
 
 \section{Datasets}
 The following section presents a brief overview of the datasets that were chosen to be integrated into the framework. We focus on the principal factors that were considered when choosing these datasets with the intention of maximizing the diversity in these attributes. These include the mechanism by which the datasets where originally obtained and annotated, the respective platform from where they were sourced, any specific domain around which they center and finally we present any salient statistical information that characterizes the datasets.
