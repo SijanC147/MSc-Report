@@ -757,7 +757,7 @@ The most salient outputs of the feature provider are the \textit{TFRecord} files
 
 Finally, similar to other components, data at multiple stages are exported to pickle files for two reasons. Firstly, this foregoes the need for carrying out repetitive processing. Secondly, by loading these files at different stages of the feature generation process in an online setting, where computationally expensive tasks are kept to a minimum, the feature provider can maintain its internal state, preserving the value of all of its class members. Indeed, this is desired for all components; maintaining an identical internal state in both offline and online environments reduces the risk of costly online experiment failures resulting from run-time errors.
 
-\section{Experiment Module}
+\section{Experiment Module} \label{sec:experiment_module}
 At a high level, all operations that take place in the experiment module are governed by the experiment class, which simultaneously serves the purpose of maintaining an indexed directory of experiments while also preparing and dispatching commands to run those experiments. In this context, preparing an experiment implies setting up the directory for a new experiment, bridging the feature provider and model being trained and, loading any environment configuration settings for TensorFlow and scaffolding the experiment remotely on \textit{comet.ml}. Aside from the this tooling options that \textit{comet.ml} provides, the primary motivating factor behind integrating it into the framework is to facilitate collaborative work by making experiment details and results remotely accessible, speeding up development by automatically setting up the requisite code infrastructure.
 
 The experiment class automatically organizes the experiment directory first by model name, and then either by the specific name for an experiment which is provided by the user, or using a name automatically generated from the experiment parameters provided. Enforcing this approach has two benefits, first, experiment directories are self-documenting since they convey the details of the experiment, secondly, the framework will use the directory and continue training for an existing experiment with the same parameters by default.
@@ -991,7 +991,8 @@ Similar to the previously mentioned dataset, this was also constructed for the p
 	\label{tab:dataset_sentence_info}
 \end{table}
 
-\section{Executing Tasks}
+\section{Executing Tasks}\label{sec:executing_tasks}
+
 A task represents the start of a new experiment or a continuation thereof and is invoked using the \texttt{tsaplay.task} submodule: 
 \begin{code}
 	python -m tsaplay.task single \ 
@@ -1017,7 +1018,7 @@ This section covers the CLI arguments available on this command when executing a
 \item \texttt{--embedding} The name of the embedding to use for the experiment. A comma-delimited list of filters may be included, as well as the \texttt{corpus} keyword to filter on tokens occurring in the datasets. 
 \item \texttt{--datasets} One or more datasets specified by the name used to import them. Each dataset argument may be postfixed with a comma delimited list describing a redistribution operation on that dataset. 
 \item \texttt{--model-parameters} Model hyperparameters which may override the default specified in its parameters function. The OOV policy parameters are also supplied through this parameter set.  
-\item \texttt{--run-config} Values which are passed on to the Tensorflow run configuration. These include options such as setting a random seed for an experiment and how often to save model summaries during training.\footnote{The full specification is accessible at \\https://www.tensorflow.org/versions/r1.12/api\_docs/python/tf/estimator/RunConfig}
+\item \texttt{--run-config} Values which are passed on to the Tensorflow run configuration. These include options such as setting a random seed for an experiment and how often to save model summaries during training.\footnote{https://www.tensorflow.org/versions/r1.12/api\_docs/python/tf/estimator/RunConfig}
 \item \texttt{--aux-params} Auxiliary model parameters, separate from its hyperparameters, include programmatic switches for add-ons and a flag for enabling debug mode.
 \item \texttt{--contd-tag} An optional name to index the experiment under. If the name already exists, that experiment will continue training up to the provided \texttt{--steps} argument.
 \item \texttt{--comet-api} Comet.ml API key which enables real-time remote logging of the experiment (requires a \texttt{contd-tag} argument to be set). 
@@ -1027,13 +1028,42 @@ This section covers the CLI arguments available on this command when executing a
 \clearpage
 A batch option was also developed to allow multiple tasks to be run in sequence on the google cloud platform without the need to re-build and re-submit a job for each task. This command is also invoked on the same \texttt{tsaplay.task} submodule: 
 \begin{code}
-	python -m tsaplay.task batch --batch-file="batch_tasks.txt"
+	python -m tsaplay.task batch "batch_tasks.txt"
 \end{code}
 
 The batch-file syntax allows the user to specify multiple tasks using the single task CLI format where each task is delimited by a new-line character. Additionally, comments may be included in the file using either the \enquote*{\texttt{\#}} or \enquote*{\texttt{;}} characters at the start of a new line.\footnote{An example batch file is included in the source code for reference.}
 
 \subsection{Google Cloud Support}
+Making use of a cloud computing service provides additional computational power through hardware such as GPUs which reduce experimentation times through increased parallel computing capabilities. Additionally, by running experiments in a remote environment, local machines can be used to continue development on future experiments. The Google cloud platform was chosen as it integrates well with the Tensorflow library, itself being a product of the same company. Moreover, this platform also provided us complimentary credits with which we could carry out our work. 
 
+While the framework facilitates integration with the Google cloud AI platform, some pre-requisites must be met on the host machine. These include setting up Google cloud CLI tools, as well as a Google cloud project and cloud storage bucket. The specifics of this process are beyond the scope of this work and can be reviewed in the relevant Google cloud API documentation.\footnote{https://cloud.google.com/ml-engine/docs/}
+
+Since the framework must be packaged as a module before submitting a job, an external script must be used to programmatically invoke this process: 
+
+\begin{code}
+	python submit_job.py \ 
+		--job-id="example_job" \ 
+		--job-dir="experiments_data" \
+		--job-labels type=example \
+		--machine-types masterType=standard_gpu workerType=large_model workerCount=1 \
+		--stream-logs \
+		--show-sdist \
+		--task-args batch "batch_tasks.txt"
+\end{code}
+
+\begin{itemize}
+\item \texttt{--job-id} A unique string which identifies the job being submitted. This is also used as a job-dir if one is not provided.
+\item \texttt{--job-dir} The name of the parent directory which will house experiment data using the same structure described in \S\ref{sec:experiment_module} 
+\item \texttt{--job-labels} Optional labels which may be attached to a specific job for organizational purposes.
+\item \texttt{--machine-types} Used to specify the specific machine configuration for the job, as offered by the google cloud platform.\footnote{https://cloud.google.com/ml-engine/docs/machine-types} 
+\item \texttt{--stream-logs} A flag which, when set, continues to stream log data to the stdout as the job runs.
+\item \texttt{--show-sdist} A flag which, when set, logs the build process that takes place before submitting a job to the stdout.
+\item \texttt{--task-args} The arguments that are forwarded to the \texttt{tsaplay.task} submodule which follows the same syntax described in \S\ref{sec:executing_tasks}.
+\end{itemize}
+
+The \texttt{submit\_job.py} script is responsible for packaging the framework with the requisite assets then submitting the job request to the Google cloud platform. This process must be repeated for every job that is submitted. Tasks that fall within the scope of the data module are carried out on the host machine, before packaging the framework and requisite assets. In this way, the framework can minimize the size of the assets that need to be uploaded to the cloud while storing this data for future reuse. The internal assets directory is used to store the requisite embeddings, datasets, and features for a particular job. It is packaged with the rest of the \texttt{tsaplay} directory as a distributable python module and uploaded to the Google cloud platform. This module is subsequently installed on the platform to invoke the \texttt{tsaplay.task} submodule.
+
+At the time of writing, task execution across multiple machines in a distributed environment is considered experimental as some features, such as comet.ml logging, are known to malfunction in this setting. This is likely a consequence of machine instances submitting data to the comet.ml service concurrently. Attempts to rectify this were made, however the issue was ultimately deferred as it was beyond the scope of this work.
 
 % \begin{proof}
 % this is a proof
