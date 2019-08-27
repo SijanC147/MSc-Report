@@ -991,7 +991,7 @@ Similar to the previously mentioned dataset, this was also constructed for the p
 	\label{tab:dataset_sentence_info}
 \end{table}
 
-\section{Task Execution}
+\section{Executing Tasks}
 A task represents the start of a new experiment or a continuation thereof and is invoked using the \texttt{tsaplay.task} submodule: 
 \begin{code}
 	python -m tsaplay.task single \ 
@@ -1004,24 +1004,35 @@ A task represents the start of a new experiment or a continuation thereof and is
 		--model-params hidden_units=50 oov=true num_oov_buckets=100 \ 
 		--aux-config logging=false debug=cli \ 
 		--run-config save_checkpoints_steps=1000 \
-		--comet-api="XXXXXXXXXXXXXXXX"
+		--comet-api="XXXXXXXXXXXXXXXX" \
+		--verbosity="INFO"
 \end{code}
 
 This section covers the CLI arguments available on this command when executing a single task.
 \begin{itemize}
 \item \texttt{--steps} The number of steps to train for.
-\item \texttt{--batch-size} The number of samples per batch.
+\item \texttt{--batch-size} The number of samples to use in each batch.
 \item \texttt{--model} The name of the model being run. 
 %(might need an appendix explaining how to integrate a model, and why it had to be this way, because comet.ml needs to be imported before everythin else) 
 \item \texttt{--embedding} The name of the embedding to use for the experiment. A comma-delimited list of filters may be included, as well as the \texttt{corpus} keyword to filter on tokens occurring in the datasets. 
 \item \texttt{--datasets} One or more datasets specified by the name used to import them. Each dataset argument may be postfixed with a comma delimited list describing a redistribution operation on that dataset. 
-\item \texttt{--model-parameters} Model hyperparameters which may override the default specified in its parameters function. OOV policy parameters are also supplied through this parameter set.  
-\item \texttt{--run-config} Values passed on to the Tensorflow run configuration. These include options such as setting a random seed for an experiment and how often to save model summaries during training.\footnote{The full specification is accessible at \\https://www.tensorflow.org/versions/r1.12/api\_docs/python/tf/estimator/RunConfig}
+\item \texttt{--model-parameters} Model hyperparameters which may override the default specified in its parameters function. The OOV policy parameters are also supplied through this parameter set.  
+\item \texttt{--run-config} Values which are passed on to the Tensorflow run configuration. These include options such as setting a random seed for an experiment and how often to save model summaries during training.\footnote{The full specification is accessible at \\https://www.tensorflow.org/versions/r1.12/api\_docs/python/tf/estimator/RunConfig}
 \item \texttt{--aux-params} Auxiliary model parameters, separate from its hyperparameters, include programmatic switches for add-ons and a flag for enabling debug mode.
-\item \texttt{--contd-tag} An optional name to index the experiment under. If the name already exists, that experiment will continue training up to the \texttt{--steps} argument.
+\item \texttt{--contd-tag} An optional name to index the experiment under. If the name already exists, that experiment will continue training up to the provided \texttt{--steps} argument.
 \item \texttt{--comet-api} Comet.ml API key which enables real-time remote logging of the experiment (requires a \texttt{contd-tag} argument to be set). 
+\item \texttt{--verbosity} Controls the logging level on \texttt{stdout} during execution.  
 %\item job-dir A google cloud storage location to store the experiment when running on the google cloud service.
 \end{itemize}
+\clearpage
+A batch option was also developed to allow multiple tasks to be run in sequence on the google cloud platform without the need to re-build and re-submit a job for each task. This command is also invoked on the same \texttt{tsaplay.task} submodule: 
+\begin{code}
+	python -m tsaplay.task batch --batch-file="batch_tasks.txt"
+\end{code}
+
+The batch-file syntax allows the user to specify multiple tasks using the single task CLI format where each task is delimited by a new-line character. Additionally, comments may be included in the file using either the \enquote*{\texttt{\#}} or \enquote*{\texttt{;}} characters at the start of a new line.\footnote{An example batch file is included in the source code for reference.}
+
+\subsection{Google Cloud Support}
 
 
 % \begin{proof}
