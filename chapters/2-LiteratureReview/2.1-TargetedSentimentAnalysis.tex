@@ -1,0 +1,70 @@
+% !TEX root = ../../fyp.tex
+\documentclass[../../fyp.tex]{subfiles}
+
+\begin{document}
+\subsection{What is targeted sentiment analysis?}
+Targeted sentiment analysis is a fine-grained text-classification task which stems from the broader, more general, document, or sentence, level sentiment analysis. The former extends on the latter by taking into consideration a particular target or aspect within the context of the document, and aims to identify the sentiment with respect to this target or aspect \cite{pang2008}, \cite{liu2012}, \cite{pontiki}.
+
+It is often the case in the literature that when referring to a \textit{target}, this would be a particular noun or subject within the phrase while an \textit{aspect} can be a more general area or concept that the phrase touches on, without referencing in the literal sense. Consider a sentence such as, \enquote{The waiting times were long however the ravioli were simply to die for}, a plausible \textit{target} that could be considered is \enquote{waiting times} for which the statement conveys a negative sentiment. Alternatively, the phrase could be assessed with respect to an \textit{aspect} such as \enquote{food quality}, for which a positive sentiment is conveyed even though the precise term \enquote{food quality} is only implicitly implied.
+
+It is evident that, separating itself from sentence-oriented sentiment analysis, target or aspect based sentiment analysis requires the careful consideration of the target or aspect in question along with its context. The extent of this fact was initially demonstrated by \cite{jiang2011}, whose work demonstrated that a staggering 40\% of errors within the field of targeted-sentiment analysis could be attributed to the lack of consideration of the target or aspect \cite{jiang2011}.
+
+\subsection{What is the importance of targeted sentiment analysis?}
+Due to the proliferation of social media networks and online shopping, opinions voiced from users on specific topics, products, services and events have never been as readily available for data mining. The value in having the means to accurately gauge public interest and opinion of very specific topics of interest on such a phenomenal scale cannot be understated. From those in the public sector, such as electoral campaigns who seek to obtain a clearer picture of their constituents' strongest held opinions and expectations, to private businesses who wish to employ the most effective advertising campaign for their products and services, all of these objectives rely heavily on being as cognizant on public sentiment as possible. \cite{tang2016}
+
+Over time the content of these online text sources has become more sophisticated and richer in information. Changes in social media platforms such as \textit{twitter}'s decision to raise the character limit of tweets results in the same unit of data conveying up to twice the amount of information. As this availability increases, so to must the resolution at which this information is processed, so as to keep pace with the needs of both producers and consumers alike. This phenomenon further pushes the need to focus on opinion mining at a finer-grained level, perfecting the ability to discern varying sentiments towards separate targets within the same phrase.
+
+\subsection{What are the challenges of targeted sentiment analysis?}
+As with any task that requires a deeper understanding of the intricacies of language, there are many challenges that face target-oriented sentiment analysis. Many of these challenges are inherent to parsing the structure of a language such as sarcasm, where sentences such as \enquote{Nice perfume. You must shower in it.} \cite{kharde2016} are composed entirely of positive-sentiment bearing words while expressing a negative sentiment. These notwithstanding, the informal nature of the majority of text data found on social media platforms (upon which this task frequently focuses), supplements these challenges with its own.
+
+Colloquialisms and social short-hands are a commonplace within social media networks where many users intend on conveying as much information in as little characters as possible, particularly in situations where this number is capped. This phenomenon also leads to intentional, as well as unintentional, spelling errors which further obscures that data for any prospective machine learning model that does not account for these circumstances.
+
+Along with these challenges, the literature also presents a number of obstacles and particularly problematic instances that need to be taken into account when approaching the task of targeted sentiment analysis. Comparative opinions are one such circumstance where the sentiment being conveyed is obscured by another subject. \cite{tang2016} report challenges of this sort, with phrases such as \enquote{I've had better Japanese food at a mall food court}.
+
+Other common challenges that are pointed out in \cite{tang2016}, are negation and conditional situations, citing the example \enquote{but dinner here is never disappointing, even if the prices are a bit over the top}, where the sentiment towards the target cannot be easily deduced from the various syntactic structures present.
+
+Moreover, the particular case of expressions which consist of multiple words needs to be given special care. Various approaches that employ word embeddings operate on the word as the atomic unit of operation, and would therefore struggle to correctly model an expression such as \enquote{die for} in \enquote{the ice cream to die for} \cite{tang2016} from its constituents. \cite{zheng2018} also also stress the significance of this issue, and argue that it has not been given sufficient attention, particularly when modelling \textit{targets} that also consist of multiple words.
+
+When considering the opinion of a sentence towards a specific target, it may be the case that the sentence will have opposing sentiments for different targets, this is another degree of complexity that targeted-sentiment analysis models need to account for as opposed to sentiment analysis of the sentence as a whole \cite{tang}. Phrases such as \enquote{great food but the service was dreadful!} convey different and opposite sentiments towards \enquote{food} and \enquote{service} \cite{tang2016}. Previous sentence oriented sentiment analysis approaches such as \cite{socher2011}, \cite{appel2016} would be incapable of correctly distinguishing this level of granularity \cite{chen2017}.
+
+\cite{dehongma2017}, \cite{wang2018} also call attention to the fact that there are several instances where the sentiment conveyed by a particular word is contingent upon the target or aspect that is being considered. An adjective such as \enquote{short} can have positive connotations with respect to \enquote{waiting times} for a restaurant, on the other hand the same adjective is assumed negative when describing something such as the \enquote{battery life} of a product.
+
+\subsection{What metrics are commonly used to measure performance?}
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{||l c c||}
+		\hline
+		                 & $y=A$                 & $y\neq{A}$            \\ [0.5ex]
+		$\hat{y}=A$      & true positive ($tp$)  & false positive ($fp$) \\
+		$\hat{y}\neq{A}$ & false negative ($fn$) & true negative ($tn$)  \\
+		\hline
+	\end{tabular}
+	\caption{Confusion Matrix for the binary case of some class label, $A$. $y$ represents the true label while $\hat{y}$ represents the predicted label.}
+	\label{table:confusion_matrix}
+\end{table}
+
+Two commonly extrapolated metrics from which other measures are typically derived are precision and recall. Given some class $A$, the former is a ratio of correctly labelled instances to all instances labelled $A$ whereas the latter compares the amount of correctly labelled instances to all instances of class $A$ present in the data, which is analogous to the accuracy for class $A$. Formally, based on the definitions in table \ref{table:confusion_matrix}, the two measures are given by:
+
+\begin{equation} \label{eq:precision}
+	precision_A = \frac{tp_A}{tp_A + fp_A}
+\end{equation}
+\begin{equation} \label{eq:recall}
+	recall_A = \frac{tp_A}{tp_A + fn_A}
+\end{equation}
+
+For the case with $C$ classes, the total number of instances for a class $c$, $N_c$ is equal to $tp_c + fn_c$. The prevalent metric for accuracy that is reported in the literature, equivalent to the micro-averaged recall, is thus computed by:
+
+\begin{equation} \label{eq:accuracy}
+	accuracy = \frac{\sum_{c}^{C}tp_c}{N} = recall^{micro}
+\end{equation}
+
+Where $N$ is the total number of instances in the data. Using this micro-averaged metric, however, is not necessarily the most accurate indicator of a model's performance in a classification task, particularly when the dataset that is being utilized is heavily biased to one specific class. Care must be given in the training phase of any machine learning model to ensure that the model is exposed to all classes in question in a balanced way. This is because in computing the micro-average, the weighting scheme is distributed across all instances in the dataset, as opposed to the classes. A more sophisticated metric that is robust to this issue is the macro-averaged F1-score which equally distributes the weight across all classes as opposed to instances \cite{manning2010}. The macro-averaged F-measure given by the harmonic mean of the precision and recall (each being macro-averaged) for a specific class. For some class $A$, this is given by:
+
+\begin{equation} \label{eq:f1_measure}
+	F1^{macro}_{A} = \frac{2P^{macro}_{A}R^{macro}_{A}}{P^{macro}_{A}+R^{macro}_{A}}
+\end{equation}
+
+Training a model heavily on one specific class, or not enough on another could lead the model to classify the majority of test samples to the biased class or being unable to correctly classify the class that has been under-represented in training, since the model would not have gathered enough information to discern this class. In the case where the testing dataset would be imbalanced towards the same class, the overall accuracy would lack the sufficient information expected as a metric to illustrate the effectiveness of the model to classify samples into the correct class since the model would have been trained in a biased way towards the class that is prevalent.
+
+As an example, a frequently cited benchmark dataset is presented in \cite{dong}, this dataset consists of 6248 training and 692 test phrases collected from twitter, each annotated with a particular sentiment (negative, neutral or positive) towards a specific target that appears in the tweet. Within both the training and testing subsets of this dataset, there are twice as many neutral instances as there are positive and negative instances. Works such as \cite{chen2017}, \cite{dong} correctly point out the shortcoming of accuracy as a valid performance metric in this situations such as this, and cite macro-averaged F1 scores in their results.
+\end{document}

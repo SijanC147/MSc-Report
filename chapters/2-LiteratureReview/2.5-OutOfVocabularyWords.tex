@@ -1,0 +1,58 @@
+% !TEX root = ../../fyp.tex
+\documentclass[../../fyp.tex]{subfiles}
+
+\begin{document}
+\subsection{What are OOV words?}
+A common theme in the deep learning models that have been discussed herein is the uncanny similarity between the techniques that these models employ to understand information and the same techniques that the human brain takes advantage of, both consciously and unconsciously, to produce an understanding of the information it is presented, with respect to a particular goal.
+
+Traits such as properly identifying the most important and informative elements of a sequence, and referring to past events when making such decisions as well the fundamental process by which the intricacies of the networks are tuned when errors are made in training, in an effort to lessen such errors in the future.
+
+In this analogy, when dealing with language-related tasks such as targeted sentiment analysis, the word embedding matrix from which different words' are represented numerically can be regarded as the working vocabulary that the model has prior to tackling the task at hand.
+
+It stands to reason that due to the ever changing and ever evolving nature of language, it is impossible to account for the entire vocabulary of a particular language when constructing word embeddings. Regardless of the amount of text that is initially used to construct the word embeddings there shall be words that are not encountered within that text and therefore a continuous vector representation of that word could not be produced. While the probability of covering the most commonly occurring words increases with the size of the original text and the variety within it, encountering new words is an inescapable eventuality. These previously unseen words are consequently referred to as out-of-vocabulary (OOV) words.
+
+The magnitude of the challenge that OOV words present, and the potential repercussions thereof, become evident in the landscape of this analogy. These represent words which the models essentially have no understanding of and can be of little help to it when attempting to extract any information it may convey to the task at hand. While the model can be expected to learn more about these words through repeated encounters in different contexts, the fact that these words, by their own nature, tend to occur infrequently in language substantially diminishes the efficacy of this learning process.
+
+\subsection{What problems for generative tasks do OOV words create?}
+OOV words are of particular concern when dealing with tasks that are generative in nature, such as ASR. The toll of OOV words on the performance of approaches to these tasks is two-fold. Firstly, OOV word may be substituted with an incorrect IV word. Secondly, the OOV word has a direct effect on the neighbouring IV words \cite{naptali2012}.
+
+A common approach to this problem is clustering OOV words into groups that would are sufficiently expressive of their constituents. Various techniques have been employed towards this goal such syntactic and morphological features, part-of-speech tag information, online resources, and subword-level models to name a few, \cite{naptali2012} does a good job of outlining these approaches.
+
+\subsection{What problems for sentiment analysis do OOV words create?}
+Since sentiment analysis is classification task, where words are provided as input and subsequently used as keys when looking up the relevant embedding vector, substituting an OOV word for an IV word is of no concern. The effect of an OOV word on its neighboring words, however, is prone to undermine a model's ability to generate an accurate representation of the content as a whole.
+
+This sort of phenomenon is not particularly difficult to imagine since it is often times the case in languages that a single word can have drastic effects on the meaning of a phrase, particularly in situations expressing negation. Consider a phrase such as \enquote{It avoids all the predictability found in Hollywood movies.}, where \enquote{predictability} conveys a negative sentiment, which is subsequently negated by the verb \enquote{avoids}.
+
+Moreover, OOV words obviously make the process of comprehending a phrase more difficult by introducing elements that the model has no knowledge of. If the word embedding model that is being used is analogous to the model's understanding of a language, an OOV word is effectively a word the model does not understand, and therefore has limited means by which to gauge the effect of that word on the overall sentiment of the phrase, if any.
+
+\subsection{How are OOV words typically regarded in Sentiment Analysis?}
+A typical approach to this OOV challenge within the field of sentiment analysis is the use of a particular singular token that is meant to represent low frequency words during the training phase, and subsequently model all OOV words encountered in the test phase. The vector for this token is often times initialized using some bounded random uniform distribution.
+
+\subsection{Why is this sub-optimal?}
+As far back as \cite{gallwitz1996}, before the popularity of pre-trained word embeddings such as \textit{GloVe} and \textit{Word2Vec}, it was pointed out that using a single token is somewhat crude. It could not possibly encompass the wealth of linguistic information expressed by every OOV word that is encountered; consider that an OOV word can be anything from a spelling mistake to proper noun, such as the name of an entity, and anything in between.
+
+When training an n-gram model, the use of a single \unk label for all OOV words will lead to a substantial inconsistency in the frequency of OOV words between training and test datasets \cite{gallwitz1996}. This inconsistency is comparable to the possibly counter productive training that is carried out on the singular \unk vector across different samples within the scope of sentiment analysis and word embeddings.
+
+In their work, dealing particularly with OOV tokens within the field of Reading Comprehension (RC), \cite{bhuwandhingra2017} note a considerable drop in performance when taking this approach in some cases and suggest that a unique OOV token would lack the desired level of detail to correctly generate a correct answer.
+
+\subsection{Why are classes better for handling OOV words?}
+It is not necessarily useful to approach the OOV word challenge at the word-level. It is assumed that OOV words are scarce, which substantially limits the occasions for a prospective model to learn any discerning information about that word. Attempting to model clusters of OOV words instead, would benefit each member of the cluster by the accumulated frequency of all members \cite{naptali2012}.
+
+Moreover, within the scope of sentiment analysis, the intuition for clustering words under classes characterized by some particular sentimental value, or a lack thereof; as in the case of registered trademarks, would be evidently beneficial.
+
+\subsection{What is the trade-off between too many and too few classes?}
+Too few classes may not possess a sufficiently fine level of detail in their discerning characteristics and cluster together words which are unrelated and subsequently erroneously trained together. This can be seen from the extreme of this case, where only a single token is used, and the issues that have been reported for this approach.
+
+Conversely, if an excessive number of classes are used, this would naturally decrease the amount of OOV words within each class, and consequently the frequency of words appearing in a particular sample. This hinders a model's ability to learn any distinguishing characteristics of a class. Taken to the extreme, if each class were to contain only a single word, this would effectively render each class as a randomly initialized vector for this word which is rarely encountered, and trained. This undermines the purpose of a word vector, which is to convey as much information about the word as possible.
+
+\subsection{Why do i think there are benefits to be had from better OOV handling in SA?}
+Within the scope of a RC task, \cite{bhuwandhingra2017}, carry out a study to accurately measure the effects that different embeddings and OOV approaches can have on the final result of two benchmark models.
+
+They outline the typical approach to RC problems as initially generating a representation of the source document, possibly through the use of pre-trained word embeddings such as \textit{GloVe} in conjunction with statistical models such as the LSTM \cite{hochreiter1997} which may employ an attention mechanism (eg. \cite{bahdanau2014}). The result of this process is a contextual representation of the document from which a valid answer can be extracted.
+
+It is worth noting that this process is not dissimilar from the majority of approaches that have been adopted recently within the field of sentiment analysis. Both employ similar techniques and maintain the same characteristic order of events in generating a substantive representation of the source, differing only in the objective and hence the final product to be extracted from that representation. While this is by no means an insignificant difference, on a macro level this can be seen merely as adjusting the variables and parameters that are input to the system, as opposed to the system as a whole.
+
+In their work, \cite{bhuwandhingra2017} suggest that there are notable effects on the downstream results of models when comparing the use of different word embeddings, pre-trained or otherwise. Specifically, as an out-of-the-box solution, they recommend the use of GloVe \cite{pennington} 200-dimension pre-trained embeddings. Moreover, for their benchmark RC models, they recommend assigning random unique vectors for OOV tokens at test time, possibly due to the fact that subjects in generated responses are likely to be OOV token and proper nouns.
+
+Based on these findings, the aforementioned similarity in the process of tackling RC tasks and SA tasks, along with the challenges that OOV words pose in the field of SA as previously outlined, the study of word embedding choice and OOV approaches and their effects therein is something that we believe merits further investigation.
+\end{document}

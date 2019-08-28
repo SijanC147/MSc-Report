@@ -1,0 +1,42 @@
+% !TEX root = ../../fyp.tex
+\documentclass[../../fyp.tex]{subfiles}
+
+\begin{document}
+The Spacy NLP library defines three different pipes that each are responsible for obtaining POS, NER and Dependency-Parsing tags respectively. A POS pipe, for example, assigns a \textit{pos\_} attribute to each token with its corresponding POS tag which can subsequently be used by the end-user as a filtering criterion. These piping operations can carry a heavy computational cost when running on exceedingly large embedding vocabularies. This motivated the development of a filtering process that is intuitively extendible by the end-user while adhering to the core tenant of the framework of maintaining as small a computational overhead as possible to facilitate rapid experimentation.
+
+First, set filters are applied to reduce the size of the embedding, thereby reducing the amount of data each pipe would need to process. All the requested function-filters are loaded using a lookup registry which allows the user to specify a custom string identifier for a filter. The framework then encapsulates all function-filters into a single function and injects code to enable logging throughout the filtering process. Throughout the process, the framework deduces which pipes are required based on the collective set of filtering criteria specified by all filter-functions, and only runs these pipe operations to obtain the requisite NLP tags and filter tokens accordingly.
+
+Partial functions are provided that conform to the signature that it expects from a function-filter to integrate these functions into a single function and deduce the corresponding pipes required. This makes the process of defining custom function-filters as simple as extending these partial functions, providing the attributes or tags the user intends to filter on. The framework expects an array of tags or attributes that are to be included by default, unless prefixed with a \enquote{!} character which conversely implies exclusion based on the same character or tag. 
+
+The sample code below illustrates the implementation of two filters, each requiring the POS pipe and therefore extending the \texttt{\_pos\_pipe\_filter} partial. The first excludes all proper noun tokens whereas the second stipulates that only adjectives, adverbs, nouns and, verbs should be allowed.\footnote{The complete annotation specification can be found at https://spacy.io/api/annotation} 
+
+\begin{code}
+no_proper_nouns = partial(_pos_pipe_filter, tags=["!PROPN"])
+pos_set_one = partial(_pos_pipe_filter, tags=["ADJ", "ADV", "NOUN", "VERB"])
+\end{code}
+
+During the filtering process, the framework tracks all tokens that are being filtered along with the corresponding user-provided filter-function. This information is tabulated and exported as a CSV file that is stored in the framework's hashed index of embeddings alongside the filtered embedding, for future reference. The primary motivation behind the filter report file is to enable the end-user to inspect the filtering process at a granular level, providing insight into the tokens being filtered along with the function-filter responsible.
+
+\subsection{OOV Policies}
+The OOV policy of an experiment describes the mechanism used to deal with OOV tokens during feature generation. This policy is controlled by two parameters, an \texttt{oov} flag, and a \texttt{num\_oov\_buckets} parameter, which is an integer that instructs the framework to use a bucketing strategy and how many buckets to use.
+
+There are three valid configurations for these parameters described as follows, 
+
+\begin{enumerate}
+\item \texttt{oov} = \texttt{false} 
+
+In this instance, all OOV tokens in both training and testing datasets are discarded.
+
+\item \texttt{oov} = \texttt{true}, \texttt{num\_oov\_buckets} = 0
+
+When using no bucketing strategy, distinct vectors are initialized using a customizable initialization function for all OOV tokens in the training dataset. OOV tokens from the testing dataset are discarded to simulate real-world environments.
+
+\item \texttt{oov} = \texttt{true}, \texttt{num\_oov\_buckets} $\geqslant$ 0
+
+All tokens, in both trianing and testing datasets are considered, with OOV tokens being assigned a bucket using Tensorflow's in-built hashing fucntion. Similar to (2), vectors for each bucket are initialized using a customizable initialization function.
+\end{enumerate}
+
+A list is maintained of which tokens to consider during tokenization, which controls which OOV tokens are discarded. Lookup operations during experimentation requires a vocabulary file which is generated with the tokens and their respective indices in the embedding, including any bucket entries. To speed up experimentation, a second, filtered, vocabulary file is generated containing only indices of tokens relevant to the experiment, thereby reducing the look-up operations' computation time.
+
+This approach implies that any changes made to the \texttt{num\_oov\_buckets} or the \texttt{oov} flag will alter the content of the aforementioned files and require the process to be repeated. Changes to the OOV initialization function, however, do not, since vector initialization for OOV tokens and buckets takes place within the scope of the experiment module.
+\end{document}

@@ -1,0 +1,34 @@
+% !TEX root = ../../fyp.tex
+\documentclass[../../fyp.tex]{subfiles}
+
+\begin{document}
+The primary consideration when re-distributing a dataset is minimizing the number of original samples that are discarded to maintain as much of the size of the original dataset as possible without selecting duplicate samples from the source.
+
+\vspace{\baselineskip}
+\begin{algorithm}[H]
+	\SetAlgoLined
+	\DontPrintSemicolon
+	\algorithmfootnote{Ternary operations are applied element-wise}
+	\KwIn{Source Class Label Counts $ \rightarrow  \mathbf{counts}$}
+	\KwIn{Target Class Label Distribution $ \rightarrow \mathbf{targets}$}
+	\KwResult{Redistributed Class Label Counts}
+	\tcp{...argument validation}
+	$\mathbf{counts'} \gets \mathbf{counts} \odot \mathbf{targets}$\;
+	$\mathbf{counts} \gets$ (counts$'$ = 0) ? $\infty$ : counts\;  
+	\While{$\min(counts) \neq \infty$}{
+	$\mathbf{smallest} \gets$ (counts = $\min(counts)$) ? counts : 0\;  
+	$\mathbf{totals} \gets$ (smallest $\neq$ 0) ? $\lfloor{\frac{smallest}{target}}\rfloor$ : $\infty$\;
+	total $\gets \min(totals)$\;
+	$\mathbf{candidates} \gets \lfloor$ total $\odot$ $\mathbf{targets}$ $\rfloor$\;
+	$\mathbf{counts} \gets$ (candidates $>$ counts) ? counts : $\infty$\;
+	}
+	\Return $\mathbf{candidates}$
+	\caption{Dataset Re-Distribution}
+	\label{alg:re_dist}
+\end{algorithm}
+\vspace{\baselineskip}
+
+The first stage of the process validates the arguments provided, ensuring that a valid distribution is provided.\footnote{Omitted from the algorithm for brevity} Since the limiting factors in this process are the smallest (most scarce) count numbers, an infinitely large marker must be used to remove elements from consideration. The algorithm(\ref{alg:re_dist}) starts from the smallest count number as a reference point, from which candidate counts are calculated, and subsequently compared to the original number of samples for each class. If all candidates are less than the number of samples available, the redistribution is considered valid and the algorithm terminates. Otherwise, the process is repeated using the class for which there are insufficient samples as the new reference until all candidate counts are valid.
+
+One drawback of this approach is the substantial reduction in the magnitude of the original dataset that can occur in heavily skewed datasets that contain a small number of samples for some particular class. The amount of samples that will be discarded is directly proportional to the class that is the most scarce in the dataset and its corresponding target distribution in the new dataset.
+\end{document}

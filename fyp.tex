@@ -1,0 +1,168 @@
+\documentclass[12pt, a4paper]{report}
+
+\usepackage{fyp}
+
+%%these packages are not really necessary if you dont need the code and proofs environments
+%%so if you like you can delete from here till the next comment
+%%note that there are some examples below which obviously won't work once you remove this part
+\usepackage{verbatim}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{acronym}
+\usepackage{csquotes}
+\usepackage{multirow}
+\usepackage[ruled,vlined,linesnumbered,noresetcount]{algorithm2e}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+
+\newcommand{\unk}{\textit{\textless{UNK}\textgreater} }
+%%this environment is useful if you have code snippets
+\newenvironment{code}
+{\footnotesize\verbatim}{\endverbatim\normalfont}
+
+%%the following environments are useful to present proofs in your thesis
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{definition}%plain}
+\newtheorem{example}{Example}[section]
+\theoremstyle{definition}%remark}
+\newtheorem{proposition}{Proposition}[section]
+\theoremstyle{definition}%remark}
+\newtheorem{lemma}{Lemma}[section]
+\theoremstyle{definition}%remark}
+\newtheorem{corollary}{Corollary}[section]
+\theoremstyle{definition}%remark}
+\newtheorem{theorem}{Theorem}[section]
+%%you can delete till here if you dont need the code and proofs environments
+
+\graphicspath{ {figures/}{../figures/} }
+
+\setlength{\headheight}{15pt}
+%\overfullrule=15pt
+
+%% TEMPORARY FIX FOR MORE READABLE CITATIONS 
+\usepackage{natbib}
+\bibpunct{(}{)}{,}{a}{}{;}
+\bibliographystyle{abbrvnat}
+\renewcommand{\cite}[1]{[\citealp{#1}]}
+%% END OF TEMPORARY FIX FOR MORE READABLE CITATIONS 
+% \bibliographystyle{abbrv} %% UNCOMMENT 
+\makeatletter
+\newcommand{\algorithmfootnote}[2][\footnotesize]{%
+  \let\old@algocf@finish\@algocf@finish% Store algorithm finish macro
+  \def\@algocf@finish{\old@algocf@finish% Update finish macro to insert "footnote"
+    \leavevmode\rlap{\begin{minipage}{\linewidth}
+    #1#2
+    \end{minipage}}%
+  }%
+}
+\makeatother
+\usepackage{subfiles}
+\begin{document}
+
+
+%%make sure to enter this information
+\title{a title}
+\author{Sean Bugeja}
+\date{enter a date}
+\supervisor{Mr. Mike Rosner}
+\department{Faculty of ICT}
+\universitycrestpath{crest}
+\submitdate{enter a date}
+
+\frontmatter
+
+
+\begin{acknowledgements}
+	your acknowledgments
+\end{acknowledgements}
+
+\begin{abstract}
+	Provides a short (typically 1 page) overview of the dissertation’s contents including the tackled problem and high-level results/conclusions.
+\end{abstract}
+
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+\newpage
+\section*{Acronyms}
+\begin{acronym}
+	\acro{NLP}{Natural Language Processing}
+	\acro{LSTM}{Long Short Term Memory}
+	\acro{OOV}{Out of Vocabulary}
+	\acro{IV}{In Vocabulary}
+	\acro{SVM}{Support Vector Machine}
+	\acro{ASR}{Automatic Speech Recognition}
+	\acro{RC}{Reading Comprehension}
+	\acro{LDA}{Latent Dirichlet Allocation}
+	\acro{LSA}{Latent Semantic Analysis}
+	\acro{CLI}{Command Line Interface}
+\end{acronym}
+
+
+\mainmatter
+
+\chapter{Introduction}
+\subfile{chapters/1-Introduction/main}
+
+%%you can organize your chapters into parts but this is not always necessary
+%%\part{Part1} - Available but generally not used
+\chapter{Background and Literature Review}
+% A sufficient background designed to provide examiners with just enough information to be able to understand the work of the dissertation itself as well as the context in which it was tackled.
+\subfile{chapters/2-LiteratureReview/main}
+
+\chapter{Design}
+% A detailed explanation of how the problem was tackled along with justifications for all decisions taken in the course of the solution.
+% Design chapter Intro
+%     describe the conceptual design of the framework  
+%     provides reasons for notable design choices made
+%     Show image of the block diagram
+%     Next sections cover design details of the Data and Experiment module, and their constituent components
+%     Specific implementation details are given in chapter 4 
+%     Chapter 5 describes the evaluation measures produced by the framework
+\subfile{chapters/3-Design/main}
+
+\chapter{Implementation}
+\subfile{chapters/4-Implementation/main}
+% \begin{proof}
+% this is a proof
+% \end{proof}
+
+\chapter{Evaluation}
+% Details about how the solution was evaluated with respect to the original research question(s) along with the results achieved.
+% \section{Datasets}
+% \subsection{Reviews}
+% SemEval restaurant and laptop dataset \cite{pontiki}.\\
+% \subsection{Social Media}
+% Social media datasets are provided in \cite{socher2013}, \cite{dong}, \cite{pontikib} and \cite{saeidi2016}.\\
+\section{Evaluation Metrics}
+
+\chapter{Results and Observations}
+
+\chapter{Conclusion}
+% An outline of the main conclusions from the student’s research an the impact of these conclusions on the field.
+\section{Future Work}
+% Proposals for the student him/herself or other future researchers with regards to how the work can be extended or used as a basis for future work in the are.
+\appendix
+
+\chapter{Appendix A}
+\section{These are some details}
+%%example of the code environment
+\begin{code}
+	this is some code;
+	Make sure to use this template.
+\end{code}
+
+
+\bibliomatter
+
+
+
+\bibliography{references}
+\end{document}
