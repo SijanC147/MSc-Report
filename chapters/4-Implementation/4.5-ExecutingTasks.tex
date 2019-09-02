@@ -9,7 +9,7 @@ A task represents the start of a new experiment or a continuation thereof and is
 		--steps=1000 \  
 		--model="lstm" \  
 		--embedding="wiki-50[corpus,only_adjectives]" \ 
-		--datasets="dong[33/34/33,15/70/15] wang" \ 
+		--datasets 'dong[33/34/33,15/70/15]' wang \ 
 		--contd-tag="example-experiment-task" \ 
 		--model-params hidden_units=50 oov=true num_oov_buckets=100 \ 
 		--aux-config logging=false debug=cli \ 
@@ -25,7 +25,7 @@ This section covers the CLI arguments available on this command when executing a
 \item \texttt{--model} The name of the model being run. 
 %(might need an appendix explaining how to integrate a model, and why it had to be this way, because comet.ml needs to be imported before everythin else) 
 \item \texttt{--embedding} The name of the embedding to use for the experiment. A comma-delimited list of filters may be included, as well as the \texttt{corpus} keyword to filter on tokens occurring in the datasets. 
-\item \texttt{--datasets} One or more datasets specified by the name used to import them. Each dataset argument may be postfixed with a comma delimited list describing a redistribution operation on that dataset. 
+\item \texttt{--datasets} One or more datasets specified by the name used to import them. Each dataset argument may be postfixed with a comma delimited list describing of redistribution percentages for training and testing. Each redistribution must have the same number of elements as the amount of unique classes in the dataset, separated using a \texttt{/} character. If only one set of values are provided this is applied to both training and testing datasets. 
 \item \texttt{--model-parameters} Model hyperparameters which may override the default specified in its parameters function. The OOV policy parameters are also supplied through this parameter set.  
 \item \texttt{--run-config} Values which are passed on to the Tensorflow run configuration. These include options such as setting a random seed for an experiment and how often to save model summaries during training.\footnote{https://www.tensorflow.org/versions/r1.12/api\_docs/python/tf/estimator/RunConfig}
 \item \texttt{--aux-params} Auxiliary model parameters, separate from its hyperparameters, include programmatic switches for add-ons and a flag for enabling debug mode.
