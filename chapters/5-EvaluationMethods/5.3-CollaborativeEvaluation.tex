@@ -1,0 +1,23 @@
+% !TEX root = ../../fyp.tex
+\documentclass[../../fyp.tex]{subfiles}
+
+\begin{document}
+\subsection{Comet-ML Integration}
+The comet.ml workspace is considered the top-level scope, encompassing all experiment data, which are organized by the name of the respective models used therein. From here, a dashboard for each model may be accessed which lists all the respective experiments and allows the user to define custom visualizations comparing metrics across a multitude of experiments. Finally, each experiment may be individually accessed to view all of the data that has been, or is being, logged to it.
+
+The default behavior of the framework is to upload all images and scalar metrics, however, histograms and embedding projections are only accessible using the tensorboard tool. The framework uploads all of CLI parameters used to start the experiment, as well as the final parameter set that is resolved during runtime, which allows to user to ensure the experiment was run using the desired configuration. Uploading these parameters serves as a useful point of reference when referring back to the experiment at a later date. 
+
+In addition to these, the framework also uploads the following resources for each experiment:
+\begin{itemize}
+\item Model graph definition file
+\item The stdout output of the experiment
+\item The model source code
+\item All parameters used in the experiment
+\item Any embedding filter details and the corresponding report
+\item Details about the host machine running the experiment
+\item A list of installed Python packages used for the experiment
+\end{itemize}
+
+\subsection{Embedding Filter Report}
+The embedding filter report lists all tokens that were removed from the embedding as a result of a particular function filter. The first three columns describe the responsible function, whereas the latter two columns detail the token and the corresponding NLP properties. The insights provided by the embedding filter report may serve to inform further refinement of a filtering scheme, at the singular token level, as to whether a less stringent filtering approach might be beneficial, or if a stricter ruleset may be enforced with minimal detriment to downstream performance. Other filter details, such as set-filters, are uploaded in a separate JSON file as part of the assets accompanying the experiment on cometml.
+\end{document}
