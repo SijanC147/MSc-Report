@@ -1,0 +1,26 @@
+% !TEX root = ../../fyp.tex
+\documentclass[../../fyp.tex]{subfiles}
+
+\begin{document}
+\subsection{Model Graph}
+The model graph provides an intuitive way of visualizing the architecture and data flow of a model. Nodes are used to represent operations, or named-scopes which abstract their constituent operations, while connections represent the tensor data that flows from one operation to the next.\footnote{More information on this graph and the extent of its applications can be found at https://www.tensorflow.org/guide/graph\_viz} 
+
+\subsection{Histograms}
+Histograms provide a means of visualizing how the distribution of tensors evolve with training. Internally, the framework attempts to automatically produce histograms for all tensors that it identifies as subject to training.\footnote{More information on tensor historgrams can be found at https://www.tensorflow.org/guide/tensorboard\_histograms}
+
+\subsection{Embeddings}
+When preparing feature data for an experiment, the framework also generates a tab-separated-value (tsv) file which lists all the tokens, including any OOV buckets, in the order, they appear in the final filtered embedding. This file can be used in conjunction with the Tensorboard projector tool, which projects the embedding matrix in R3-space using principal component analysis (PCA), to attach labels to these points. This is particularly useful when embedding vectors are trained alongside the model and may provide additional insights into how the representation of OOV buckets evolves with respect to other tokens in the embedding by visualizing neighboring points and cluster shapes.
+%TODO Include an example image of embedding visualized in this way, possibly showing nearest neighbors of OOV buckets
+
+\subsection{Confusion Matrix}
+Matplotlib was the library of choice for producing most of the custom visualizations offered by the framework due to its extensive toolset. The confusion matrix is generated using a custom-built hook and provides a broad overview of the performance of the model.The confusion matrix tensor is rendered as a heatmap spread across all samples of the evaluation dataset at a checkpoint. Although this information may be condensed into equally informative scalar metrics, such as the macro-F1, the confusion matrix may convey more insight into the per-class transient performance of the model. Ideally, the heatmap should consolidate across the diagonal of the matrix with training.
+%TODO Include example image of multiple confusion matrices over time showing how the heatmap distribution changes over time
+
+\subsection{Attention Heat-maps}
+Attention weight vectors are obtained using custom implementations of attention units which expose these data and their corresponding string tokens. A custom-built add-on uses these data at each checkpoint to produce attention heatmaps for a select subset of samples from each batch. The size of this subset can be adjusted using the auxiliary configuration parameters to avoid excessive heatmaps from being generated for increasingly large datasets. 
+
+The attention heat-maps use a color-map to contrast the different weights being placed on each token. Over time, as the model learns to distinguish which tokens maximally contribute to the sentiment polarity of a statement, these tokens are expected to be highlighted relative to their surroundings which signifies a stronger attention weight. Two attention heat-maps are generated for each sample, the first illustrating the color-coded attention weight distribution corresponding to each string token whereas the second supplementing the first with the precise real-valued weights.
+
+For models that employ multiple hops, such as memory networks, the process is repeated for the weight vector output at each hop. These models are expected to concentrate their attention on the most salient tokens with each hop, as well as improving this process on the whole with training.
+%TODO Include two images of attention maps one for the normal case showing both generated types and one for memory networks showing multiple hops
+\end{document}

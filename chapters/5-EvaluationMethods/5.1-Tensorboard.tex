@@ -9,6 +9,5 @@ At each checkpoint, the model is run against the test dataset consisting exclusi
 \subsection{Scalars}
 Loss is plotted during training and evaluation which can be used to identify possible cases of overfitting. Although not an ideal metric, accuracy is recorded to compare results with papers that report it. Mean per-class accuracy is also monitored as it is more robust to class imbalances, however, unlike the macro-F1, it does not consider the false positive rate. Other metrics are recorded only for intermediary data that are produced in their calculation. The mean intersection-over-union (IOU), for instance, although not typically cited in TSA applications, produces a confusion matrix tensor internally.
 
-\subsection{Model Graph}
-The model graph provides an intuitive way of visualizing the architecture and data flow of a model. Nodes are used to represent operations, or named-scopes which abstract their constituent operations, while connections represent the tensor data that flows from one operation to the next.\footnote{More information on this graph and the extent of its applications can be found at https://www.tensorflow.org/guide/graph\_viz} 
+
 \end{document}
