@@ -2,6 +2,8 @@
 \documentclass[../../fyp.tex]{subfiles}
 
 \begin{document} \label{sec:comet_ml_integration}
+The primary motivating factor behind integrating the comet-ml service into the framework is to facilitate collaborative work by making experiment details and results remotely accessible while speeding up development by automatically setting up the requisite code infrastructure for this service.
+
 The top-level scope, encompassing all experiment data, organized by the name of the models used, is the comet-ml workspace. At a lower level, a dashboard for each model lists all the respective experiments and allows the user to define custom visualizations comparing metrics across multiple experiments. Finally, each experiment may be individually accessed to view all of the data that has been, or is being, uploaded.
 
 The default behavior of the framework is to upload all images and scalar metrics, all CLI parameters used to start the experiment and, their values as they are resolved during runtime so as to ensure the experiment was run with the desired configuration. These parameters also serve as a useful point of reference when referring back to the experiment at a later date. 
