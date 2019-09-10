@@ -4,10 +4,12 @@
   "latex-workshop.view.pdf.viewer": "browser",
   "cSpell.words": [
     "Matplotlib",
+    "Saeidi",
     "Tensorboard",
     "Tensorflow",
     "dataset",
     "datasets",
+    "logits",
     "overfitting",
     "webserver"
   ]

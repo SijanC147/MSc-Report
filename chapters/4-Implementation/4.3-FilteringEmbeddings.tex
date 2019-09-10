@@ -33,7 +33,7 @@ When using no bucketing strategy, distinct vectors are initialized using a custo
 
 \item \texttt{oov} = \texttt{true}, \texttt{num\_oov\_buckets} $\geqslant$ 0
 
-All tokens, in both trianing and testing datasets are considered, with OOV tokens being assigned a bucket using Tensorflow's in-built hashing fucntion. Similar to (2), vectors for each bucket are initialized using a customizable initialization function.
+All tokens, in both training and testing datasets are considered, with OOV tokens being assigned a bucket using a native Tensorflow hashing function. Similar to (2), vectors for each bucket are initialized using a customizable initialization function.
 \end{enumerate}
 
 A list is maintained of which tokens to consider during tokenization, which controls which OOV tokens are discarded. Lookup operations during experimentation requires a vocabulary file which is generated with the tokens and their respective indices in the embedding, including any bucket entries. To speed up experimentation, a second, filtered, vocabulary file is generated containing only indices of tokens relevant to the experiment, thereby reducing the look-up operations' computation time.

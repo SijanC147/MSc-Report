@@ -1,7 +1,7 @@
 % !TEX root = ../../fyp.tex
 \documentclass[../../fyp.tex]{subfiles}
 
-\begin{document}
+\begin{document} \label{sec:comet_ml_integration}
 The comet-ml workspace is the top-level scope which encompasses all experiment data, organized by the name of the models used. At a lower level, a dashboard for each model lists all the respective experiments and allows the user to define custom visualizations comparing metrics across a multitude of experiments. Finally, each experiment may be individually accessed to view all of the data that has been, or is being, uploaded.
 
 The default behavior of the framework is to upload all images and scalar metrics as well as all of CLI parameters used to start the experiment and their values as they are resolved during runtime, which allows to user to ensure the experiment was run with the desired configuration. These parameters also serve as a useful point of reference when referring back to the experiment at a later date. 
