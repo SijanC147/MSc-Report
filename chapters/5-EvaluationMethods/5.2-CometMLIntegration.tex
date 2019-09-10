@@ -2,9 +2,9 @@
 \documentclass[../../fyp.tex]{subfiles}
 
 \begin{document} \label{sec:comet_ml_integration}
-The comet-ml workspace is the top-level scope which encompasses all experiment data, organized by the name of the models used. At a lower level, a dashboard for each model lists all the respective experiments and allows the user to define custom visualizations comparing metrics across a multitude of experiments. Finally, each experiment may be individually accessed to view all of the data that has been, or is being, uploaded.
+The top-level scope, encompassing all experiment data, organized by the name of the models used, is the comet-ml workspace. At a lower level, a dashboard for each model lists all the respective experiments and allows the user to define custom visualizations comparing metrics across multiple experiments. Finally, each experiment may be individually accessed to view all of the data that has been, or is being, uploaded.
 
-The default behavior of the framework is to upload all images and scalar metrics as well as all of CLI parameters used to start the experiment and their values as they are resolved during runtime, which allows to user to ensure the experiment was run with the desired configuration. These parameters also serve as a useful point of reference when referring back to the experiment at a later date. 
+The default behavior of the framework is to upload all images and scalar metrics, all CLI parameters used to start the experiment and, their values as they are resolved during runtime so as to ensure the experiment was run with the desired configuration. These parameters also serve as a useful point of reference when referring back to the experiment at a later date. 
 
 In addition to these, the framework also uploads the following resources for each experiment:
 \begin{itemize}
@@ -19,7 +19,7 @@ In addition to these, the framework also uploads the following resources for eac
 \end{itemize}
 
 \subsection{Embedding Filter Report}
-The embedding filter report tabulates embedding tokens filtered as a result of a function-filter. The first three columns describe the function-filter responsible, and the latter two columns the token and its corresponding NLP properties. 
+The embedding filter report tabulates embedding tokens filtered as a result of a function-filter. The first three columns describe the function-filter responsible, while the latter two contain the token and its corresponding NLP properties. 
 
-The insights provided by the embedding filter report may serve to inform further refinement of a filtering scheme, at the token level, as to whether a less stringent filtering approach might be beneficial, or if a stricter rule-set may be enforced with minimal detriment to performance. 
+The insights provided by the embedding filter report may serve to inform further refinement of a filtering scheme, for example, if a less stringent filtering approach might be beneficial, or if a stricter rule-set is feasible without sacrificing performance. 
 \end{document}
