@@ -2,6 +2,12 @@
 \documentclass[../../fyp.tex]{subfiles}
 
 \begin{document} 
+In this chapter we describe the different metrics and visualizations that are produced by the framework from each experiment as well as the tools that are used to consume the data that are output. 
+
+We first introduce Tensorboard, a companion to Tensorflow which a richer level of interaction between the user and the output data of an experiment produced by the framework. This is followed by an overview of the elements that comprise these data, their significance, and the ideal outcome for each within the scope of TSA. 
+
+Finally, we address the notion of collaboration when carrying out experiments using the framework and how this is addressed efficiently by internally integrating with the Comet-ML platform.     
+
 \section{Tensorboard}
 \subfile{chapters/5-EvaluationMethods/5.1-Tensorboard}
 
@@ -11,11 +17,9 @@
 \section{Comet-ML Integration}
 \subfile{chapters/5-EvaluationMethods/5.3-CometMLIntegration}
 
-% Details about how the solution was evaluated with respect to the original research question(s) along with the results achieved.
-% \section{Datasets}
-% \subsection{Reviews}
-% SemEval restaurant and laptop dataset \cite{pontiki}.\\
-% \subsection{Social Media}
-% Social media datasets are provided in \cite{socher2013}, \cite{dong}, \cite{pontikib} and \cite{saeidi2016}.\\
+\section{Summary}
+We have explored the details of each stage of the framework, from data preparation to model implementation to the output data and tools used to evaluate them. At each of these stages the core principles of the framework have been to enable rapid experimentation through an intuitive interface and extending this ease-of-use into an API which allows users to expand the functionality of the framework at various points of the process such as with novel datasets, embedding filtering techniques and, custom visualizations.
+
+In the next chapter we present the results obtained from two separate use-cases of the framework, a reproducibility study for a number of models, implemented using the framework API and, an investigation into a number of OOV approaches using the same models.  
 
 \end{document}
