@@ -1,0 +1,15 @@
+% !TEX root = ../../fyp.tex
+\documentclass[../../fyp.tex]{subfiles}
+
+\begin{document}
+We carry out all experiments using GloVe word embeddings \cite{pennington} since all of the studies reproduced use some version of these and because these embeddings performed optimally in both \cite{moore2018} and \cite{bhuwandhingra2017} when dealing with NN based approaches. Since these word embeddings are case insensitive, we lowercase all tokens and carry out tokenization using the Spacy library with the default token filter (\S\ref{sec:filtering_embeddings}) to remove all emails and URLs from the text.
+
+When determining parameters for each model, the following order is adopted; first, parameters from the original paper are set, while also referring to any accompanying source code which could include parameters missing from the papers. Where unavailable, we use configurations adopted by third-party implementations based on their reported results. Finally, we set any other parameters intuitively, based on the respective setting from models with similar architectures. 
+
+As we shall outline, a non-trivial portion of the studies covered omitted essential parameter settings, such as the learning-rate of a model or the number of hidden units used, which drastically hinder their reproducibility. These omissions would be understandable provided the work is supplemented with source-code, however, this was also unobtainable or excluded in most cases.
+
+Parameters such as the batch-size and duration of training are assumed based on online implementations, which report results similar to the original work. To account for this,following \cite{moore2018}, we adopt early-stopping with a patience of 10 epochs and a maximum allowance of 300 epochs. We determine the minimum number of epochs for each model based on its learning rate and observations made in a series of experiments prior.
+
+We first provide a brief overview of each approach, which is followed by a description of the challenges faced in reproducing each approach in particular, and the counter-measures taken. Finally, we contrast the results obtained from our experiments with those reported in the original work. Since he effect of the random seed on parameter initialization is statistically significant \cite{reimers2017} as cited in \cite{moore2018}, we report mean values from 3 separate runs using different random seed values, for each experiment. 
+
+\end{document}
