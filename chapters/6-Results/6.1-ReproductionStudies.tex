@@ -33,6 +33,13 @@ We also increase the upper bound to 300d by including the two variants of the gl
 
 Finally, the larger of these two variants also takes into account another aspect by differentiating between uppercase and lowercase letters in tokens. 
 
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{tdlstm_orig_macrof1.png}
+	\caption{TD-LSTM Macro-F1 Results, $N$ refers to the number of runs carried out.}
+	\label{fig:ffnn}
+\end{figure}
+
 We consider the performance of the TD-LSTM as it is the most commonly quoted variant compared in the literature. 
 
 Comparing macro-f1 scores to account for the class imbalances in each dataset we note that the 300d GloVe variants outperform the 100d and 200d embeddings, even though the latter are not sourced from twitter as is the dataset. The 840b variant obtains the best score, suggesting that there is valuable information contained in the case-sensitivity of tokens.
@@ -53,11 +60,5 @@ When comparing the results obtained in the laptops and restaurants dataset to th
 This discrepency may be the result of the different approaches that were adopted to account for unknown parameters in the original work [Tang2016a] which were similarly left unreported in [Chen2017].
 
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\textwidth]{tdlstm_orig_macrof1.png}
-	\caption{TD-LSTM Macro-F1 Results, $N$ refers to the number of runs carried out.}
-	\label{fig:ffnn}
-\end{figure}
 
 \end{document}
