@@ -59,6 +59,39 @@ When comparing the results obtained in the laptops and restaurants dataset to th
 
 This discrepency may be the result of the different approaches that were adopted to account for unknown parameters in the original work [Tang2016a] which were similarly left unreported in [Chen2017].
 
+\subsection{IAN}
 
+The Interactive Attention Network (IAN) model [Dehong Ma et. al 2017] separates the input sentence into target and context and feeds the vector representation of these elements to two separate LSTM units. The authors subsequently use max-pooling on the hidden states of these LSTM units and employ an attention mechanism to attend on the output of each LSTM unit with respect to the other's max-pooled hidden state vector. This produces a vector representation of the context weighted by the attention scores with respect to the target and vice-versa. These representations are then concatenated and fed to a softmax classifier which produces a probability distribution over the class labels, the highest of which is taken to be the final predicted class. 
+
+A defining characteristic of this approach is the fact that it is not solely the context's represenation which is dependent on the target, but the target representation itself is affected by its context. 
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{ian_arch.jpeg}
+	\caption{Architecture of the IAN Model [Dehong Ma et al. 2017]}
+	\label{fig:ffnn}
+\end{figure}
+
+The authors make use of a momentum optimizer [Qian et al. 1999] when training their model, however they do not mention the specific momentum parameter that is used when obtaining the reported results. The authors also omit the learning rate hyper-parameter and the batch-size used in their training, both of which are correlated to the momentum hyper-parameter previously mentioned which further exacerbates the problem. 
+
+Finally, the authors remark that GloVe [Pennington et al. 2014] embeddings are used with a dimentionality matching that of the hidden unit count in each of the LSTM units, namely 300. It must be noted however that there are two variants of these embeddings with that dimentionality, with substantially different source-vocabulary sizes and only one of which is case-sensitive.
+
+We use values reported in a more recent paper [Zhang et al. 2018] for the momentum, learning-rate and batch size parameters for the default configuration of this model since these parameters are intertwined and in their work [Zhang et al. 2018] report promising results. 
+
+We further consider this 'default configuration' as a baseline for the model and evaluate its performance on the datasets reported in the original work as well as the Dong twitter dataset. Furhtermore, we also include four different variants of the GloVe embeddings, 100 and 200 dimentionality twitter variants and both of the aforementioend 300 dimentionality variants so as to observe the difference in downstream performance these make with respect to the reported results. 
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{ian_default_microf1.png}
+	\caption{IAN Micro-F1 results (compared with originally reported results)}
+	\label{fig:ffnn}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{ian_default_macrof1.png}
+	\caption{IAN Micro-F1 results (compared with results reported in [Navonil et al. 2020])}
+	\label{fig:ffnn}
+\end{figure}
 
 \end{document}
