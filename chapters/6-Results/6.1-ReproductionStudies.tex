@@ -94,4 +94,19 @@ We further consider this 'default configuration' as a baseline for the model and
 	\label{fig:ffnn}
 \end{figure}
 
+We first compare the micro-F1 (accuracy) results obtained in the our experiments with those reported in the original work [Ma et al. 2017] for the laptops and the restaurants dataset as these are the only metrics which were cited. It is worth pointing out once more that both of these datasets are heavily skewed in their class distribution [REF: datasets chapter for more info] which confines the validity of this metric.
+
+This notwithstanding, in both datasets when employing both variants of the 300d GloVe embeddings we find that the reported micro-f1 results are considered conservative when compared to the mean value of the same metric in our experiments. 
+
+The authors do not mention the number of runs that were performed or whether multiple runs were performed, which may explain this discrepancy. We can observe that both reported metrics fall within the range of results obtained with the 42b 300d GloVe embedding, which may suggest that this was the variant the authors were referreing to in their work. 
+
+Recently, a novel approach was presented in [Novanil et al. 2020] which included the IAN architecture as a baseline and report macro-f1 scores for the skewed datasets. In their work, the authors report a learning rate of 0.002 as opposed to 0.1 which was employed in our work. 
+
+We observe similar, if not more pronounced, differences when considering the 300d GloVe variants in both laptop and restaurants datasets, with the reported metrics in both cases falling squarely below the range of values we obtain in our experiments. 
+
+Although this discrepenacy in both cases can be considered 'favorable', it nonetheless continues to underscore the importance of providing all parameter settings for these models to facilitate reproduction by mitigating the overhead involved in attempting to recreate the original results. 
+
+Moreover, the importance of reporting metrics which take into account dataset characteristics as outlined in [REF: chapter on metrics] and which take into account the downstream effects of randomness in the initialization process [Gurevych, Moore] continues to emerge from these results. 
+
+
 \end{document}
