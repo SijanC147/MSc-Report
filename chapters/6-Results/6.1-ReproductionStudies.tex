@@ -108,5 +108,22 @@ Although this discrepenacy in both cases can be considered 'favorable', it nonet
 
 Moreover, the importance of reporting metrics which take into account dataset characteristics as outlined in [REF: chapter on metrics] and which take into account the downstream effects of randomness in the initialization process [Gurevych, Moore] continues to emerge from these results. 
 
+\subsection{LCR-ROT}
+From the approaches described thus far, we observe that utilizing attention mechanisms to affect the representation of a context concerning its target is effective when tackling TSA tasks. This may be considered fairly intuitive, however, as we have seen \cite{dehongma2017} present a compelling argument with their IAN model that the inverse, in favor of using attention mechanisms to affect the target representation concerning its context as well. \cite{zheng2018} expand upon this idea in their work presenting a Left-Center-Right Rotary Attention network (LCR-ROT) in several ways, albeit at the cost of a heavier computational load. 
+
+First, similar to other works such as \cite{tang2016} and \cite{chen2017}, the authors consider the left and right contexts of a target separately as opposed to a single context vector which makes the model more robust when considering the same sentence for different targets. 
+
+Secondly, the authors employ Bi-directional LSTMs, which enable the model to extract sequential feature data in both directions of a sequence. This comes at the cost of double the parameters that the model must learn since it is achieved by stacking the hidden states of two separate LSTMs processing the sequence in opposite directions. Three BiLSTMs are used for the left and right contexts and the target respectively. 
+
+An initial, \textit{Target2Context}, attention model is used to weight both left and right context representations against a target representation obtained through average-pooling, producing target-aware context representations. The rotary attention mechanism characterizes the inverse of this process, using both target-aware context representations in combination with a second \textit{Context2Target} attention model to construct two separate left-aware and right-aware target representations. 
+
+Finally, all four components are used in conjunction as the sentence feature vector which is fed to a softmax classifier to obtain the sentiment classification. 
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{lcrrot_architecture.png}
+	\caption{Left-Center-Right Separated Neural Network Architecture \cite{zheng2018} illustrating the construction of each constituent component of the final sentence representation. Bi-LSTMs are employed for the initial feature extraction followed by two attention models, \textit{Target2Context} and \textit{Context2Target}, which produce target-aware context representations as well as left and right context-aware target representations.}
+	\label{fig:ffnn}
+\end{figure}
+
 
 \end{document}
