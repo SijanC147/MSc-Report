@@ -147,5 +147,10 @@ Finally, we draw attention to the use of accuracy (macro-f1) as the definitive m
 	\label{fig:ffnn}
 \end{figure}
 
+Similar to the previously mentioned studies, we assume the reported metrics are optimal, as the authors did not mention multiple runs. When considering the Dong dataset, our results suggest that the authors employed the larger 840b variant of the GloVe embeddings. The reported micro-f1, in this case, falls within the mean (-0.06), as opposed to the 42b variant, which performs markedly worse. 
+
+We note that the principles adopted in the LCR-ROT approach's more sophisticated modeling of context and target relations are substantiated. The model outperforms the previous works across all experiment configurations we investigate. Despite this, we were unable to reproduce the reported micro-f1 metrics for the Laptops and Restaurants datasets. The more substantial discrepancy between results for these two datasets, when compared to the Dong dataset, is likely a consequence of the latter's less pronounced class imbalance. [REF to datasets chapter] 
+
+We observe another evident by-product of this distinction in the magnitude of deviation in macro-f1 scores and micro-f1 scores. Considering the best-performing mean scores for each dataset, the macro-f1 scores for the Dong dataset deviates from its respective micro-f1 counterpart by 1.61 points. Comparatively, this figure increases to 5.09 and 9.38 for the Laptops and Restaurants datasets' best-performing configurations. This difference is replicated across all embedding configurations and is an indication of the degree to which the micro-f1 metric falls short in these circumstances.
 
 \end{document}
