@@ -155,4 +155,14 @@ We observe another evident by-product of this distinction in the magnitude of de
 
 Finally, we note that in all previously presented experiments, the 840b GloVe embedding consistently outperforms its 42b counterpart in the Dong dataset. The nature of the Dong dataset, being sourced from a social media platform that encourages a relaxed demeanor and enforces brevity, leading to samples that typically ignore correct grammar and punctuation. Initially, it may seem counter-intuitive that the case-sensitive embeddings would perform better in this domain. However, we surmise that by often ignoring the case, in the rare instances which adhere to it, such as proper nouns, provide more information than in other, more formal and verbose, datasets. 
 
+\subsection{Concluding Remarks}
+We have documented herein the process of reproducing three critical studies employing increasingly complex structures to further the field of TSA. In doing so, we have elucidated the following challenges and suggestions to mitigate them accordingly: 
+
+\begin{itemize}
+	\item We have outlined the detrimental effects that lack of specificity has on this process, consuming more time and resources, thereby setting back further development. While ensuring that all pertinent parameter values original reports provide all pertinent parameters is ideal, the optimal solution is to strive to make the accompanying code publically available. 
+	\item We have illustrated in each case how reporting singular, optimal scores is insufficient, given the variance observed in each of our experiments when carrying out multiple runs with different random seeds. Although limited in our work by resources, we acknowledge that this approach may carry increasing insight into a model with an even higher number of runs. 
+	\item Finally, we have shown that careful attention is imperative when considering the performance metric to report, for the datasets used. Notably, it is evident that macro-f1 scores are more robust in this field and give a more precise, albeit less optimistic, measure of a model's performance.
+\end{itemize}
+
+
 \end{document}
