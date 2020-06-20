@@ -153,4 +153,6 @@ We note that the principles adopted in the LCR-ROT approach's more sophisticated
 
 We observe another evident by-product of this distinction in the magnitude of deviation in macro-f1 scores and micro-f1 scores. Considering the best-performing mean scores for each dataset, the macro-f1 scores for the Dong dataset deviates from its respective micro-f1 counterpart by 1.61 points. Comparatively, this figure increases to 5.09 and 9.38 for the Laptops and Restaurants datasets' best-performing configurations. This difference is replicated across all embedding configurations and is an indication of the degree to which the micro-f1 metric falls short in these circumstances.
 
+Finally, we note that in all previously presented experiments, the 840b GloVe embedding consistently outperforms its 42b counterpart in the Dong dataset. The nature of the Dong dataset, being sourced from a social media platform that encourages a relaxed demeanor and enforces brevity, leading to samples that typically ignore correct grammar and punctuation. Initially, it may seem counter-intuitive that the case-sensitive embeddings would perform better in this domain. However, we surmise that by often ignoring the case, in the rare instances which adhere to it, such as proper nouns, provide more information than in other, more formal and verbose, datasets. 
+
 \end{document}
