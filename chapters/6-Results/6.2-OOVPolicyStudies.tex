@@ -1,0 +1,17 @@
+% !TEX root = ../../fyp.tex
+\documentclass[../../fyp.tex]{subfiles}
+
+\begin{document}
+
+Consider a sub-space composed of all Out-Of-Vocabulary(OOV) tokens in the training and testing datasets. We assume the existence of an arbitrary amount of knowledge distributed across this sub-space which may or may not have a direct influence on the sentiment of the context of an OOV token where it appears. Ideally, a model learns an accurate representation of the weight of this influence during training, with each time it encounters the token. OOV tokens hinder this process in two ways; first, OOV words are, by definition, scarce within a given vocabulary and therefore provide limited opportunities to construct and optimize for an accurate representation. Second, when these tokens are encountered, the effect on the sentiment of their context is attenuated when compared to other, more frequent, tokens for which the model has numerous opportunities to fine-tune its understanding of token's consequential effect on the task at hand. In our OOV sub-space, this is analogous to the information contained therein being spread too thin across all the tokens comprising it. 
+
+The motivation underlying the following work is to investigate whether this OOV sub-space can be effectively encoded into a smaller number of clusters, each composed of tokens with shared properties, ideally relating to the sentimental information each carries. Since the information contained within the OOV sub-space is finite, the degree to which such an approach would be effective is modulated by the cluster-cardinality, which determines the range of information we intend to encapsulate in each cluster.
+
+We use our framework to construct a series of experiments consisting of a baseline, followed by variations on the aforementioned range of information. This is achieved through the OOV policy parameter, specifically the OOV-train-threshold and OOV-bucket parameters. Combined, these parameters provide a mechanism by which to cluster single OOV tokens, encountered both at the training and testing stage, into unique vector representations which are subsequently updated in the model's training process. 
+
+This section provides a detailed description of the experiment setup and motivations behind the specific choices made, followed by an analysis of the corresponding results.
+
+\subsection{Experiment Setup}
+
+
+\end{document}
