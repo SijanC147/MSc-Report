@@ -52,4 +52,30 @@ We adopt a principled approach to this idea, investigating a broader range of va
 
 We leave further research into more granular fine-tuning of this value as well as more sophisticated hashing algorithms that assign tokens to buckets for future work. 
 
+\subsection{Results and Observations}
+
+We adopt a similar approach to our reproduction studies, to a lesser extent to account for the increase in the number of experiments. Each experiment configuration is run 4 times and we gauge the performance of each using the macro-F1 score to account for the class imbalance in the testing dataset. We find the best performing parameter set for this modified Nakov dataset is the variant with 300 hidden units and a learning rate of 0.1. We speculate that with the increased vocabulary in the Nakov dataset, the model can effectively leverage the additional parameters to produce a more accurate representation of the dataset. Moreover, the faster learning rate may be a means by which the model is able to extract more information from the reduced sample size of the training dataset by amplifying the effect of each. 
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{oov_threshold_ablation.png}
+	\caption{Results obtained with varying OOV training threshold parameters. (OOV Buckets = 1)}
+	\label{fig:oov_threshold_ablation}
+\end{figure}
+
+We illustrate the results of different threshold level, while mainining the bucket parameter at 1, in \ref{fig:oov_threshold_ablation}. We observe the most pronounced improvement when $T=0$, which disregards all OOV tokens in training. We believe the larger deviation of this configuration results from the miniscule effect on train-time OOV coverage that the other values have compared to $T=1$. More surprising however is the polarity of this difference, which suggests that it is more beneficial to disregard OOV tokens at training altogether. 
+
+This may indicate that due to the low occurrence rate of OOV tokens, and the natural distribution of words in languages, there lacks sufficient contextual information to embed the significant of the OOV token in isolation. This effectively reduces the added vectors to noise, which would be reduced by increasing threshold values above 1, which can be observed in the slight gradual improvement of macro-f1 scores in \ref{fig:oov_threshold_ablation}  Recall that in this configuration, we set the OOV buckets to 1, therefore when $T=0$ all training OOV tokens are subsequently grouped under a single OOV bucket. Increasing the granularity of this strategy with additional buckets may further improve the performance of this approach.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{oov_buckets_ablation.png}
+	\caption{Results obtained with different numbers of test time OOV buckets. (OOV Train Threshold = 1)}
+	\label{fig:oov_threshold_ablation}
+\end{figure}
+
+We carried out our initial experiments investigating increasing OOV buckets compared to the default reference case of $T=1$ and $B=1$. Preliminary results from these experiments are illustrated in \ref{fig:oov_threshold_ablation} and hint at slight improvements over the mean macro-f1 scores as we increase the number of buckets up to $B=100$. Similar to the train threshold scenario, given that the nakov dataset has over 2000 OOV tokens, at $B=1000$ each bucket on average shall group 2 OOV tokens. As we have previously discussed, since the majoriti of OOV tokens only occur once, this approach results in buckets bereft of enough contextual information for accurate representation. 
+
+We believe that these results merit further investigation into the possibility of accumulating the benefits of each optimal parameter value. Future avenues of research could involve further experiments covering combinations of these parameters, and larger vocabularies obtained by merging individual datasets using our framework. Finally, we present our results as evidence that these parameters, particularly the bucketing strategy, do indeed manifest in downstream performance differences. We believe this merits further investigation into the significance of these parameter configurations and to what degree their influence can be fine-tuned and optimized both in the generalized setting as well as for specific domains and their corresponsing vocabularies.
+
 \end{document}
