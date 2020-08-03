@@ -1,0 +1,18 @@
+% !TEX root = ../../fyp.tex
+\documentclass[../../fyp.tex]{subfiles}
+
+\begin{document}
+%\subsection{What is targeted sentiment analysis?}
+Targeted sentiment analysis (TSA) is a fine-grained text-classification task that stems from the broader, more general, document, or sentence, level sentiment analysis. The former extends on the latter by taking into consideration a particular target or aspect within the context of the document, and aims to identify the sentiment with respect to this target or aspect \cite{pang2008}, \cite{liu2012}, \cite{pontiki}.
+
+Target and aspect are closely related. A \textit{target} is a particular noun or subject within the phrase while an \textit{aspect} can be a more general area or concept that the phrase touches on, without referencing in the literal sense. Consider a sentence such as, \enquote{The waiting times were long however the ravioli were simply to die for}, a plausible \textit{target} could be \enquote{waiting times} for which the statement conveys a negative sentiment. Alternatively, the phrase could be assessed with respect to an \textit{aspect} such as \enquote{food quality}, for which a positive sentiment is conveyed even though the precise term \enquote{food quality} is only implicit.
+
+It is evident that, separating itself from sentence-oriented sentiment analysis, target or aspect-based sentiment analysis requires the careful consideration of the target or aspect in question along with its context. This was initially demonstrated by \cite{jiang2011}, whose work revealed that a staggering 40\% of errors within the field of targeted-sentiment analysis could be attributed to the lack of consideration of the target or aspect.
+
+%\subsection{What is the importance of targeted sentiment analysis?}
+Due to the proliferation of social media networks and online shopping, opinions voiced from users on specific topics, products, services and events have never been as readily available for data mining as they are now. The value in having the means to accurately gauge public interest and opinion of very specific topics of interest on such a phenomenal scale cannot be understated. From those in the public sector, such as electoral campaigns who seek to obtain a clearer picture of their constituents' strongest held opinions and expectations, to private businesses who wish to employ the most effective advertising campaign for their products and services, all of these objectives rely heavily on being as cognizant on public sentiment as possible. \cite{tang2016}
+
+Over time the content of these online text sources has become more sophisticated and richer in information. Changes in social media platforms such as \textit{twitter}'s decision to raise the character limit of tweets results in the same unit of data conveying up to twice the amount of information. As this availability increases, so must the resolution at which this information is processed, so as to keep pace with the needs of both producers and consumers alike. This phenomenon further pushes the need to focus on opinion mining at a finer-grained level, perfecting the ability to discern varying sentiments towards separate targets within the same phrase.
+
+
+\end{document}

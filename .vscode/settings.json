@@ -12,5 +12,26 @@
     "logits",
     "overfitting",
     "webserver"
+  ],
+  "grammarly.overrides": [
+    {
+      "files": [
+        "**/chapters/1-Introduction/1.5-Objectives.tex"
+      ],
+      "config": {
+        "audience": "general",
+        "dialect": "american",
+        "domain": "academic",
+        "emotions": [
+          "confident",
+          "analytical"
+        ],
+        "goals": [
+          "inform",
+          "tellStory"
+        ],
+        "emotion": "mild"
+      }
+    }
   ]
 }

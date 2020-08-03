@@ -44,12 +44,12 @@
 %\overfullrule=15pt
 
 %% TEMPORARY FIX FOR MORE READABLE CITATIONS 
-\usepackage{natbib}
-\bibpunct{(}{)}{,}{a}{}{;}
-\bibliographystyle{abbrvnat}
-\renewcommand{\cite}[1]{[\citealp{#1}]}
+% \usepackage{natbib}
+% \bibpunct{(}{)}{,}{a}{}{;}
+% \bibliographystyle{abbrvnat}
+% \renewcommand{\cite}[1]{[\citealp{#1}]}
 %% END OF TEMPORARY FIX FOR MORE READABLE CITATIONS 
-% \bibliographystyle{abbrv} %% UNCOMMENT 
+\bibliographystyle{abbrv} %% UNCOMMENT 
 \makeatletter
 \newcommand{\algorithmfootnote}[2][\footnotesize]{%
   \let\old@algocf@finish\@algocf@finish% Store algorithm finish macro
@@ -113,10 +113,10 @@
 \chapter{Introduction} \label{chap:introduction}
 \subfile{chapters/1-Introduction/main}
 
-\chapter{Background and Literature Review}
+\chapter{Background and Literature Review} \label{chap:background}
 \subfile{chapters/2-LiteratureReview/main}
 
-\chapter{Design}
+\chapter{Design} \label{chap:design}
 \subfile{chapters/3-Design/main}
 
 \chapter{Implementation} \label{chap:implementation}
@@ -128,7 +128,7 @@
 \chapter{Results and Observations} \label{chap:results_observations}
 \subfile{chapters/6-Results/main}
 
-\chapter{Conclusion}
+\chapter{Conclusion} \label{chap:conclusion}
 \subfile{chapters/7-Conclusion/main}
 
 \appendix
@@ -137,13 +137,13 @@
 % this is a proof
 % \end{proof}
 
-\chapter{Appendix A}
-\section{These are some details}
-%%example of the code environment
-\begin{code}
-	this is some code;
-	Make sure to use this template.
-\end{code}
+% \chapter{Appendix A}
+% \section{These are some details}
+% %%example of the code environment
+% \begin{code}
+% 	this is some code;
+% 	Make sure to use this template.
+% \end{code}
 
 
 \bibliomatter
