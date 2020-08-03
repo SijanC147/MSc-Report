@@ -13,6 +13,7 @@
 \usepackage{acronym}
 \usepackage{csquotes}
 \usepackage{multirow}
+\usepackage{rotating}
 \usepackage[ruled,vlined,linesnumbered,noresetcount]{algorithm2e}
 \usepackage[table,xcdraw]{xcolor}
 \usepackage[normalem]{ulem}
@@ -67,21 +68,26 @@
 %%make sure to enter this information
 \title{TSAPLAY: A framework to aid reproducibility in and exploration of the field of Targeted Sentiment Analysis}
 \author{Sean Bugeja}
-\date{enter a date}
+\date{August 2020}
 \supervisor{Mr. Mike Rosner}
 \department{Faculty of ICT}
 \universitycrestpath{crest}
-\submitdate{enter a date}
+\submitdate{August 2020}
 
 \frontmatter
 
 
 \begin{acknowledgements}
-	your acknowledgments
+I would like to thank the University, both for the masters programme itself, as well as their understanding throughout my reading for it. 
+I am deeply grateful to my supervisor, Mike Rosner, whose level of patience and understanding are unparalleled. His guidance and support were crucial for me too see this project to its completion and cannot be understated. To Professor Matthew Montebello for providing his guidance when I needed it most. To my family and friends, for getting me through the toughest periods of this journey.  
 \end{acknowledgements}
 
 \begin{abstract}
-	Provides a short (typically 1 page) overview of the dissertation's contents including the tackled problem and high-level results/conclusions.
+	The proliferation of platforms online which enable users from around to world to voice their opinions on any subject over time has led to the emergence of the largest publically accessible textual representation of public opinion which has not gone unnoticed by the NLP community, using this data in conjunction with sophisticated models for various tasks. Targeted Sentiment Analysis (TSA), whereby the sentiment polarity towards a particular target is identified,r presents itself as one of the most popular of such tasks garnering a wide range of different approaches over the years.
+
+	In this work, we attempt to recreate some of the most seminal approaches to this task in an effort to evaluate the current state of reproducibility of this field, and whether it has been neglected by the fields' rapid growth. Towards this end, we develop a framework which facilitates TSA model research by decomposing the various parts of the Machine Learning (ML) pipeline into separate modules, abstracting lower-level complexities from the end-user while exposing entry points for feature-extendibility and, providing an ideal environment where models can be evaluated and compared more efficiently.
+
+	Using this framework to investigate reproducibility, we identify three issues, namely, lack of specificity, the importance of multiple experimentation runs and, the use of misleading metrics which do not account for class distribution in datasets. Finally, we evaluate different out-of-vocabulary clustering approaches and find downstream effects which merit further investigation. 
 \end{abstract}
 
 \tableofcontents
