@@ -9,5 +9,5 @@
 **/*.lot
 **/*.synctex(busy)
 **/*.toc
-
+.DS_Store
 
