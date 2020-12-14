@@ -13,7 +13,7 @@ OOV words are of particular concern when dealing with tasks that are generative 
 
 A common approach to this problem is clustering OOV words into groups that would are sufficiently expressive of their constituents. Various techniques have been employed towards this goal such syntactic and morphological features, part-of-speech tag information, online resources, and subword-level models to name a few, \cite{naptali2012} does a good job of outlining these approaches.
 
-Since sentiment analysis is a classification task, where words are provided as input and subsequently used as keys when looking up the relevant embedding vector, substituting an OOV word for an IV word is of no concern. The effect of an OOV word on its neighboring words, however, is prone to undermine a model's ability to generate an accurate representation of the content as a whole.
+Since sentiment analysis is a classification task, where words are provided as input and subsequently used as keys when looking up the relevant embedding vector, substituting an OOV word for an in-vocabulary (IV) word is of no concern. The effect of an OOV word on its neighboring words, however, is prone to undermine a model's ability to generate an accurate representation of the content as a whole.
 
 This sort of phenomenon is not particularly difficult to imagine since it is often times the case in languages that a single word can have drastic effects on the meaning of a phrase, particularly in situations expressing negation. Consider a phrase such as \enquote{It avoids all the predictability found in Hollywood movies.}, where \enquote{predictability} conveys a negative sentiment, which is subsequently negated by the verb \enquote{avoids}.
 
@@ -31,7 +31,7 @@ In their work, dealing particularly with OOV tokens within the field of Reading 
 % \subsection{OOV Clustering}
 It is not necessarily useful to approach the OOV word challenge at the word-level. It is assumed that OOV words are scarce, which substantially limits the occasions for a prospective model to learn any discerning information about that word. Attempting to model clusters of OOV words instead, would benefit each member of the cluster by the accumulated frequency of all members \cite{naptali2012}.
 
-Moreover, within the scope of sentiment analysis, the intuition for clustering words under classes characterized by some particular sentimental value, or a lack thereof; as in the case of registered trademarks, would be evidently beneficial.
+Moreover, within the scope of sentiment analysis, the intuition for clustering words under classes characterized by some particular sentimental value, or a lack thereof; as in the case of registered trademarks like company names would be beneficial. Ideally, the lexicon of these terms should not affect the sentiment score and an increased likelihood of being a target can be encoded in the vector representation of such a cluster. 
 
 Too few classes may not possess a sufficiently fine level of detail in their discerning characteristics and cluster together words which are unrelated and subsequently erroneously trained together. This can be seen from the extreme of this case, where only a single token is used, and the issues that have been reported for this approach.
 

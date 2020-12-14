@@ -59,19 +59,19 @@ A word-word co-occurrence matrix $X$ is constructed from a vocabulary such that 
 
 Furthering the case for the capacity of the \textit{GloVe} model, the comparative study carried out on the task of reading comprehension by \cite{bhuwandhingra2017} demonstrated that pre-trained \textit{GloVe} embeddings outclassed other embeddings, including \textit{word2vec} \cite{mikolov2013}. From their experiments, \cite{bhuwandhingra2017} continue to suggest that these embeddings, in their off-the-shelf format, also surpassed embeddings trained on the target text itself as well as, to their surprise, an expanded corpus of data extracted from a domain commensurate with that of the target text.
 
-\subsection{Fasttext}
-Both \textit{word2vec} and \textit{GloVe} are considered as models operating on a word-level by regarding the word as the atomic operand, however \cite{bojanowski2017} argue that this approach is possibly sub-optimal when considering languages, such as Turkish and Finnish, where single words can have multiple morphologies, or comprise of exceedingly large vocabularies, or both. In contrast, they argue that the use of sub-word information lends itself well to these languages where the multiple morphologies of a word follow some form structure, such as specific verb conjugations.
+% \subsection{Fasttext}
+% Both \textit{word2vec} and \textit{GloVe} are considered as models operating on a word-level by regarding the word as the atomic operand, however \cite{bojanowski2017} argue that this approach is possibly sub-optimal when considering languages, such as Turkish and Finnish, where single words can have multiple morphologies, or comprise of exceedingly large vocabularies, or both. In contrast, they argue that the use of sub-word information lends itself well to these languages where the multiple morphologies of a word follow some form structure, such as specific verb conjugations.
 
-To tackle this issue they extend the \textit{word2vec} skip-gram model to operate at a sub-word level, adopting a bag-of-characters n-grams approach for word representation. As opposed to having each word represented by a vector, a word is represented as the aggregate sum of its constituent character n-grams.
+% To tackle this issue they extend the \textit{word2vec} skip-gram model to operate at a sub-word level, adopting a bag-of-characters n-grams approach for word representation. As opposed to having each word represented by a vector, a word is represented as the aggregate sum of its constituent character n-grams.
 
-The authors also demonstrate how a vector for an OOV word can be constructed from its character n-grams with remarkable similarity to a comparable IV word. Some of their results can be seen in \ref{fig:fasttext_oov_similarity}, where an OOV word \enquote{microcircuit} shows positive cosine similarity (in red) to an IV word \enquote{chip} between its constituent character n-grams \enquote{micro} and \enquote{circuit}.
+% The authors also demonstrate how a vector for an OOV word can be constructed from its character n-grams with remarkable similarity to a comparable IV word. Some of their results can be seen in \ref{fig:fasttext_oov_similarity}, where an OOV word \enquote{microcircuit} shows positive cosine similarity (in red) to an IV word \enquote{chip} between its constituent character n-grams \enquote{micro} and \enquote{circuit}.
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.7\textwidth]{fasttext_oov_similarity.png}
-	\caption{Character n-gram similarity between the OOV word \enquote{microcircuit} and IV word \enquote{chip}. Positive and negative cosine similarity are denoted in red and blue respectively. Figure adapted from \cite{bojanowski2017}}
-	\label{fig:fasttext_oov_similarity}
-\end{figure}
+% \begin{figure}[!ht]
+% 	\centering
+% 	\includegraphics[width=0.7\textwidth]{fasttext_oov_similarity.png}
+% 	\caption{Character n-gram similarity between the OOV word \enquote{microcircuit} and IV word \enquote{chip}. Positive and negative cosine similarity are denoted in red and blue respectively. Figure adapted from \cite{bojanowski2017}}
+% 	\label{fig:fasttext_oov_similarity}
+% \end{figure}
 
 %TODO: conclusion to this section is needed: what follows that concerns the work you have done?
 %TODO: Need to include disadvantages of fasttext to make a contrast

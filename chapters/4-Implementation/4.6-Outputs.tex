@@ -1,0 +1,44 @@
+% !TEX root = ../../fyp.tex
+\documentclass[../../fyp.tex]{subfiles}
+
+\begin{document}
+This section describes the different metrics and visualizations that are produced by the framework from each experiment as well as the tools that are used to consume the data that are output. We first introduce Tensorboard, a companion to Tensorflow which allows a richer level of interaction between the user and the output data of an experiment produced by the framework. This is followed by an overview of the elements that comprise these data, their significance, and the ideal outcome for each within the scope of TSA. 
+
+\subsection{Tensorboard}
+Tensorboard is a development tool, included with the Tensorflow library, used primarily for visualizing the transient performance and behavior summaries of a model. A summary is a representation of a model at a particular checkpoint, encapsulating all the information about that model at that step in training. At each checkpoint, the model is evaluated on the test dataset consisting exclusively of unseen samples adding the respective metrics and visualization to the summary object of that checkpoint. The add-on mechanism wraps around hooks which allow custom metrics and visualizations to be added to the summary object.
+
+The checkpoint frequency of an experiment is an adjustable run-configuration parameter. While more frequent checkpoints increase the granularity of the transient data for a model, this also incurs a cost on experimentation times, particularly when dealing with visualizations which may need to be generated multiple times. In certain situations however, such as employing early stopping, more frequent checkpoints may help minimize the risk of overfitting.
+ 
+The Tensorboard service is started using a command line interface (CLI) command pointing to an experiment directory, stored locally or on a google cloud storage bucket, and is subsequently accessible on a local webserver.   
+
+\subsubsection{Scalar Metrics}
+The scalar loss value of a model is plotted during training and evaluation to identify possible cases of overfitting. Although not an ideal metric, accuracy is recorded to compare results with papers that report it exclusively. Mean per-class accuracy is also monitored as it is more robust to class imbalances, however, unlike the macro-F1, it does take into consideration false positives. 
+
+\subsection{Visualizations}
+
+\subsubsection{Model Graph}
+The model graph provides an intuitive way of visualizing the architecture and data flow of a model. Nodes are used to represent single operations or groups thereof, and connections represent the tensor data that flows from one operation to the next.\footnote{https://www.tensorflow.org/guide/graph\_viz} 
+
+\subsubsection{Histograms}
+Histograms illustrate the evolution of tensor distributions with training. Internally, the framework attempts to produce histograms for all tensors that are trained.\footnote{https://www.tensorflow.org/guide/tensorboard\_histograms}
+
+\subsubsection{Embedding Projections}
+When preparing feature data for an experiment, the framework also produces a tab-separated-value (tsv) file listing all the tokens, including any OOV buckets, in the order they appear in the embedding. This file can be used in conjunction with a Tensorboard projector tool to attach labels to points of the embedding matrix projected in $\mathbb{R}^3$ space using principal component analysis (PCA). This may provide additional insights into how the representation of OOV buckets evolves with respect to other tokens by visualizing neighboring points.
+%TODO Include an example image of embedding visualized in this way, possibly showing nearest neighbors of OOV buckets
+
+\subsubsection{Confusion Matrix}
+Matplotlib\footnote{https://matplotlib.org/} was used to render most of the visualizations offered by the framework for its extensive tool-set. The confusion matrix is generated using a custom-built hook and provides a high-level overview of the model performance. It is rendered as a heat-map spread across all samples of the evaluation dataset. Although this information may be condensed into informative scalar metrics, such as the macro-F1, the confusion matrix may convey more insight into the per-class transient performance of the model. Ideally, with training, the heat-map should consolidate across the diagonal of the matrix.
+%TODO Include example image of multiple confusion matrices over time showing how the heatmap distribution changes over time
+
+\subsubsection{Dataset Distribution Figure}
+Two pie-charts are generated for the training and test datasets which depict the class distribution of the each dataset. Moreover, when merged datasets are used, the contribution of each constituent dataset and their class distributions are also included in this figure. This type of visualization intuitively highlights class imbalances as well as their sources while also efficiently conveying the contribution of each dataset relative to the others in a merged dataset.
+%TODO Include image of a dataset distribution piechart
+
+\subsubsection{Attention Heat-maps}
+The attention heat-maps use a color-map to contrast the different weights being placed on each token. Over time, as the model learns to distinguish which tokens maximally contribute to the sentiment of a sentence, they are expected to be highlighted in contrast to their surroundings which signifies a higher attention weight. Two attention heat-maps are generated for each sample, the first illustrating the color-coded attention weight distribution corresponding to each string token and a second, supplementing the first, with the precise real-valued weights.
+
+Attention weight vectors are obtained using custom implementations of attention units which expose these data and their corresponding string tokens. These are used by the corresponding add-on to generate attention heat-maps for a subset of samples from each batch during evaluation. The size of this subset can be adjusted using the auxiliary-configuration parameters to avoid excessive heat-maps from being generated for increasingly large datasets. 
+
+For models that employ multiple \enquote{hops}, such as memory networks, the process is repeated for each hop. These models are expected to concentrate their attention on the most salient tokens with each hop, as well as improving the process on the whole with each evaluation checkpoint.
+
+\end{document}

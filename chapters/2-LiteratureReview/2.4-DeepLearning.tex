@@ -45,29 +45,29 @@ The use of neural network models such as \cite{lakkaraju2014} \cite{vo2015} \cit
 
 The most prevalent architectures are the Convolutional Neural Networks (CNNs) and Recurrent Neural Networks (RNN) and the descendants thereof. The Recursive Neural Network (Rec-NN), which has been employed in works such as \cite{socher2011} and \cite{socher2013} for syntactic analysis and sentence sentiment analysis respectively. \cite{zhang2018}
 
-\subsubsection{Convolutional Neural Networks (CNNs)}
-The layers typically comprise of filters, also referred to as kernels, of differing widths that slide over the input data to extrapolate various features. Each of these features would be representative of a diverse set of aspects of the data that would aid in defining it with respect to the task being tackled.
+% \subsubsection{Convolutional Neural Networks (CNNs)}
+% The layers typically comprise of filters, also referred to as kernels, of differing widths that slide over the input data to extrapolate various features. Each of these features would be representative of a diverse set of aspects of the data that would aid in defining it with respect to the task being tackled.
 
-These convolution layers are coupled with a max-pooling layer with the intention of extracting the most salient values. These values can subsequently be forwarded to another convolution layer that presumably extrapolates deeper, more abstract features. This process can be repeated a number of times across multiple convolution layers to build a deep CNN that eventually produces a single feature vector representation of the original input data. Figure \ref{fig:cnn_architecture} illustrates this process using six filters with three difference widths and two diverse operations for each, the results of which are down-scaled using max-pooling, and subsequently passed through a softmax function for binary classification.
+% These convolution layers are coupled with a max-pooling layer with the intention of extracting the most salient values. These values can subsequently be forwarded to another convolution layer that presumably extrapolates deeper, more abstract features. This process can be repeated a number of times across multiple convolution layers to build a deep CNN that eventually produces a single feature vector representation of the original input data. Figure \ref{fig:cnn_architecture} illustrates this process using six filters with three difference widths and two diverse operations for each, the results of which are down-scaled using max-pooling, and subsequently passed through a softmax function for binary classification.
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.7\textwidth]{cnn_architecture.jpg}
-	\caption{An example of a CNN architecture used for sentence modelling and subsequent binary classification \cite{yezhang2015} as cited in \cite{young2017}.}
-	\label{fig:cnn_architecture}
-\end{figure}
+% \begin{figure}[!ht]
+% 	\centering
+% 	\includegraphics[width=0.7\textwidth]{cnn_architecture.jpg}
+% 	\caption{An example of a CNN architecture used for sentence modelling and subsequent binary classification \cite{yezhang2015} as cited in \cite{young2017}.}
+% 	\label{fig:cnn_architecture}
+% \end{figure}
 
-Max-pooling is ideal for producing a fixed-length representation of the data, which is a common prerequisite for classification tasks, while at the same time preserving the most prominent features from the original data. \cite{young2017}
+% Max-pooling is ideal for producing a fixed-length representation of the data, which is a common prerequisite for classification tasks, while at the same time preserving the most prominent features from the original data. \cite{young2017}
 
-\subsubsection{CNNs in TSA}
-Some of the first CNN-based approaches that paved the way for the growth of CNN architectures in the literature that followed were \cite{collobert2011}, \cite{kim}, and \cite{kalchbrenner2014}.
-\cite{kim} used CNN architecture for sentence classification tasks ranging from subjectivity and question type with promising results albeit in the face of a number of challenges that became evident to the authors. Not least of these was the limited capacity for the CNN architecture to capture syntactical dependencies in sentences that occurred over long distances. This challenge was the one of the foremost drivers for the work that followed by \cite{kalchbrenner2014} who developed the DynamicCNN (DCNN) which consisted of a series of hierarchical convolution and k-max pooling layers.
+% \subsubsection{CNNs in TSA}
+% Some of the first CNN-based approaches that paved the way for the growth of CNN architectures in the literature that followed were \cite{collobert2011}, \cite{kim}, and \cite{kalchbrenner2014}.
+% \cite{kim} used CNN architecture for sentence classification tasks ranging from subjectivity and question type with promising results albeit in the face of a number of challenges that became evident to the authors. Not least of these was the limited capacity for the CNN architecture to capture syntactical dependencies in sentences that occurred over long distances. This challenge was the one of the foremost drivers for the work that followed by \cite{kalchbrenner2014} who developed the DynamicCNN (DCNN) which consisted of a series of hierarchical convolution and k-max pooling layers.
 
-Other works cited in \cite{young2017} include \cite{poria2016} that dealt with sarcasm detection on twitter data, noting a need for additional context information when dealing with short texts of this nature. This observation is also echoed in \cite{johnsonzhang2015}, who noted superior performance of CNN networks when dealing with longer text that would provide more contextual information as opposed to shorter text. Due to the vast amount of parameters that CNNs typically need to learn, scarcity of data is an often cited challenge \cite{young2017}.
+% Other works cited in \cite{young2017} include \cite{poria2016} that dealt with sarcasm detection on twitter data, noting a need for additional context information when dealing with short texts of this nature. This observation is also echoed in \cite{johnsonzhang2015}, who noted superior performance of CNN networks when dealing with longer text that would provide more contextual information as opposed to shorter text. Due to the vast amount of parameters that CNNs typically need to learn, scarcity of data is an often cited challenge \cite{young2017}.
 
-Work carried out by \cite{chen2016} made use of a CNN to deduce the sentiment of the target based on the sentiment of the clause surrounding it. As noted by \cite{chen2017} however, this method still operated on the assumption that the most salient features of a word can be extracted from other words in close proximity.
+% Work carried out by \cite{chen2016} made use of a CNN to deduce the sentiment of the target based on the sentiment of the clause surrounding it. As noted by \cite{chen2017} however, this method still operated on the assumption that the most salient features of a word can be extracted from other words in close proximity.
 
-A phrase such as \enquote{I bought a mobile phone, its camera is wonderful but the battery life is short, not particularly satisfied overall}, challenges this assumption with respect to the \enquote{mobile phone}, as the intended target since the most sentimentally-laden words appear at the opposite end of the sentence.
+% A phrase such as \enquote{I bought a mobile phone, its camera is wonderful but the battery life is short, not particularly satisfied overall}, challenges this assumption with respect to the \enquote{mobile phone}, as the intended target since the most sentimentally-laden words appear at the opposite end of the sentence.
 
 \subsubsection{Recurrent Neural Networks (RNNs)}
 An RNN can be thought of as a chain of recurring modules which typically represent elements within a variable-length sequence, with an internal hidden state that represents the network's \enquote{memory}. This state is passed forward from one module in the chain to the next.
@@ -152,61 +152,61 @@ Sentence and document level sentiment classification tasks lend themselves well 
 
 An improvement in results stemming, in part, from taking a bi-directional approach is also observed in \cite{zhang2016}, in both accuracy and macro F1 scores when compared to the work of \cite{vo2015}, from which the former was inspired. More recent works (eg. \cite{ma2018}, \cite{zheng2018}) that have reported notable results in the field also take advantage of bi-directionality in their approach.
 
-\subsubsection{Gated Recurrent Units (GRUs)}
-The GRU does away with the cell state that is found in the LSTM, maintaining only a single hidden state as its \enquote{memory}. The second way in which the GRU differs from the LSTM is in its number of gating units, by foregoing the output gate and combining the input and forget gates into a single update gate, the GRU benefits from having less parameters to learn.
-\begin{equation} \label{eq:gru_update_gate}
-	z_t = \sigma(W_z\cdot[h_{t-1},x_t] + b_z)
-\end{equation}
-As the name implies, when the reset gate (eq. \ref{eq:gru_reset_gate}) nears $0$, it allows the GRU unit to drop the previous information, which may be deemed inconsequential at a later time, and reset itself with the current input only. This information is then used by the GRU to produce a vector of candidate activation values (eq. \ref{eq:gru_candidate_activation}).
-\begin{equation} \label{eq:gru_reset_gate}
-	r_t = \sigma(W_r\cdot[h_{t-1},x_t] + b_r)
-\end{equation}
-\begin{equation} \label{eq:gru_candidate_activation}
-	\Tilde{h}_t = \tanh(W\cdot[r_t * h_{t-1},x_t] + b)
-\end{equation}
+% \subsubsection{Gated Recurrent Units (GRUs)}
+% The GRU does away with the cell state that is found in the LSTM, maintaining only a single hidden state as its \enquote{memory}. The second way in which the GRU differs from the LSTM is in its number of gating units, by foregoing the output gate and combining the input and forget gates into a single update gate, the GRU benefits from having less parameters to learn.
+% \begin{equation} \label{eq:gru_update_gate}
+% 	z_t = \sigma(W_z\cdot[h_{t-1},x_t] + b_z)
+% \end{equation}
+% As the name implies, when the reset gate (eq. \ref{eq:gru_reset_gate}) nears $0$, it allows the GRU unit to drop the previous information, which may be deemed inconsequential at a later time, and reset itself with the current input only. This information is then used by the GRU to produce a vector of candidate activation values (eq. \ref{eq:gru_candidate_activation}).
+% \begin{equation} \label{eq:gru_reset_gate}
+% 	r_t = \sigma(W_r\cdot[h_{t-1},x_t] + b_r)
+% \end{equation}
+% \begin{equation} \label{eq:gru_candidate_activation}
+% 	\Tilde{h}_t = \tanh(W\cdot[r_t * h_{t-1},x_t] + b)
+% \end{equation}
 
-Instead of maintaining an internal memory cell, the GRU uses the update gate and carries out a linear interpolation function (eq. \ref{eq:gru_update_interpolation}) to control the amount of candidate activation, $\Tilde{h}_t$, that is added to the previous activation. In this way the update gate serves as the primary mechanism preventing the GRU from overwriting a previously encountered salient feature.
-\begin{equation} \label{eq:gru_update_interpolation}
-	h_t = (1-z_t)*h_{t-1} + z_t*\Tilde{h}_t
-\end{equation}
-Whereas the LSTM utilizes the output gate to control the exposure of its internal memory to the rest of the network, the GRU does not have any means by which to control the exposure of its inner state, and therefore exposes its hidden state in its entirety to the rest of the network.
+% Instead of maintaining an internal memory cell, the GRU uses the update gate and carries out a linear interpolation function (eq. \ref{eq:gru_update_interpolation}) to control the amount of candidate activation, $\Tilde{h}_t$, that is added to the previous activation. In this way the update gate serves as the primary mechanism preventing the GRU from overwriting a previously encountered salient feature.
+% \begin{equation} \label{eq:gru_update_interpolation}
+% 	h_t = (1-z_t)*h_{t-1} + z_t*\Tilde{h}_t
+% \end{equation}
+% Whereas the LSTM utilizes the output gate to control the exposure of its internal memory to the rest of the network, the GRU does not have any means by which to control the exposure of its inner state, and therefore exposes its hidden state in its entirety to the rest of the network.
 
-Each unit in a GRU model will have separate update and reset gates that will independently learn to capture long and short term dependencies in a sequence. Units that learn to capture longer-term dependencies will have active update gates whereas, for short-term dependencies, the reset gates will tend to be more active.
+% Each unit in a GRU model will have separate update and reset gates that will independently learn to capture long and short term dependencies in a sequence. Units that learn to capture longer-term dependencies will have active update gates whereas, for short-term dependencies, the reset gates will tend to be more active.
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.7\textwidth]{gru_architecture.png}
-	\caption{Internal gating structure of a GRU unit. \cite{colah-understanding-lstm}}
-	\label{fig:gru_architecture}
-\end{figure}
+% \begin{figure}[!ht]
+% 	\centering
+% 	\includegraphics[width=0.7\textwidth]{gru_architecture.png}
+% 	\caption{Internal gating structure of a GRU unit. \cite{colah-understanding-lstm}}
+% 	\label{fig:gru_architecture}
+% \end{figure}
 
-\subsubsection{GRUs in TSA}
-\cite{zhang2016} model the interplay between targets and their contexts through gated mechanism operating on the a representation of the original sentence split into three components using a gated-RNN.
+% \subsubsection{GRUs in TSA}
+% \cite{zhang2016} model the interplay between targets and their contexts through gated mechanism operating on the a representation of the original sentence split into three components using a gated-RNN.
 
-\cite{liu2018} use a GRU as part of their approach, serving as a gating mechanism to determine whether to update a specific part of memory based on past activations. They claim state of the art results in aspect detection and sentiment classification, outperforming SenticNet \cite{ma2018}, and foregoing the need of external knowledge.
+% \cite{liu2018} use a GRU as part of their approach, serving as a gating mechanism to determine whether to update a specific part of memory based on past activations. They claim state of the art results in aspect detection and sentiment classification, outperforming SenticNet \cite{ma2018}, and foregoing the need of external knowledge.
 
-\cite{xue2018} use gated tanh-ReLU units to control flow of features from convolutional neural networks to max pooling layer. They deal more with the advantages that a CNN offers, since it is not time-dependent and is therefore easier to parallelize.
+% \cite{xue2018} use gated tanh-ReLU units to control flow of features from convolutional neural networks to max pooling layer. They deal more with the advantages that a CNN offers, since it is not time-dependent and is therefore easier to parallelize.
 
-\cite{jabreel2017} generate a sentence representation by stacking two GRU based networks, similar to the BLSTM configuration, opting to go with the GRU architecture instead since it has less parameters to learn, noting similar results. A continuous vector representation of the target is sandwiched between the two GRU direction outputs, and fed to softmax classifier. Authors report accuracy and macro-f1 scores better than state of the art obtained on a twitter dataset \cite{dong}.
+% \cite{jabreel2017} generate a sentence representation by stacking two GRU based networks, similar to the BLSTM configuration, opting to go with the GRU architecture instead since it has less parameters to learn, noting similar results. A continuous vector representation of the target is sandwiched between the two GRU direction outputs, and fed to softmax classifier. Authors report accuracy and macro-f1 scores better than state of the art obtained on a twitter dataset \cite{dong}.
 
-\subsubsection{LSTM vs GRU}
-Since the architecture of the GRU is less complex than that of the LSTM, there may be circumstances where the former may be more efficient than the latter since it requires less parameters to learn \cite{chen2017}, \cite{jabreel2017}.
+% \subsubsection{LSTM vs GRU}
+% Since the architecture of the GRU is less complex than that of the LSTM, there may be circumstances where the former may be more efficient than the latter since it requires less parameters to learn \cite{chen2017}, \cite{jabreel2017}.
 
-That being said, there is no clear winner between the two variants, as demonstrated by work conducted in \cite{chung2014}. The results obtained, shown in figure \ref{fig:rnn_v_lstm_v_gru_graphs}, concluded that the only demonstrable advantage is that of both variants over a standard RNN architecture. The authors go on to say that the performance of the two variants themselves is contingent on the particular nature of the tasks being addressed. Although it is worth noting that the work carried out by \cite{chung2014} was not specifically in the field of NLP, the deciding factor between these variants in NLP literature still tends to be heuristic \cite{young2017}.
+% That being said, there is no clear winner between the two variants, as demonstrated by work conducted in \cite{chung2014}. The results obtained, shown in figure \ref{fig:rnn_v_lstm_v_gru_graphs}, concluded that the only demonstrable advantage is that of both variants over a standard RNN architecture. The authors go on to say that the performance of the two variants themselves is contingent on the particular nature of the tasks being addressed. Although it is worth noting that the work carried out by \cite{chung2014} was not specifically in the field of NLP, the deciding factor between these variants in NLP literature still tends to be heuristic \cite{young2017}.
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.7\textwidth]{rnn_v_lstm_v_gru_graphs.jpg}
-	\caption{Results obtained by \cite{chung2014} during training and validation of different RNN variants illustrating the superiority of LSTM and GRU units over the traditional RNN.}
-	\label{fig:rnn_v_lstm_v_gru_graphs}
-\end{figure}
+% \begin{figure}[!ht]
+% 	\centering
+% 	\includegraphics[width=0.7\textwidth]{rnn_v_lstm_v_gru_graphs.jpg}
+% 	\caption{Results obtained by \cite{chung2014} during training and validation of different RNN variants illustrating the superiority of LSTM and GRU units over the traditional RNN.}
+% 	\label{fig:rnn_v_lstm_v_gru_graphs}
+% \end{figure}
 
-\subsubsection{CNN vs RNN}
-In spite of various studies illustrating the fact that CNN networks are data heavy in nature and often require auxiliary data when dealing with micro-texts such as those obtained from social media networks such as twitter, \cite{young2017} note that assuming the superiority of RNNs for sequential data is inaccurate.
+% \subsubsection{CNN vs RNN}
+% In spite of various studies illustrating the fact that CNN networks are data heavy in nature and often require auxiliary data when dealing with micro-texts such as those obtained from social media networks such as twitter, \cite{young2017} note that assuming the superiority of RNNs for sequential data is inaccurate.
 
-They proceed to cite studies where CNNs performed competitively, and even surpassed RNN-based architectures in tasks for which the latter would, in theory, be better suited, such as language-modelling \cite{dauphin2017} as cited in \cite{young2017}.
+% They proceed to cite studies where CNNs performed competitively, and even surpassed RNN-based architectures in tasks for which the latter would, in theory, be better suited, such as language-modelling \cite{dauphin2017} as cited in \cite{young2017}.
 
-It is worth keeping in mind that when dealing with language modelling, RNNs and CNNs approach the task from separate avenues; while RNNs, and their descendents, have no context boundaries when processing sequential data to generate a representation, CNN-based approaches seek to extrapolate the most meaningful n-grams from bounded-contexts from that sequence, to produce their final representation. \cite{young2017}
+% It is worth keeping in mind that when dealing with language modelling, RNNs and CNNs approach the task from separate avenues; while RNNs, and their descendents, have no context boundaries when processing sequential data to generate a representation, CNN-based approaches seek to extrapolate the most meaningful n-grams from bounded-contexts from that sequence, to produce their final representation. \cite{young2017}
 
 \subsection{Attention}
 The intuition behind an attention mechanism is that, when dealing with sequential data, different parts of the sequence contribute to varying degrees towards a specific task or goal. This is abundantly apparent in the field of machine translation, where the attention mechanism made its debut \cite{bahdanau2014}
@@ -260,42 +260,42 @@ Expanding these inequalities results in $Wh_{high}<Wh_{low}<Wh_{high}$, which is
 
 Towards this end, \cite{wang2018} experiment using a series of techniques, and note an improvement over previously cited results as well as a direct improvement on the RAM model \cite{chen2017} when these are coupled with their optimally performing target-sensitive context modelling strategy.
 
-\subsection{Memory}
-It can be argued that one of the most prominent contributions of the attention mechanism covered in the previous section is the ability to selectively read information, typically from the internal state of a model, in a differentiable manner by reading from all of the data, to varying degrees. This, however, has more profound implications: the same process can be applied to selectively write in a differentiable way. Memory networks are so-called as they exploit this fact, providing an external memory store that a model can learn to refer to and update over time.
+% \subsection{Memory}
+% It can be argued that one of the most prominent contributions of the attention mechanism covered in the previous section is the ability to selectively read information, typically from the internal state of a model, in a differentiable manner by reading from all of the data, to varying degrees. This, however, has more profound implications: the same process can be applied to selectively write in a differentiable way. Memory networks are so-called as they exploit this fact, providing an external memory store that a model can learn to refer to and update over time.
 
-This concept was first actualized in two distinct, yet coincident, studies: \cite{alexgraves2014}, who proposed their Neural Turing Machine (NTM) and \cite{jasonweston2014} who put forward their Memory Neural Network (MemNN) framework.
+% This concept was first actualized in two distinct, yet coincident, studies: \cite{alexgraves2014}, who proposed their Neural Turing Machine (NTM) and \cite{jasonweston2014} who put forward their Memory Neural Network (MemNN) framework.
 
-In their seminal work, \cite{jasonweston2014} describe their memory network framework as comprising of some tangible memory component, which is represented as an encoded continuous matrix. This external memory is updated through the use of neural network operations which selectively read and write to and from it. They proceed to conceptualize these operations in the form of four fundamental components.
+% In their seminal work, \cite{jasonweston2014} describe their memory network framework as comprising of some tangible memory component, which is represented as an encoded continuous matrix. This external memory is updated through the use of neural network operations which selectively read and write to and from it. They proceed to conceptualize these operations in the form of four fundamental components.
 
-The first component, the input component, $I$, is tasked with mapping incoming data to an internal representation. Pre-processing and embedding look-ups are two examples of operations that may be entailed at this stage. A generalization component, $G$, follows, which uses the data from $I$ to update the memory. $G$ is so-called as it allows for the potential of  generalization of existing memory towards some future goal. In its simplest form however, this component simply stores incoming data in the next available memory slot, leaving existing memory unchanged. Using the input data from $I$ and the current memory state an output component, $O$, produces an output feature vector which typically involves inferring the most relevant memories. This output is finally interpreted by a response component, $R$, to the desired format.
+% The first component, the input component, $I$, is tasked with mapping incoming data to an internal representation. Pre-processing and embedding look-ups are two examples of operations that may be entailed at this stage. A generalization component, $G$, follows, which uses the data from $I$ to update the memory. $G$ is so-called as it allows for the potential of  generalization of existing memory towards some future goal. In its simplest form however, this component simply stores incoming data in the next available memory slot, leaving existing memory unchanged. Using the input data from $I$ and the current memory state an output component, $O$, produces an output feature vector which typically involves inferring the most relevant memories. This output is finally interpreted by a response component, $R$, to the desired format.
 
-Each component that makes up this process may represent any trainable model such as an RNN or SVM, and trained accordingly. In their original approach, \cite{jasonweston2014} use \enquote{hard} attention when probing for the most relevant memory evidences, where the number of highest scoring evidences is a tunable parameter. \cite{sukhbaatar2015} build upon this idea by opting instead to use a softmax operation, which is conceptually comparable to using a \enquote{soft} attention mechanism over the external memory store. Moreover, unlike its \enquote{hard} counterpart, this makes the process differentiable, making the model trainable in an end-to-end fashion, requiring less supervision when compared to \cite{jasonweston2014}.
+% Each component that makes up this process may represent any trainable model such as an RNN or SVM, and trained accordingly. In their original approach, \cite{jasonweston2014} use \enquote{hard} attention when probing for the most relevant memory evidences, where the number of highest scoring evidences is a tunable parameter. \cite{sukhbaatar2015} build upon this idea by opting instead to use a softmax operation, which is conceptually comparable to using a \enquote{soft} attention mechanism over the external memory store. Moreover, unlike its \enquote{hard} counterpart, this makes the process differentiable, making the model trainable in an end-to-end fashion, requiring less supervision when compared to \cite{jasonweston2014}.
 
-This framework put forward in \cite{jasonweston2014} and subsequently extended by \cite{sukhbaatar2015} served as the foundation from which most memory-based targeted sentiment analysis approaches emerged.
+% This framework put forward in \cite{jasonweston2014} and subsequently extended by \cite{sukhbaatar2015} served as the foundation from which most memory-based targeted sentiment analysis approaches emerged.
 
-%TODO: Could insert the math, from sukhbaatar here, just explaining the process, if necessary, I will get back to it later after i've thought about it sommore.
+% %TODO: Could insert the math, from sukhbaatar here, just explaining the process, if necessary, I will get back to it later after i've thought about it sommore.
 
-Furthermore, \cite{sukhbaatar2015} show that the performance of their model can be enhanced by having the $O$ component repeatedly attending to memory for a number of consecutively stacked \enquote{hops}. Indeed, this observation is echoed in subsequent studies inspired by their work in the field of targeted sentiment analysis (eg. \cite{tang2016}, shown in figure \ref{fig:tang_memory_network}), the intuition being that through these consecutive hops the model is able to attend to richer, more abstractive, features than those existing solely on the surface level of the data.
+% Furthermore, \cite{sukhbaatar2015} show that the performance of their model can be enhanced by having the $O$ component repeatedly attending to memory for a number of consecutively stacked \enquote{hops}. Indeed, this observation is echoed in subsequent studies inspired by their work in the field of targeted sentiment analysis (eg. \cite{tang2016}, shown in figure \ref{fig:tang_memory_network}), the intuition being that through these consecutive hops the model is able to attend to richer, more abstractive, features than those existing solely on the surface level of the data.
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.7\textwidth]{tang_memory_network.png}
-	\caption{The deep memory network approach for targeted sentiment analysis, with 3 hops. The model stored the context of a target in memory and repeatedly attends to that memory with respect to the target word $w_i$. \cite{tang2016}}
-	\label{fig:tang_memory_network}
-\end{figure}
+% \begin{figure}[!ht]
+% 	\centering
+% 	\includegraphics[width=0.7\textwidth]{tang_memory_network.png}
+% 	\caption{The deep memory network approach for targeted sentiment analysis, with 3 hops. The model stored the context of a target in memory and repeatedly attends to that memory with respect to the target word $w_i$. \cite{tang2016}}
+% 	\label{fig:tang_memory_network}
+% \end{figure}
 
-% \subsection{Memory in TSA}
-Memory networks were first put forward towards the goal of targeted sentiment analysis by \cite{tang2016} (figure \ref{fig:tang_memory_network}). Their approach was inspired by \cite{sukhbaatar2015}, with some differences in the attention function that was used, opting instead to use the method put forward in \cite{bahdanau2014}. The authors reported results outperforming the state-of-the-art SVM-based model by \cite{kiritchenko}, which required extensive manual feature engineering, absent from their proposed memory network, as well as the far more complex LSTM based models \cite{tang2016} which required substantially more time to train. Similar to \cite{sukhbaatar2015}, the authors noted a marginal increase in performance as they increased the number of computational hops, which capped at around 8 hops.
+% % \subsection{Memory in TSA}
+% Memory networks were first put forward towards the goal of targeted sentiment analysis by \cite{tang2016} (figure \ref{fig:tang_memory_network}). Their approach was inspired by \cite{sukhbaatar2015}, with some differences in the attention function that was used, opting instead to use the method put forward in \cite{bahdanau2014}. The authors reported results outperforming the state-of-the-art SVM-based model by \cite{kiritchenko}, which required extensive manual feature engineering, absent from their proposed memory network, as well as the far more complex LSTM based models \cite{tang2016} which required substantially more time to train. Similar to \cite{sukhbaatar2015}, the authors noted a marginal increase in performance as they increased the number of computational hops, which capped at around 8 hops.
 
-\cite{chen2017} construct a location-weighted memory module from the hidden states of a BLSTM placed between the input and the attention modules so as to better capture information from phrases comprising of multiple words, such as \enquote{not wonderful enough}. Moreover, unlike the \cite{tang2016}, they combine the results of their recurrent attention layers non-linearly. These improvements led to a performance boost over \cite{tang2016}. The proposed model architecture is illustrated in figure \ref{fig:chen_recurrent_attention_model}. It is also worth pointing out that the authors failed to reproduce the results originally cited in \cite{tang2016}.
+% \cite{chen2017} construct a location-weighted memory module from the hidden states of a BLSTM placed between the input and the attention modules so as to better capture information from phrases comprising of multiple words, such as \enquote{not wonderful enough}. Moreover, unlike the \cite{tang2016}, they combine the results of their recurrent attention layers non-linearly. These improvements led to a performance boost over \cite{tang2016}. The proposed model architecture is illustrated in figure \ref{fig:chen_recurrent_attention_model}. It is also worth pointing out that the authors failed to reproduce the results originally cited in \cite{tang2016}.
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.7\textwidth]{chen_recurrent_attention.png}
-	\caption{The recurrent attention model architecture showing the placement of the location-weighted memory module with respect to the input and attention layers. As opposed to \cite{tang2016}, the attention values are combined from one episode to the next non-linearly, using a GRU. \cite{chen2017}}
-	\label{fig:chen_recurrent_attention_model}
-\end{figure}
+% \begin{figure}[!ht]
+% 	\centering
+% 	\includegraphics[width=0.7\textwidth]{chen_recurrent_attention.png}
+% 	\caption{The recurrent attention model architecture showing the placement of the location-weighted memory module with respect to the input and attention layers. As opposed to \cite{tang2016}, the attention values are combined from one episode to the next non-linearly, using a GRU. \cite{chen2017}}
+% 	\label{fig:chen_recurrent_attention_model}
+% \end{figure}
 
-\cite{liu2018} maintain a memory chain of entities that are encountered while processing a phrase and develop a gating mechanism that determines how those memory chains should be updated. The gating mechanism accounts for the content and the location of the memory chains compared to the current input, as well as the past activations, through the use of a GRU unit, when choosing to update a particular memory element.
+% \cite{liu2018} maintain a memory chain of entities that are encountered while processing a phrase and develop a gating mechanism that determines how those memory chains should be updated. The gating mechanism accounts for the content and the location of the memory chains compared to the current input, as well as the past activations, through the use of a GRU unit, when choosing to update a particular memory element.
 
 \end{document}

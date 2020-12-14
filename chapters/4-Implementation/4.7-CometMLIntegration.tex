@@ -1,0 +1,27 @@
+% !TEX root = ../../fyp.tex
+\documentclass[../../fyp.tex]{subfiles}
+
+\begin{document} \label{sec:comet_ml_integration}
+The primary motivating factor behind integrating the comet-ml service into the framework is to facilitate collaborative work by making experiment details and results remotely accessible while speeding up development by automatically setting up the requisite code infrastructure for this service.
+
+The top-level scope, encompassing all experiment data, organized by the name of the models used, is the comet-ml workspace. At a lower level, a dashboard for each model lists all the respective experiments and allows the user to define custom visualizations comparing metrics across multiple experiments. Finally, each experiment may be individually accessed to view all of the data that has been, or is being, uploaded.
+
+The default behavior of the framework is to upload all images and scalar metrics, all CLI parameters used to start the experiment and, their values as they are resolved during runtime so as to ensure the experiment was run with the desired configuration. These parameters also serve as a useful point of reference when referring back to the experiment at a later date. 
+
+In addition to these, the framework also uploads the following resources for each experiment:
+\begin{itemize}
+\item Dataset distribution figure
+\item Model graph definition file
+\item A log of the \texttt{stdout} stream during execution
+\item The model source code
+\item All parameters used in the experiment
+\item Any embedding filter details and corresponding report
+\item Description of the host environment used to run the experiment 
+\item A list of installed Python packages used for the experiment
+\end{itemize}
+
+\subsection{Embedding Filter Report}
+The embedding filter report tabulates embedding tokens filtered as a result of a function-filter. The first three columns describe the function-filter responsible, while the latter two contain the token and its corresponding NLP properties. 
+
+The insights provided by the embedding filter report may serve to inform further refinement of a filtering scheme, for example, if a less stringent filtering approach might be beneficial, or if a stricter rule-set is feasible without sacrificing performance. 
+\end{document}

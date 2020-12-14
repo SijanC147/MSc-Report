@@ -19,9 +19,17 @@ This chapter presents a closer look at the implementation details of the tool-se
 \section{Executing Tasks} \label{sec:executing_tasks}
 \subfile{chapters/4-Implementation/4.5-ExecutingTasks}
 
-\section{Summary}
-The tools described herein provide functionality which may be programmatically controlled through the same interface used to carry out experiments or submit jobs. This implementation approach adheres to our objective of providing a simplified interface, minimizing the amount of work required for successive experimentation, while still producing substantive downstream outputs. 
+\section{Outputs}
+\subfile{chapters/4-Implementation/4.6-Outputs}
 
-In chapter \ref{chap:evaluation_methods} we provide an overview these outputs, from metrics and visualizations to integrations with useful analysis tools, which is followed by the results and observations from our OOV and reproducibility experiments in chapter \ref{chap:results_observations}.
+\section{Comet-ML Integration}
+\subfile{chapters/4-Implementation/4.7-CometMLIntegration}
+
+\section{Summary}
+We have explored the details of each stage of the framework, from data preparation to model implementation to the output data and tools used to evaluate them. At each of these stages the core principles of the framework have been to enable rapid experimentation through an intuitive interface and extending this ease-of-use into an API which allows users to expand the functionality of the framework at various points of the process such as with novel datasets, embedding filtering techniques and, custom visualizations. This implementation approach adheres to our objective of providing a simplified interface, minimizing the amount of work required for successive experimentation, while still producing substantive downstream outputs. 
+
+In the next chapter we present the results obtained from two separate use-cases of the framework, a reproducibility study for a number of models, implemented using the framework API and, an investigation into a number of OOV approaches using the same models.  
+
+% In chapter \ref{chap:evaluation_methods} we provide an overview these outputs, from metrics and visualizations to integrations with useful analysis tools, which is followed by the results and observations from our OOV and reproducibility experiments in chapter \ref{chap:results_observations}.
 
 \end{document}
