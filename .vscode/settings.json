@@ -33,5 +33,7 @@
         "emotion": "mild"
       }
     }
-  ]
+  ],
+  "latex-workshop.latex.rootFile.useSubFile": false,
+  "latex-workshop.latex.rootFile.doNotPrompt": true
 }

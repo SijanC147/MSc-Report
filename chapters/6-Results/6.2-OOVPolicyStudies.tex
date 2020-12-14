@@ -71,10 +71,10 @@ This may indicate that due to the low occurrence rate of OOV tokens, and the nat
 	\centering
 	\includegraphics[width=\textwidth]{oov_buckets_ablation.png}
 	\caption{Results obtained with different numbers of test time OOV buckets. (OOV Train Threshold = 1)}
-	\label{fig:oov_threshold_ablation}
+	\label{fig:oov_buckets_ablation}
 \end{figure}
 
-We carried out our initial experiments investigating increasing OOV buckets compared to the default reference case of $T=1$ and $B=1$. Preliminary results from these experiments are illustrated in \ref{fig:oov_threshold_ablation} and hint at slight improvements over the mean macro-f1 scores as we increase the number of buckets up to $B=100$. Similar to the train threshold scenario, given that the nakov dataset has over 2000 OOV tokens, at $B=1000$ each bucket on average shall group 2 OOV tokens. As we have previously discussed, since the majority of OOV tokens only occur once, this approach results in buckets bereft of enough contextual information for accurate representation. 
+We carried out our initial experiments investigating increasing OOV buckets compared to the default reference case of $T=1$ and $B=1$. Preliminary results from these experiments are illustrated in \ref{fig:oov_buckets_ablation} and hint at slight improvements over the mean macro-f1 scores as we increase the number of buckets up to $B=100$. Similar to the train threshold scenario, given that the nakov dataset has over 2000 OOV tokens, at $B=1000$ each bucket on average shall group 2 OOV tokens. As we have previously discussed, since the majority of OOV tokens only occur once, this approach results in buckets bereft of enough contextual information for accurate representation. 
 
 We believe that these results merit further investigation into the possibility of accumulating the benefits of each optimal parameter value. Future avenues of research could involve further experiments covering combinations of these parameters, and larger vocabularies obtained by merging individual datasets using our framework. Finally, we present our results as evidence that these parameters, particularly the bucketing strategy, do indeed manifest in downstream performance differences. We believe this merits further investigation into the significance of these parameter configurations and to what degree their influence can be fine-tuned and optimized both in the generalized setting as well as for specific domains and their corresponding vocabularies.
 

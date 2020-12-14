@@ -42,7 +42,7 @@ Finally, the larger of these two variants also takes into account another aspect
 	\centering
 	\includegraphics[width=\textwidth]{tdlstm_orig_macrof1.png}
 	\caption{TD-LSTM Macro-F1 Results, $N$ refers to the number of runs carried out.}
-	\label{fig:ffnn}
+	\label{fig:tdlstm_orig_macrof1}
 \end{figure}
 
 We consider the performance of the TD-LSTM as it is the most commonly quoted variant compared in the literature. 
@@ -73,7 +73,7 @@ A defining characteristic of this approach is the fact that it is not solely the
 	\centering
 	\includegraphics[width=\textwidth]{ian_arch.jpeg}
 	\caption{Architecture of the IAN Model \cite{dehongma2017}}
-	\label{fig:ffnn}
+	\label{fig:ian_arch}
 \end{figure}
 
 The authors make use of a momentum optimizer [Qian et al. 1999] when training their model, however they do not mention the specific momentum parameter that is used when obtaining the reported results. The authors also omit the learning rate hyper-parameter and the batch-size used in their training, both of which are correlated to the momentum hyper-parameter previously mentioned which further exacerbates the problem. 
@@ -88,14 +88,14 @@ We further consider this 'default configuration' as a baseline for the model and
 	\centering
 	\includegraphics[width=\textwidth]{ian_default_microf1.png}
 	\caption{IAN Micro-F1 results (compared with originally reported results)}
-	\label{fig:ffnn}
+	\label{fig:ian_default_microf1}
 \end{figure}
 
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{ian_default_macrof1.png}
 	\caption{IAN Macro-F1 results (compared with results reported in [Navonil et al. 2020])}
-	\label{fig:ffnn}
+	\label{fig:ian_default_macrof1}
 \end{figure}
 
 We first compare the micro-F1 (accuracy) results obtained in the our experiments with those reported in the original work \cite{dehongma2017} for the laptops and the restaurants dataset as these are the only metrics which were cited. It is worth pointing out once more that both of these datasets are heavily skewed in their class distribution (see \ref{tab:dataset_class_dists}) which confines the validity of this metric.
@@ -126,7 +126,7 @@ Finally, all four components are used in conjunction as the sentence feature vec
 	\centering
 	\includegraphics[width=\textwidth]{lcrrot_architecture.png}
 	\caption{Left-Center-Right Separated Neural Network Architecture \cite{zheng2018}. Bi-LSTMs extract features, followed by two attention models, \textit{Target2Context} and \textit{Context2Target}, which produce target-aware context representations and left and right context-aware target representations.}
-	\label{fig:ffnn}
+	\label{fig:lcrrot_architecture}
 \end{figure}
 
 When attempting to reproduce the approach as described in \cite{zheng2018}, we note that this work provides the best coverage of important parameters thus far. The authors further indicate their intention to make the source code of their model publically accessible. Although the paper provides no direct link, the repository was sufficiently easy to locate manually. The repository contains an example, which specifies values for the remaining, otherwise unspecified parameters. In this case, these are the batch-size and training duration. Although unclear whether meant merely as a suggestion, we use this configuration for our reproduction experiments on the assumption that this configuration was arrived at systematically with due consideration for optimal performance.
@@ -141,14 +141,14 @@ Finally, we draw attention to the use of accuracy (macro-f1) as the definitive m
 	\centering
 	\includegraphics[width=\textwidth]{lcrrot_default_microf1.png}
 	\caption{LCR-ROT Micro-F1 results (compared with originally reported results)}
-	\label{fig:ffnn}
+	\label{fig:lcrrot_default_microf1}
 \end{figure}
 
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{lcrrot_default_macrof1.png}
 	\caption{LCR-ROT Macro-F1 results}
-	\label{fig:ffnn}
+	\label{fig:lcrrot_default_macrof1}
 \end{figure}
 
 Similar to the previously mentioned studies, we assume the reported metrics are optimal, as the authors did not mention multiple runs. When considering the Dong dataset, our results suggest that the authors employed the larger 840b variant of the GloVe embeddings. The reported micro-f1, in this case, falls within the mean (-0.06), as opposed to the 42b variant, which performs markedly worse. 
