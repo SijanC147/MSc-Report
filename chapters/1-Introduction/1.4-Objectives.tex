@@ -1,8 +1,31 @@
 % !TEX root = ../../fyp.tex
 \documentclass[../../fyp.tex]{subfiles}
 
+% The problem from mooore:
+% models make it difficult to recreate results, 
+% everyone tests on different data 
+% not everyone uses the same metrics
+% there is a lack of consistency.
+
+% Problem from dhingra
+% OOV are unavoidable, and single tokens might lack resolution
+% intelligently bucketing might provide benefits 
+% could address OOV problem with minimal resource overhead
+
 \begin{document}
-Following the principles outlined by Moore \cite{moore2018}, and motivated by the observations on these principles made by Dhingra \cite{bhuwandhingra2017} in the field of reading comprehension and the effect of out-of-vocabulary(OOV) embedding strategies thereof, the objectives of this study are two-fold.
+Moore et al. \cite{moore2018} shed light on the problem of reproducibility in the field and detail the detrimental effects of this on TSA as a whole. Development of novel architechtures that push the state-of-the-art (SOTA) are possible only after determining the current SOTA, and reproducibility is fundamental for doing so. For this reason we agree with the authors' evaluation of the severity of this problem and its repurcussions, which motivates us to re-visit the issue and evaluate the present state of reproducibility covering a wider range of studies and techniques that followed their work. To tackle this task, we develop a framework with the intent of addressing the problems specified by \cite{moore2018} in the field of TSA, namely,
+
+\begin{enumerate}
+	\item Underspecification of the methodology used.
+	\item No accompanying code-base to facilitate reproducing the reported results.
+	\item No access to the datasets as used for a study, including any processing and stratification strategies employed.
+\end{enumerate}
+
+Our framework tackles these issues by streamlining TSA model development, making it easier for authors to account for them. Moreover, we identify and address an additional problem which results from these issues: The inability to compare and contrast different TSA models in an impartial environment, where all components of the machine learning pipeline, save for the model itself, are maintained constant.
+
+Motivated by the observations made by Dhingra \cite{bhuwandhingra2017} in the field of reading comprehension and the effect of out-of-vocabulary (OOV) embedding strategies thereof, and as an application of our framework, we approach the problem of OOV words in TSA. Specifically, is it possible to mitigate the detrimental effects of OOV words by applying marginally more sophisticated bucketing strategies with minimal computational overhead?
+
+The objectives of this study, therefore, are two-fold.
 
 \begin{enumerate}
 	\item We propose to extend the work carried out by Moore et al. \cite{moore2018} in the field of TSA to cover a wider range of studies, including those that employ techniques that have since emerged focusing on attention mechanisms and memory networks. This entails the attempt to reproduce these models based on the detail provided in the original studies and subsequently carrying out a comparative evaluation of these approaches across a wide range of datasets from varying domains using a number of different pre-trained word embeddings.
