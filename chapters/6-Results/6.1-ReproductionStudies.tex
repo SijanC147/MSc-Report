@@ -13,22 +13,22 @@ When determining parameters for each model, the following order is adopted:
    
 As we shall outline, a non-trivial portion of the studies covered omitted essential parameter settings, such as the learning-rate of a model or the number of hidden units used, which drastically hinder their reproducibility. These omissions would be understandable provided the work is supplemented with source-code, however, this was also unobtainable or excluded in most cases.
 
-Parameters such as the batch-size and duration of training are assumed based on online implementations, which report results similar to the original work. To account for this, following Moore et al. \cite{moore2018}, we adopt early-stopping with a patience of 10 epochs, a maximum allowance of 300 epochs and a minimum of 30 epochs, monitoring the loss metric of each model at every epoch. 
+Parameters such as the batch-size and duration of training are assumed based on online implementations, which report results similar to the original work. To account for this, following \citet{moore2018}, we adopt early-stopping with a patience of 10 epochs, a maximum allowance of 300 epochs and a minimum of 30 epochs, monitoring the loss metric of each model at every epoch. 
 
-We first provide a brief overview of each approach, which is followed by a description of the challenges faced in reproducing each approach in particular, and the counter-measures taken. Finally, we contrast the results obtained from our experiments with those reported in the original work. Since he effect of the random seed on parameter initialization is statistically significant (Reimers et al. \cite{reimers2017} as cited in \cite{moore2018}), we report mean values from 3 separate runs using different random seed values, for each experiment. 
+We first provide a brief overview of each approach, which is followed by a description of the challenges faced in reproducing each approach in particular, and the counter-measures taken. Finally, we contrast the results obtained from our experiments with those reported in the original work. Since he effect of the random seed on parameter initialization is statistically significant \citet{reimers2017} as cited in \cite{moore2018}), we report mean values from 3 separate runs using different random seed values, for each experiment. 
 
 \subsection{TD-LSTM}
 The work carried out by Tang et al 2016 was one of the first to employ LSTM based methods for the task of TSA. Three variants were developed for their experiments, first, a baseline LSTM model which did not take any target information into account. A Target Dependent(TD) LSTM integrated target information by concatenating the target vector to both left and right contexts, and using two separate LSTMs for each. Finally, a Target-Connected(TC) LSTM also adopted two LSTMs, however the target vector information was concatenated to each word in the context, rather than the context as a whole as in the TD-LSTM. This modification incurs a cost on computation time, as it effectively doubles the embedding dimension of each word. Each variant is followed by a softmax layer which is used to obtain the final classification of the sentence.  
 
 The authors use the Dong dataset (\S\ref{ds:dong}) and experiment with both 100-dimension and 200-dimension twitter based GloVe embeddings. Furthermore, LSTM weights are initialized using $U(-0.003,0.003)$\footnote{Denotes a uniform distribution across a specific range of values} and training is carried out using stochastic gradient descent with a learning rate of 0.01.
 
-A notable omission in Tang et al. \cite{tang2016b} as well as the reproduction carried out by \cite{moore2018} is the hidden unit count for each LSTM cell. 
+A notable omission in \citet{tang2016b} as well as the reproduction carried out by \cite{moore2018} is the hidden unit count for each LSTM cell. 
 
 To choose a value for this parameter, experiments were carried out for each LSTM variant with 200 and 300 hidden units and both were found to converge on similar results. Since the latter requires more computational resources in training we assume a value of 200 for the results presented herein. 
 
 The insignificant downstream differences between these two variants notwithstanding, the omission of this parameter makes reproduction attemps more challenging, and leaves room for uncertainty when comparing results to the original work. 
 
-Finally, similar to Moore et al. \cite{moore2018}, we ignore the reported 'softmax clipping threshold' of 200 as the implications of this remained misunderstood, and no further elaboration on the parameter is provided by Tang et al. \cite{tang2016b}. 
+Finally, similar to \citet{moore2018}, we ignore the reported 'softmax clipping threshold' of 200 as the implications of this remained misunderstood, and no further elaboration on the parameter is provided by \citet{tang2016b}. 
 
 As there was no mention of the batch-size or the amount of hidden units used in the kernel of the LSTMs these were set to be 200 and 64 respectively. These values were taken from online public implementations which quoted results similar to those reported in \cite{tang2016b}.
 
@@ -55,17 +55,17 @@ Although the non-Twitter embedding variants slightly outperform their counterpar
 
 The same can be said for the restaurants dataset, considering the wide variance in the results observed using any embedding with the best results being counterintuitively obtained by the 100d Twitter-sourced glove variant.
 
-When considering the results obtained for the Dong dataset, we note that both 100d and 200d GloVe embeddings perform similarly, with a slight edge in the mean of the 200d variant. This notwithstanding, both variants' performance is markedly less than that reported in the original paper \cite{tang2016b}, which as stated by Moore et al. \cite{moore2018}, can be attributed reporting only results from singular runs, thus not taking into account the downstream effects of differences in random initializations of weights. 
+When considering the results obtained for the Dong dataset, we note that both 100d and 200d GloVe embeddings perform similarly, with a slight edge in the mean of the 200d variant. This notwithstanding, both variants' performance is markedly less than that reported in the original paper \cite{tang2016b}, which as stated by \citet{moore2018}, can be attributed reporting only results from singular runs, thus not taking into account the downstream effects of differences in random initializations of weights. 
 
-Finally, the performance of the 300d embedding variants in comparison, is in accordance with the upward trend with increased dimensionality noted by Moore et al. \cite{moore2018}
+Finally, the performance of the 300d embedding variants in comparison, is in accordance with the upward trend with increased dimensionality noted by \citet{moore2018}
 
-When comparing the results obtained in the laptops and restaurants dataset to those reported by Chen et al. \cite{chen2017} there is a significant difference irrespective of the embedding used. Although this can also be caused by randomness in the wegiht initializations (no mention of multiple runs is made), it is interesting to note that the opposite phenomena is observed when considering the dong dataset. In this instance the result reported by \cite{chen2017} is substantially lower than the rest.
+When comparing the results obtained in the laptops and restaurants dataset to those reported by \citet{chen2017} there is a significant difference irrespective of the embedding used. Although this can also be caused by randomness in the wegiht initializations (no mention of multiple runs is made), it is interesting to note that the opposite phenomena is observed when considering the dong dataset. In this instance the result reported by \cite{chen2017} is substantially lower than the rest.
 
 This discrepancy may be the result of the different approaches that were adopted to account for unknown parameters in the original work \cite{tang2016b} which were similarly left unreported by \cite{chen2017}.
 
 \subsection{IAN}
 
-The Interactive Attention Network (IAN) model developed by Ma et al. \cite{dehongma2017} separates the input sentence into target and context and feeds the vector representation of these elements to two separate LSTM units. The authors subsequently use max-pooling on the hidden states of these LSTM units and employ an attention mechanism to attend on the output of each LSTM unit with respect to the other's max-pooled hidden state vector. This produces a vector representation of the context weighted by the attention scores with respect to the target and vice-versa. These representations are then concatenated and fed to a softmax classifier which produces a probability distribution over the class labels, the highest of which is taken to be the final predicted class. 
+The Interactive Attention Network (IAN) model developed by \citet{dehongma2017} separates the input sentence into target and context and feeds the vector representation of these elements to two separate LSTM units. The authors subsequently use max-pooling on the hidden states of these LSTM units and employ an attention mechanism to attend on the output of each LSTM unit with respect to the other's max-pooled hidden state vector. This produces a vector representation of the context weighted by the attention scores with respect to the target and vice-versa. These representations are then concatenated and fed to a softmax classifier which produces a probability distribution over the class labels, the highest of which is taken to be the final predicted class. 
 
 A defining characteristic of this approach is the fact that it is not solely the context's represenation which is dependent on the target, but the target representation itself is affected by its context. 
 
@@ -80,7 +80,7 @@ The authors make use of a momentum optimizer when training their model, however 
 
 Finally, the authors remark that GloVe \cite{pennington} embeddings are used with a dimensionality matching that of the hidden unit count in each of the LSTM units, namely 300. It must be noted however that there are two variants of these embeddings with that dimensionality, with substantially different source-vocabulary sizes and only one of which is case-sensitive.
 
-We use values reported in a more recent paper by Zhang et al. \cite{zhang2018} for the momentum, learning-rate and batch size parameters for the default configuration of this model since these parameters are intertwined and in their work \cite{zhang2018} report promising results. 
+We use values reported in a more recent paper by \citet{zhang2018} for the momentum, learning-rate and batch size parameters for the default configuration of this model since these parameters are intertwined and in their work \cite{zhang2018} report promising results. 
 
 We further consider this 'default configuration' as a baseline for the model and evaluate its performance on the datasets reported in the original work as well as the Dong Twitter dataset. Furthermore, we also include four different variants of the GloVe embeddings, 100 and 200 dimensionality Twitter variants and both of the aforementioend 300 dimensionality variants so as to observe the difference in downstream performance these make with respect to the reported results. 
 
@@ -94,7 +94,7 @@ We further consider this 'default configuration' as a baseline for the model and
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{ian_default_macrof1.png}
-	\caption{IAN Macro-F1 results (compared with results reported in Navonil et al. \cite{navonil2020})}
+	\caption{IAN Macro-F1 results (compared with results reported in \citet{navonil2020})}
 	\label{fig:ian_default_macrof1}
 \end{figure}
 
@@ -104,18 +104,18 @@ This notwithstanding, in both datasets when employing both variants of the 300d 
 
 The authors do not mention the number of runs that were performed or whether multiple runs were performed, which may explain this discrepancy. We can observe that both reported metrics fall within the range of results obtained with the 42b 300d GloVe embedding, which may suggest that this was the variant the authors were referreing to in their work. 
 
-Recently, Navonil et al. \cite{navonil2020} present a novel approach which included the IAN architecture as a baseline and report macro-f1 scores for the skewed datasets. In their work, the authors report a learning rate of 0.002 as opposed to 0.1 which was employed in our work. 
+Recently, \citet{navonil2020} present a novel approach which included the IAN architecture as a baseline and report macro-f1 scores for the skewed datasets. In their work, the authors report a learning rate of 0.002 as opposed to 0.1 which was employed in our work. 
 
 We observe similar, if not more pronounced, differences when considering the 300d GloVe variants in both laptop and restaurants datasets, with the reported metrics in both cases falling squarely below the range of values we obtain in our experiments. 
 
 Although this discrepancy in both cases can be considered 'favorable', it nonetheless continues to underscore the importance of providing all parameter settings for these models to facilitate reproduction by mitigating the overhead involved in attempting to recreate the original results. 
 
-Moreover, the importance of reporting metrics which take into account dataset characteristics as outlined in \S\ref{sec:eval_metrics} and which take into account the downstream effects of randomness in the initialization process (Reimers et al. \cite{reimers2017} as in \cite{moore2018}) continues to emerge from these results. 
+Moreover, the importance of reporting metrics which take into account dataset characteristics as outlined in \S\ref{sec:eval_metrics} and which take into account the downstream effects of randomness in the initialization process \citet{reimers2017} as in \cite{moore2018}) continues to emerge from these results. 
 
 \subsection{LCR-ROT}
-From the approaches described thus far, we observe that utilizing attention mechanisms to affect the representation of a context concerning its target is effective when tackling TSA tasks. This may be considered fairly intuitive, however, as we have seen, Ma et al. \cite{dehongma2017} present a compelling argument with their IAN model that the inverse, in favor of using attention mechanisms to affect the target representation concerning its context as well. Zheng et al. \cite{zheng2018} expand upon this idea in their work presenting a Left-Center-Right Rotary Attention network (LCR-ROT) in several ways, albeit at the cost of a heavier computational load. 
+From the approaches described thus far, we observe that utilizing attention mechanisms to affect the representation of a context concerning its target is effective when tackling TSA tasks. This may be considered fairly intuitive, however, as we have seen, \citet{dehongma2017} present a compelling argument with their IAN model that the inverse, in favor of using attention mechanisms to affect the target representation concerning its context as well. \citet{zheng2018} expand upon this idea in their work presenting a Left-Center-Right Rotary Attention network (LCR-ROT) in several ways, albeit at the cost of a heavier computational load. 
 
-First, similar to other works such as Tang et al. \cite{tang2016} and Chen et al. \cite{chen2017}, the authors consider the left and right contexts of a target separately as opposed to a single context vector which makes the model more robust when considering the same sentence for different targets. 
+First, similar to other works such as \citet{tang2016} and \citet{chen2017}, the authors consider the left and right contexts of a target separately as opposed to a single context vector which makes the model more robust when considering the same sentence for different targets. 
 
 Secondly, the authors employ Bi-directional LSTMs, which enable the model to extract sequential feature data in both directions of a sequence. This comes at the cost of double the parameters that the model must learn since it is achieved by stacking the hidden states of two separate LSTMs processing the sequence in opposite directions. Three BiLSTMs are used for the left and right contexts and the target respectively. 
 
@@ -129,9 +129,9 @@ Finally, all four components are used in conjunction as the sentence feature vec
 	\label{fig:lcrrot_architecture}
 \end{figure}
 
-When attempting to reproduce the approach as described in Zheng et al. \cite{zheng2018}, we note that this work provides the best coverage of important parameters thus far. The authors further indicate their intention to make the source code of their model publically accessible. Although the paper provides no direct link, the repository was sufficiently easy to locate manually. The repository contains an example, which specifies values for the remaining, otherwise unspecified parameters. In this case, these are the batch-size and training duration. Although unclear whether meant merely as a suggestion, we use this configuration for our reproduction experiments on the assumption that this configuration was arrived at systematically with due consideration for optimal performance.
+When attempting to reproduce the approach as described in \citet{zheng2018}, we note that this work provides the best coverage of important parameters thus far. The authors further indicate their intention to make the source code of their model publically accessible. Although the paper provides no direct link, the repository was sufficiently easy to locate manually. The repository contains an example, which specifies values for the remaining, otherwise unspecified parameters. In this case, these are the batch-size and training duration. Although unclear whether meant merely as a suggestion, we use this configuration for our reproduction experiments on the assumption that this configuration was arrived at systematically with due consideration for optimal performance.
 
-However, a more pressing concern is the lack of specificity when describing the word embeddings used for their experiments. We have previously outlined the differences in the two variants of 300-dimension GloVe embeddings, and have repeatedly produced varying results in each of our tests. Zheng et al. \cite{zheng2018} cite Wang et al. \cite{wang2018} and Tang et al. \cite{tang2016} as motivation for their choice of embeddings; however, these approaches each use different variants.
+However, a more pressing concern is the lack of specificity when describing the word embeddings used for their experiments. We have previously outlined the differences in the two variants of 300-dimension GloVe embeddings, and have repeatedly produced varying results in each of our tests. \citet{zheng2018} cite \citet{wang2018} and \citet{tang2016} as motivation for their choice of embeddings; however, these approaches each use different variants.
 
 Furthermore, the authors do not specify whether embeddings were trained further in their experiments. When referring to the codebase, we note both approaches, with the code for further embedding training being disabled. We assume this to imply that excluding embeddings from the training process provided superior results and adopt the same approach in our experiments. 
 
