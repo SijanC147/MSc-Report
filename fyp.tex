@@ -19,7 +19,7 @@
 \usepackage[ruled,vlined,linesnumbered,noresetcount]{algorithm2e}
 \usepackage[table,xcdraw]{xcolor}
 \usepackage[normalem]{ulem}
-\usepackage[colorlinks,citecolor=blue,urlcolor=blue,bookmarks=false,hypertexnames=true]{hyperref}
+\usepackage[colorlinks,citecolor=blue,urlcolor=blue,bookmarks=false,hypertexnames=true,linktoc=both]{hyperref}
 \useunder{\uline}{\ul}{}
 
 \newcommand{\unk}{\textit{\textless{UNK}\textgreater} }
@@ -64,7 +64,7 @@
     \end{minipage}}%
   }%
 }
-\let\Hy@linktoc\Hy@linktoc@none
+% \let\Hy@linktoc\Hy@linktoc@none
 \makeatother
 \usepackage{subfiles}
 \begin{document}
@@ -94,12 +94,13 @@ I am deeply grateful to my supervisor, Mike Rosner, whose level of patience and 
 
 	Using this framework to investigate reproducibility, we identify three issues, namely, lack of specificity, the importance of multiple experimentation runs and, the use of misleading metrics which do not account for class distribution in datasets. Finally, we evaluate different out-of-vocabulary clustering approaches and find downstream effects which merit further investigation. 
 \end{abstract}
-
+{\hypersetup{linkcolor=black}
 \tableofcontents
 
 \listoffigures
 
 \listoftables
+}
 
 \newpage
 \section*{Acronyms}
