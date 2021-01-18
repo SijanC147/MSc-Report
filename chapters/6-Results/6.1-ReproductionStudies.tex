@@ -55,13 +55,13 @@ Although the non-Twitter embedding variants slightly outperform their counterpar
 
 The same can be said for the restaurants dataset, considering the wide variance in the results observed using any embedding with the best results being counterintuitively obtained by the 100d Twitter-sourced glove variant.
 
-When considering the results obtained for the Dong dataset, we note that both 100d and 200d GloVe embeddings perform similarly, with a slight edge in the mean of the 200d variant. This notwithstanding, both variants' performance is markedly less than that reported in the original paper \cite{tang2016b}, which as stated by \citet{moore2018}, can be attributed reporting only results from singular runs, thus not taking into account the downstream effects of differences in random initializations of weights. 
+When considering the results obtained for the Dong dataset, we note that both 100d and 200d GloVe embeddings perform similarly, with a slight edge in the mean of the 200d variant. This notwithstanding, both variants' performance is markedly less than that reported in the original paper \citep{tang2016b}, which as stated by \citet{moore2018}, can be attributed reporting only results from singular runs, thus not taking into account the downstream effects of differences in random initializations of weights. 
 
 Finally, the performance of the 300d embedding variants in comparison, is in accordance with the upward trend with increased dimensionality noted by \citet{moore2018}
 
-When comparing the results obtained in the laptops and restaurants dataset to those reported by \citet{chen2017} there is a significant difference irrespective of the embedding used. Although this can also be caused by randomness in the wegiht initializations (no mention of multiple runs is made), it is interesting to note that the opposite phenomena is observed when considering the dong dataset. In this instance the result reported by \cite{chen2017} is substantially lower than the rest.
+When comparing the results obtained in the laptops and restaurants dataset to those reported by \citet{chen2017} there is a significant difference irrespective of the embedding used. Although this can also be caused by randomness in the wegiht initializations (no mention of multiple runs is made), it is interesting to note that the opposite phenomena is observed when considering the dong dataset. In this instance the result reported by \citet{chen2017} is substantially lower than the rest.
 
-This discrepancy may be the result of the different approaches that were adopted to account for unknown parameters in the original work \cite{tang2016b} which were similarly left unreported by \cite{chen2017}.
+This discrepancy may be the result of the different approaches that were adopted to account for unknown parameters in the original work \cite{tang2016b} which were similarly left unreported by \citet{chen2017}.
 
 \subsection{IAN}
 

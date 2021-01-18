@@ -5,7 +5,8 @@
 %%these packages are not really necessary if you dont need the code and proofs environments
 %%so if you like you can delete from here till the next comment
 %%note that there are some examples below which obviously won't work once you remove this part
-\usepackage[square,numbers]{natbib}
+% \usepackage[square,numbers]{natbib}
+\usepackage{natbib}
 \usepackage[hyphens,spaces]{url}
 \usepackage{verbatim}
 \usepackage{amsfonts}
@@ -55,6 +56,8 @@
 %% END OF TEMPORARY FIX FOR MORE READABLE CITATIONS 
 % \bibliographystyle{abbrv} %% UNCOMMENT 
 \bibliographystyle{ACM-Reference-Format}
+\setcitestyle{authoryear,open={(},close={)}}
+
 \makeatletter
 \newcommand{\algorithmfootnote}[2][\footnotesize]{%
   \let\old@algocf@finish\@algocf@finish% Store algorithm finish macro
