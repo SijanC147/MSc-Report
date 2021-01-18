@@ -27,14 +27,14 @@ Since predictive methods rely on a bounded context window of some specified widt
 
 There was a need for more sophisticated, and scalable, techniques to address the bottleneck that was presenting itself in the lack of accurately labelled data that was being made available for training models in fields such as Automatic Speech Recognition (ASR) and machine translation. As these models emerged to tackle increasingly large data sets, simpler models, such as the aforementioned n-gram model, were consistently outperformed by neural networks using distributed representations of words in the form of word embeddings. Moreover, neural networks were shown to capture the linear relationships between words more accurately than previous methods that used LSA, while maintaining a higher level of scalability when compared to LDA \citep{mikolov2013}.
 
-Some of the initial work making use of neural networks to learn word embeddings include \citep{collobert2008}, later refined in \citet{collobert2011}. Their approach consisted of a feedforward neural network tasked with predicting the correct word within a context window of five words including the target word itself.
+Some of the initial work making use of neural networks to learn word embeddings include \citet{collobert2008}, later refined in \citet{collobert2011}. Their approach consisted of a feedforward neural network tasked with predicting the correct word within a context window of five words including the target word itself.
 
 \citet{mikolov2013} introduced the Continuous Skip-gram and the Continuous Bag-Of-Words (CBOW) models in an effort to extract word embeddings from large corpora. As illustrated in figure \ref{fig:cbow_vs_skipgram}, the former aims to learn an adequate representation of a word by training to predict the words that are most likely to surround it while, inversely, the latter was trained to predict a specific word given its context, both using a feed-forward neural network with the non-linear hidden layer removed.
 
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.7\textwidth]{cbow_vs_skipgram.png}
-	\caption{The differences between the model architectures proposed by Mikolov in \citep{mikolov2013}. The Continuous Bag-Of-Words (CBOW) approach predicts a word from its context and, conversely, the skip-gram model predicts the context from a word \citep{mikolov2013b}.}
+	\caption{The differences between the model architectures proposed in \citet{mikolov2013}. The Continuous Bag-Of-Words (CBOW) approach predicts a word from its context and, conversely, the skip-gram model predicts the context from a word \citep{mikolov2013b}.}
 	\label{fig:cbow_vs_skipgram}
 \end{figure}
 
@@ -47,7 +47,7 @@ Following their initial work, \citet{mikolov2013b} later expanded on their \text
 As noted by \citet{mikolov2013}, the performance of their models were contingent on a set of design choices, most critical of which include the training algorithm, vector size, sub-sampling rate and the size of the training window. They conclude that the optimal configuration for these parameters varies based on the task being tackled.
 
 \subsection{Global Vectors for Word Representation (GloVe)}
-Using co-occurrence statistics to extract continuous representations of words within a large corpus of data has been explored in NLP in works as early as \citet{rumelhart1988}, as cited by Bojanowski \citep{bojanowski2017}
+Using co-occurrence statistics to extract continuous representations of words within a large corpus of data has been explored in NLP in works as early as \citet{rumelhart1988} (as cited by \cite{bojanowski2017}).
 
 \citet{pennington} argue that while the significance of word occurrence information within a text when learning word representations in an unsupervised manner is uncontested, further research is needed into the mechanisms by which these statistical data generate meaningful vector representations. In pursuit of this, they propose the \textit{GloVe} model, characterized by its use of the global, that is to say at the level of the corpus in its entirety, co-occurrence information to produce aptly-called \textit{\enquote{global vectors}}. The authors point out that while count and prediction based methods are not fundamentally dissimilar, since both exploit co-occurrence statistics within a corpus to obtain accurate representations, they argue for the efficiency of the former approach over the latter. A word-word co-occurrence matrix $X$ is constructed from a vocabulary such that $X_{ij}$ is representative of the number of times word $j$ is found in the context of word $i$. This invariably makes $X$ sparse in nature, since the substantial portion of words within a language cannot be expected to occur within an equally substantial number of words.
 

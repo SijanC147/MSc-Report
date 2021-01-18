@@ -17,7 +17,7 @@ The hidden layers of a neural network architecture are able to extrapolate featu
 \end{figure}
 
 \subsubsection{Activation Functions}
-Three of the most commonly used activation functions are sigmoid (eq. \ref{eq:sigmoid}), hyperbolic tangent (eq. \ref{eq:hyperbolic_tangent}) and Rectified Linear Unit (ReLU; eq. \ref{eq:relu}). Although the choice of activation function is typically heuristic, \citet{glorot2011} (as cited in \citep{zhang2018}) notes that the ReLU is easier to compute when compared to the other two and also tends to converge faster, all while maintaining similar or even better performance.
+Three of the most commonly used activation functions are sigmoid (eq. \ref{eq:sigmoid}), hyperbolic tangent (eq. \ref{eq:hyperbolic_tangent}) and Rectified Linear Unit (ReLU; eq. \ref{eq:relu}). Although the choice of activation function is typically heuristic, \citet{glorot2011} (as cited in \citet{zhang2018}) notes that the ReLU is easier to compute when compared to the other two and also tends to converge faster, all while maintaining similar or even better performance.
 
 \begin{equation} \label{eq:sigmoid}
 	f(W^tx) = sigmoid(W^tx) = \frac{1}{1+e^{-W^tx}}
@@ -30,7 +30,7 @@ Three of the most commonly used activation functions are sigmoid (eq. \ref{eq:si
 \end{equation}
 
 \subsubsection{Training}
-Neural networks are trained by following the direction of the gradient that lessens the measured error rate of some objective function which is calculated through the repeated application of the chain-rule. The process can be carried out on the training set in its entirety, commonly referred to as batch learning, or in an on-line manner, carrying out updates after each training sample. The latter is known as stochastic gradient descent and is known to be more efficient and robust to local minima when dealing with large datasets \citep{lecun1998} as cited in \citep{graves2012b}.
+Neural networks are trained by following the direction of the gradient that lessens the measured error rate of some objective function which is calculated through the repeated application of the chain-rule. The process can be carried out on the training set in its entirety, commonly referred to as batch learning, or in an on-line manner, carrying out updates after each training sample. The latter is known as stochastic gradient descent and is known to be more efficient and robust to local minima when dealing with large datasets (\citet{lecun1998} as cited in \citet{graves2012b}).
 
 There will always be noise in the sampled training data that does not translate to the real world test data scenarios and that the model must therefore avoid learning. Training models to the point of becoming overly-sensitive to this noise is referred to as over-fitting the data, and there are a number of regularization techniques often employed in the literature while training to counteract this.
 
@@ -41,9 +41,9 @@ One common approach is introducing some form of weight penalties, for instance, 
 
 In recent years, the astounding progress in computing resources such as GPUs and high performance distributed computing have made deep learning accessible on an unparalleled level. Consequently, this has driven interest in the applicability of deep learning architectures such as the CNN and RNN in a range of fields from computer vision to natural language processing \citep{goldberg2015,collobert2011}.
 
-The use of neural network models such as \citet{lakkaraju2014}, \citet{vo2015}, \citet{nguyen2015} became increasingly widespread within the field of NLP, including targeted and aspect based sentiment classification tasks \citep{dong,wang,tang2016,tang2016b}.
+The use of neural network models such as \citet{lakkaraju2014,vo2015,nguyen2015} became increasingly widespread within the field of NLP, including targeted and aspect based sentiment classification tasks \citep{dong,wang,tang2016,tang2016b}.
 
-The most prevalent architectures are the Convolutional Neural Networks (CNNs) and Recurrent Neural Networks (RNN) and the descendants thereof. The Recursive Neural Network (Rec-NN), which has been employed in works such as \citep{socher2011} and \citep{socher2013} for syntactic analysis and sentence sentiment analysis respectively \citep{zhang2018}.
+The most prevalent architectures are the Convolutional Neural Networks (CNNs) and Recurrent Neural Networks (RNN) and the descendants thereof. The Recursive Neural Network (Rec-NN), which has been employed in works such as \citet{socher2011,socher2013} for syntactic analysis and sentence sentiment analysis respectively \citep{zhang2018}.
 
 % \subsubsection{Convolutional Neural Networks (CNNs)}
 % The layers typically comprise of filters, also referred to as kernels, of differing widths that slide over the input data to extrapolate various features. Each of these features would be representative of a diverse set of aspects of the data that would aid in defining it with respect to the task being tackled.
@@ -83,8 +83,7 @@ Moreover, the capacity of RNNs to model variable length sequences to a fixed len
 \subsubsection{Vanishing \& Exploding Gradients}
 In the setting of a traditional RNN, the tendency for a gradient to exhibit exponential change to the degree that prevents substantive learning increases with the length of a sequence \citep{bengio1994,hochreiter1997}. This phenomenon is what is implied by the terms \enquote{vanishing} or \enquote{exploding} gradients, where the changes observed over time steps often vanish with time or, although less frequently, but with equally devastating results, grow exponentially; hindering the network's capacity for learning.
 
-One class of solutions to the vanishing or exploding gradient problem is to carry out particular modifications on top of the standard stochastic gradient descent algorithm, such as gradient clipping, whereby the norm of the gradient vector is \textit{clipped}, or using second order derivatives, which may or may not be influences to a lesser degree \citep{chung2014}.
-The second, and more popular, class of solutions look instead to introduce further sophisticated, additive, non-linearities to the traditional RNN unit. These would selectively carry forward salient features and filter out irrelevant information from previous time steps, as opposed to overwriting the memory content at each time step.
+One class of solutions to the vanishing or exploding gradient problem is to carry out particular modifications on top of the standard stochastic gradient descent algorithm, such as gradient clipping, whereby the norm of the gradient vector is \textit{clipped}, or using second order derivatives, which may or may not be influences to a lesser degree \citep{chung2014}. The second, and more popular, class of solutions look instead to introduce further sophisticated, additive, non-linearities to the traditional RNN unit. These would selectively carry forward salient features and filter out irrelevant information from previous time steps, as opposed to overwriting the memory content at each time step.
 
 Variants on the standard RNN network were proposed to address the vanishing and exploding gradient issue. The most popular of these being the Long Short Term Memory (LSTM) and, more recently, Gated Recurrent Unit (GRU). Other approaches include, but are not limited to, Residual Networks (Res-Net).
 
@@ -98,7 +97,7 @@ These gates are commonly referred to as the input, forget and output gate. Moreo
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=1\textwidth]{lstm_architecture.png}
-	\caption{LSTM repeating module illustrating the four neural layers (Yellow Boxes) that comprise it. Point-wise vector operations are depicted in red boxes. Image adapted from \textit{Colah's Blog}\citep{colah-understanding-lstm}}
+	\caption{LSTM repeating module illustrating the four neural layers (Yellow Boxes) that comprise it. Point-wise vector operations are depicted in red boxes. Image adapted from \citet{colah-understanding-lstm}}
 	\label{fig:lstm_architecture}
 \end{figure}
 
@@ -150,7 +149,7 @@ It has been argued that the bidirectional nature of these models violates causal
 
 Sentence and document level sentiment classification tasks lend themselves well to the use of bi-directional RNN (BRNN) variants, since the boundaries of the sequence being classified are well-defined a priori. In their work, \citet{chen2017} suggest that using a BLSTM improves the ability of their approach to extrapolate phrase-like features when compared to a uni-directional sequential approach.
 
-An improvement in results stemming, in part, from taking a bi-directional approach is also observed in \citep{zhang2016}, in both accuracy and macro F1 scores when compared to the work of \citep{vo2015}, from which the former was inspired. More recent works, such as \citet{ma2018} and \citet{zheng2018}, that have reported notable results in the field also take advantage of bi-directionality in their approach.
+An improvement in results stemming, in part, from taking a bi-directional approach is also observed in \citet{zhang2016}, in both accuracy and macro F1 scores when compared to the work of \citet{vo2015}, from which the former was inspired. More recent works, such as \citet{ma2018,zheng2018}, that have reported notable results in the field also take advantage of bi-directionality in their approach.
 
 % \subsubsection{Gated Recurrent Units (GRUs)}
 % The GRU does away with the cell state that is found in the LSTM, maintaining only a single hidden state as its \enquote{memory}. The second way in which the GRU differs from the LSTM is in its number of gating units, by foregoing the output gate and combining the input and forget gates into a single update gate, the GRU benefits from having less parameters to learn.
@@ -213,7 +212,7 @@ The intuition behind an attention mechanism is that, when dealing with sequentia
 
 When translating a particularly long sequence, for example, it is natural to focus principally on specific regions related to the current element being translated, as opposed to the source sentence as a whole, as this would result in the most relevant parts possibly being shadowed by unrelated material.
 
-The remarkable power of attention mechanisms for machine translation Bahdanau's work \citep{bahdanau2014} sparked an interest in investigating their applicability in a range of other tasks, including target, and aspect, based sentiment analysis \citep{wang,chen2017,dehongma2017,zheng2018}, image captioning \citep{kelvinxu2015} and question answering \citep{hermann2015}, where the notion of the most salient features being dispersed unevenly across the source data also holds true.
+The remarkable power of attention mechanisms for machine translation in \citet{bahdanau2014} sparked an interest in investigating their applicability in a range of other tasks, including target, and aspect, based sentiment analysis \citep{wang,chen2017,dehongma2017,zheng2018}, image captioning \citep{kelvinxu2015} and question answering \citep{hermann2015}, where the notion of the most salient features being dispersed unevenly across the source data also holds true.
 
 In its simplest form, an attention mechanism involves a layer which produces a weight vector that represents a distribution of salience across an original feature vector, which would otherwise be considered evenly in its entirety, with respect to some target. The nature of the target varies depending on the downstream task, in targeted or aspect based sentiment analysis this is typically the target or aspect in question, whereas in fields such as machine translation this could be the last hidden state that was output.
 
@@ -232,7 +231,7 @@ This weight vector is then used to produce a context vector $c$, as the weighted
 \subsubsection{Attention in TSA}
 ATAE-LSTM \citep{wang} was one of the first to incorporate attention into an LSTM model for the purposes of aspect-based sentiment analysis. A vector representation of the target aspect is used as the subject of attention, allowing the model to attend to different parts of a sentence with respect to the aspect.
 
-Chen at al. \citep{chen2017} make use of multiple attention layers to extrapolate the most salient, and sentiment-bearing words with respect to a target, suggesting that through more than a single attention layer, the model would be more effective at extrapolating features over long distances. They subsequently aggregate these attention results non-linearly using a GRU. The authors attribute their preference of a GRU over an LSTM for this stage in the process due to the former requiring less parameters than the latter.
+\citet{chen2017} make use of multiple attention layers to extrapolate the most salient, and sentiment-bearing words with respect to a target, suggesting that through more than a single attention layer, the model would be more effective at extrapolating features over long distances. They subsequently aggregate these attention results non-linearly using a GRU. The authors attribute their preference of a GRU over an LSTM for this stage in the process due to the former requiring less parameters than the latter.
 
 \citet{dehongma2017} argue that prior works had focused primarily of the representation of contexts and not on targets themselves. When considering targets that consist of multiple words, the idea that words should not necessarily contribute equally to the final representation of that target is a valid assumption to make. They cite the example of \enquote{picture quality} as a target and argue that in such a case the word \enquote{picture} would play a more important role that \enquote{quality}. To address this, their Interactive Attention Network (IAN) incorporates two attention networks to model both the target and the context interactively, to obtain a representation of the effect each had on the other.
 
