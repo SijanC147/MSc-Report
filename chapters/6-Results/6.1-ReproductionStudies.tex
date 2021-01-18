@@ -110,7 +110,7 @@ We observe similar, if not more pronounced, differences when considering the 300
 
 Although this discrepancy in both cases can be considered 'favorable', it nonetheless continues to underscore the importance of providing all parameter settings for these models to facilitate reproduction by mitigating the overhead involved in attempting to recreate the original results. 
 
-Moreover, the importance of reporting metrics which take into account dataset characteristics as outlined in \S\ref{sec:eval_metrics} and which take into account the downstream effects of randomness in the initialization process \citet{reimers2017} as in \cite{moore2018}) continues to emerge from these results. 
+Moreover, the importance of reporting metrics which take into account dataset characteristics as outlined in \S\ref{sec:eval_metrics} and which take into account the downstream effects of randomness in the initialization process (\citet{reimers2017}; as in \citet{moore2018}) continues to emerge from these results. 
 
 \subsection{LCR-ROT}
 From the approaches described thus far, we observe that utilizing attention mechanisms to affect the representation of a context concerning its target is effective when tackling TSA tasks. This may be considered fairly intuitive, however, as we have seen, \citet{dehongma2017} present a compelling argument with their IAN model that the inverse, in favor of using attention mechanisms to affect the target representation concerning its context as well. \citet{zheng2018} expand upon this idea in their work presenting a Left-Center-Right Rotary Attention network (LCR-ROT) in several ways, albeit at the cost of a heavier computational load. 
