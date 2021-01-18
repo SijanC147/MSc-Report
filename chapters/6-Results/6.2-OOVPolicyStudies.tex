@@ -13,7 +13,7 @@ This section provides a detailed description of the experiment setup and motivat
 
 \subsection{Experiment Setup}
 
-When preparing these experiments, our principal consideration is the resource overhead involved in each configuration as a function of both time and cost. Addressing the latter, we select a model from our previous reproduction studies with the least complexity, namely the TD-LSTM approach \cite{tang2016b}. This model consumes the least amount of resources in training while maintaining a sufficient degree of aptitude for TSA, particularly in the social-media network domain in conjunction with the common-crawl 840b GloVe embeddings. 
+When preparing these experiments, our principal consideration is the resource overhead involved in each configuration as a function of both time and cost. Addressing the latter, we select a model from our previous reproduction studies with the least complexity, namely the TD-LSTM approach \citep{tang2016b}. This model consumes the least amount of resources in training while maintaining a sufficient degree of aptitude for TSA, particularly in the social-media network domain in conjunction with the common-crawl 840b GloVe embeddings. 
 
 Additionally, to obtain more in-depth insight into the effects of these OOV strategies, we seek to maximize the vocabulary size of a dataset, thereby increasing the absolute number of OOV tokens present. Towards this end, we use the nakov dataset (\S\ref{ds:nakov}), which has a considerably higher vocabulary compared to the Dong (\S\ref{ds:dong}) dataset while retaining the same social-media domain.
 
